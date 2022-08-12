@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 300.8 136.2" style="enable-background:new 0 0 300.8 136.2;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:url(#SVGID_1_);}
+	.st1{fill:url(#SVGID_2_);}
+	.st2{fill:url(#SVGID_3_);}
+	.st3{fill:#FFFFFF;}
+	.st4{fill:#145A9A;}
+	.st5{font-family:'MyriadPro-Regular';}
+	.st6{font-size:48px;}
+	.st7{font-family:'MyriadPro-It';}
+	.st8{font-size:12px;}
+	.st9{font-family:'MyriadPro-Bold';}
+	.st10{font-size:21px;}
+</style>
+<g>
+	
+		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="57.3362" y1="68.7069" x2="57.3362" y2="3.3944" gradientTransform="matrix(0.9999 1.130000e-002 -1.130000e-002 0.9999 1.0279 -4.0463)">
+		<stop  offset="0" style="stop-color:#DFDDDA"/>
+		<stop  offset="1" style="stop-color:#B7CED7"/>
+	</linearGradient>
+	<path class="st0" d="M58.7,0l-0.2,0.4c-1,13.6-22.6,55.1-22.6,55.1l-0.6,0l12.5,9.7c1.4-4.5,5.3-7.8,9.9-7.7c4.3,0,7.9,3,9.4,7.1
+		L79.8,56l0.2-0.4C80.1,55.6,59.4,13.6,58.7,0z"/>
+	
+		<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="1077.7535" y1="129.6418" x2="1106.3026" y2="80.1934" gradientTransform="matrix(-0.9988 -4.820000e-002 -4.820000e-002 0.9988 1177.942 38.2519)">
+		<stop  offset="0" style="stop-color:#0098D5"/>
+		<stop  offset="1" style="stop-color:#164C8E"/>
+	</linearGradient>
+	<path class="st1" d="M114.6,105.8l-0.4,0c-5-2.6-15.8-5.5-26.5-7.1c-15.3-2.3-27.1-2.5-27.1-2.5L61.2,78c-4.6-11.9,0,0,1.8-4.4
+		c1.7-4.1,2.9,1.4,0.4-2L80.8,59l0.4,0C81.2,59,104.7,98.7,114.6,105.8z"/>
+	
+		<linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="367.0256" y1="95.3435" x2="395.5746" y2="45.8952" gradientTransform="matrix(0.9988 -4.820000e-002 4.820000e-002 0.9988 -351.7655 38.2519)">
+		<stop  offset="0" style="stop-color:#0098D5"/>
+		<stop  offset="1" style="stop-color:#164C8E"/>
+	</linearGradient>
+	<path class="st2" d="M0,105.8l0.4,0c5-2.6,15.8-5.5,26.5-7.1C42.2,96.5,54,96.3,54,96.3L53.4,78c4.6-11.9,0,0-1.8-4.4
+		c-1.7-4.1-2.9,1.4-0.4-2L33.9,59l-0.4,0C33.5,59,10,98.7,0,105.8z"/>
+	<path class="st3" d="M70.6,69.2c0,7.3-5.6,13.2-12.6,13.2c-7,0-12.6-5.9-12.6-13.2C45.3,61.9,51,56,58,56
+		C64.9,56,70.6,61.9,70.6,69.2z"/>
+	<polyline class="st3" points="33.9,59 35.3,55.5 46.3,64.1 45.5,67.4 	"/>
+	<polyline class="st3" points="81.2,59 80.1,55.6 69.2,63.2 70.3,66.6 	"/>
+	<polygon class="st3" points="53,80.5 61.1,80.5 60.6,96.3 54,96.3 	"/>
+</g>
+<text transform="matrix(1.0065 0 0 1 92.6435 51.9878)" class="st4 st5 st6">#AntumID</text>
+<text transform="matrix(1 0 0 1 127.9775 66.5757)" class="st4 st7 st8">&apos;Your privacy is our concern&apos;</text>
+<text transform="matrix(1 0 0 1 119.977 93.2539)" class="st4 st9 st10">www.antumid.be</text>
+<text transform="matrix(1 0 0 1 110.3095 13.2823)" class="st4 st7 st8">The number one platform for privacy</text>
+</svg>

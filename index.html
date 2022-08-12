@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+       
+        <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+        <!-- Core css -->
+        <link rel="stylesheet" id="bulma" href="assets/css/bulma.css" />
+        <link rel="stylesheet" type="text/css" href="assets/css/core_lemonade.css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+        <!-- Plugins css -->
+        <link rel="stylesheet" type="text/css" href="assets/js/ggpopover/ggtooltip.css">
+        <!-- Icons -->
+        <link rel="stylesheet" type="text/css" href="assets/css/icons.min.css">
+        <!-- jQuery DropDown -->
+        <link rel="stylesheet" type="text/css" href="assets/js/jqdropdown/jquery.dropdown.min.css">
+
+
+        <!-- COMMON TAGS -->
+        <meta charset="utf-8">
+        <title>Digi-ID - Blockchain Open Auth</title>
+        <!-- Search Engine -->
+        <meta name="description" content="The blockchain-based cryptographic solution to handling user authentication. Powered by DigiByte blockchain.">
+        <meta name="image" content="https://digi-id.io/assets/scenarium/GeneralOG-03.png">
+        <!-- Schema.org for Google -->
+        <meta itemprop="name" content="Digi-ID - Blockchain Open Auth">
+        <meta itemprop="description" content="The blockchain-based cryptographic solution to handling user authentication. Powered by DigiByte blockchain.">
+        <meta itemprop="image" content="https://digi-id.io/assets/scenarium/GeneralOG-03.png">
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:title" content="Digi-ID - Blockchain Open Auth">
+        <meta name="twitter:description" content="The blockchain-based cryptographic solution to handling user authentication. Powered by DigiByte blockchain.">
+        <meta name="twitter:site" content="@DigiByteCoin">
+        <meta name="twitter:creator" content="@cengic_damir">
+        <meta name="twitter:image:src" content="https://digi-id.io/assets/scenarium/TwitterOG-02.png">
+        <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+        <meta name="og:title" content="Digi-ID - Blockchain Open Auth">
+        <meta name="og:description" content="The blockchain-based cryptographic solution to handling user authentication. Powered by DigiByte blockchain.">
+        <meta name="og:image" content="https://digi-id.io/assets/scenarium/FacebookOG-01.png">
+        <meta name="og:url" content="https://digi-id.io">
+        <meta name="og:site_name" content="Digi-ID Website">
+        <meta name="og:type" content="website">
+         
+    </head>
+
+    <style type="text/css">
+        
+        .blink_me {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50%{
+    opacity: 0.2;
+  }
+}
+    </style>
+
+    <body class="body1 free2">
+
+        <div id="video-modal" class="modal modal-info" style="z-index: 1000 !important;">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+                <div class="side-block is-title-reveal">
+                    <div class="background-wrapper">
+                        <div id="video-embed" class="video-wrapper" data-url="https://www.youtube.com/watch?v=pLrQycud5GI?rel=0&autoplay=1">
+                            <div class="video-overlay"></div>
+                            <div class="playbutton">
+                                <div class="icon-play">
+                                    <i class="im im-icon-Play-Music"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="modal-close is-large is-hidden stop-video" aria-label="close"></button>
+        </div> 
+        <!-- Pageloader -->
+        <div class="pageloader"></div>
+        <div class="infraloader is-active"></div>
+
+        <!-- Hero and nav -->
+        <div class="hero is-medium">
+            <div class="navbar-wrapper navbar-fade">
+                <div class="hero-head">
+
+                    <!-- Nav -->
+                    <div class="container">
+                        <nav class="nav">
+                            <div class="container big">
+                                <div class="nav-left">
+                                    <a class="nav-item" href="index.html">
+                                        <img class="medium-footer-logo" src="assets/scenarium/logo.svg" alt="">
+                                    </a>
+                                    <!-- Sidebar trigger -->
+                                 
+                                    <a href="index.html" class="nav-item is-tab nav-inner is-not-mobile">
+                                        Home
+                                    </a>
+                                    <a href="documentation.html" class="nav-item is-tab nav-inner is-not-mobile">
+                                        Documentation
+                                    </a>
+                                     <a href="getstarted.html" class="nav-item is-tab nav-inner is-not-mobile">
+                                        Get started
+                                    </a>
+                                    <a href="/#implementations" class="nav-item is-tab nav-inner is-not-mobile">
+                                        Implementations
+                                    </a>
+                                    <a href="contact.html" class="nav-item is-tab nav-inner is-not-mobile">
+                                        Contact
+                                    </a>
+                                </div>
+                                <!-- Responsive toggle -->
+                                <span class="nav-toggle">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </span>
+                                <div class="nav-right nav-menu">
+
+                                    <a href="https://digi-id.io" class="nav-item is-tab nav-inner is-menu-mobile">
+                                        Home
+                                    </a>
+                                    <a href="documentation.html" class="nav-item is-tab nav-inner is-menu-mobile">
+                                        Documentation
+                                    </a>
+                                    <a href="getstarted.html" class="nav-item is-tab nav-inner is-menu-mobile">
+                                        Get started
+                                    </a>
+                                    <a href="/#implementations" class="nav-item is-tab nav-inner is-menu-mobile">
+                                        Implementations
+                                    </a>
+                                    <a href="contact.html" class="nav-item is-tab nav-inner is-menu-mobile">
+                                        Contact
+                                    </a>
+                                    
+                                
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <!-- /Nav -->
+
+                </div>
+            </div>
+
+            <!-- Hero image -->
+            <div id="main-hero" class="hero-body is-relative no-padding-bottom">
+                <div class="container has-text-centered">
+                    <div class="columns">
+                        <div class="column is-8 is-offset-2 has-text-centered" style="z-index:3;" >
+                            <h1 class="title big-title text-bold is-2">
+                                 Authentication at its best.
+                            </h1>
+                            <div class="subtitle light-subtitle">
+                                Use Digi-ID to login to your accounts or integrate it in your website today.
+                            </div>
+                            <!-- CTA button -->
+                            <div class="has-text-centered">
+                                <a href="getstarted.html" class="button button-cta primary-btn rounded raised">Get started free</a>
+                            </div>
+
+                            
+                            <div class="video-link has-text-centered modal-trigger" data-modal="video-modal">
+                                <i class="fa fa-play blink_me" ></i> <span class="blink_me">See how it works</span>
+                            </div>
+
+                             <!-- Video modal -->
+        
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Hero image -->
+        </div>
+        <!-- /Hero and nav -->
+
+        <!-- Mockup section -->
+        <div id="product" class="section is-relative mockup-section">
+            <div class="container">
+                <div class="columns has-text-centered">
+                    <div class="column">
+                        <!-- App -->
+                        <img class="app-mockup levitate" src="assets/scenarium/main.svg" alt="">
+                        <!-- Background image -->
+                        <img class="hr-bg" src="assets/images/illustrations/mockups/landing3/hrbg.png" alt="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="floating-avatars is-hidden-mobile">
+                <img class="avatar avatar-1st levitate delay-1" src="assets/scenarium/1.svg" alt="">
+                <img class="avatar avatar-2nd levitate delay-3" src="assets/scenarium/2.svg" alt="">
+                <img class="avatar avatar-3rd levitate delay-8" src="assets/scenarium/3.svg" alt="">
+                <img class="avatar avatar-4th levitate delay-6" src="assets/scenarium/4.svg" alt="">
+                <img class="avatar avatar-5th levitate delay-4" src="assets/scenarium/5.svg" alt="">
+                <img class="avatar avatar-6th levitate delay-2" src="assets/scenarium/6.svg" alt="">
+                <img class="avatar avatar-7th levitate delay-1" src="assets/scenarium/9.svg" alt="">
+                <img class="avatar avatar-8th levitate delay-8" src="assets/scenarium/8.svg" alt="">
+                <img class="avatar avatar-9th levitate delay-9" src="assets/scenarium/10.svg" alt="">
+            </div>
+        </div>
+        <!-- Mockup section -->
+
+         <!-- Simple icon boxes-->
+        <div class="columns is-vcentered landing-features-tagline">
+            <div class="column is-6 is-offset-3">
+                <div class="info-block has-text-centered">
+                    <div class="subtitle text-bold is-2">Features</div>
+                    <p class="no-padding subtitle light-subtitle">Empowering user authentication with blockchain tech.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="columns is-vcentered is-multiline has-text-centered pt-30-mu">
+            <div class="column"></div>
+            <div class="column is-2">
+                <!-- Icon box -->
+                <div class="icon-box primary">
+                    <div class="box-icon">
+                        <i class="im im-icon-Key-Lock"></i>
+                    </div>
+                    <div class="box-title">
+                        Blockchain-backed cryptography
+                    </div>
+                    <div class="box-text">
+                        The Blockchain has shown over the last 9 years that it's not crackable, thanks to amazing mathematics, encryption, and unfathomably large numbers.
+                    </div>
+                </div>
+               
+            </div>
+
+            <div class="column is-2">
+                <!-- Icon box -->
+                <div class="icon-box danger">
+                    <div class="box-icon">
+                        <i class="im im-icon-Computer-Secure"></i>
+                    </div>
+                    <div class="box-title">
+                        Resistance to cyber threats
+                    </div>
+                    <div class="box-text">
+                        Because it's not enough to just have a Username / Password / SMS. You need to be totally safe!
+                    </div>
+                </div>
+                <!-- Icon box -->
+            
+            
+            </div>
+            <div class="column is-2">
+                <!-- Icon box -->
+                <div class="icon-box warning">
+                    <div class="box-icon">
+                        <i class="im im-icon-Data-Yes"></i>
+                    </div>
+                    <div class="box-title">
+                        Seamless &amp; quick integration
+                    </div>
+                    <div class="box-text">
+                       Just install one of our ready-built plugins and you're good to go! Or, you can create your own plugin for your own service.
+                    </div>
+                </div>
+                <!-- Icon box -->
+            
+            </div>
+                <div class="column is-2">
+                <!-- Icon box -->
+                <div class="icon-box accent">
+                    <div class="box-icon">
+                        <i class="im im-icon-Thumbs-UpSmiley"></i>
+                    </div>
+                    <div class="box-title">
+                        Lifetime free service
+                    </div>
+                    <div class="box-text">
+                        We won't charge you to use Digi-ID, offer it to users, we won't show ads, and there's no catch! Just the DigiByte Foundation helping give back to the world and secure the internet
+                    </div>
+                </div>
+                <!-- Icon box -->
+            
+            </div>
+
+
+            <div class="column"></div>
+        </div>
+        <!-- /Simple icon boxes-->
+
+         <!-- CTA Banner -->
+        <section style="margin-top:3%;;" class="section section-primary no-padding-bottom" id="getting_started">
+            <div class="container" style="z-index: 10;">
+                <div class="columns is-vcentered">
+                    <!-- CTA content -->
+                    <div class="column is-4 is-offset-1">
+                        <div class="minimal-feature">
+                            <h2 class="title is-5 minimal-title bold-text light-text no-margin">Find out more.</h2>
+                            <div class="feature-content light-text">
+                                Why not just start by reading our one-page darkpaper? It's the perfect document to read if you want to understand the gist of Digi-ID. It is available in several languages. Or just keep scrolling.
+                            </div>
+
+                            <div class="pt-20 pb-20">
+
+                                <!-- needed script <a href="path_to_file" download="proposed_file_name">Download</a> -->
+
+
+    <!-- Modal trigger -->
+<a class="button button-cta btn-align light-btn rounded raised switch modal-trigger" data-modal="card-modal"><i class="fa fa-download"></i> Download</a>
+<!-- /Modal trigger -->
+
+
+<!-- Modal Markup -->
+<div id="card-modal" class="modal modal-info modal-sm">
+    <div class="modal-background"></div>
+    <div class="modal-card modal-content">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Select a language</p>
+            <button class="delete is-medium modal-dismiss" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <a href="assets/digidocs/Digi-ID-Intro_EN.pdf" download="Digi-ID-Intro_EN.pdf">
+            <!-- User -->
+            <div class="flex-card light-bordered hover-inset padding-10 mb-10">
+                <div class="content content-flex">
+                    
+                    <div class="card-name">
+                        <div class="name">English</div>
+                        
+                    </div>
+                    <div class=" ml-auto">
+                        <i class="material-icons">get_app</i>
+                    </div>
+                </div>
+            </div>
+        </a>
+            <!-- /User -->
+            <!-- User -->
+            <a href="assets/digidocs/Digi-ID-Intro_CN.pdf" download="Digi-ID-Intro_CN.pdf">
+            <div class="flex-card light-bordered hover-inset padding-10 mb-10">
+                <div class="content content-flex">
+                    
+                    <div class="card-name">
+                        <div class="name">Chinese</div>
+                        
+                    </div>
+                    <div class=" ml-auto">
+                        <i class="material-icons">get_app</i>
+                    </div>
+                </div>
+            </div>
+        </a>
+            <!-- /User -->
+            <!-- User -->
+            <a href="assets/digidocs/Digi-ID-Intro_NL.pdf" download="Digi-ID-Intro_NL.pdf">
+            <div class="flex-card light-bordered hover-inset padding-10 mb-10">
+                <div class="content content-flex">
+                    
+                    <div class="card-name">
+                        <div class="name">Dutch</div>
+                        
+                    </div>
+                    <div class=" ml-auto">
+                        <i class="material-icons">get_app</i>
+                    </div>
+                </div>
+            </div>
+        </a>
+            <!-- /User -->
+            <!-- User -->
+            <a href="assets/digidocs/Digi-ID-Intro_FR.pdf" download="Digi-ID-Intro_FR.pdf">
+            <div class="flex-card light-bordered hover-inset padding-10 mb-10">
+                <div class="content content-flex">
+                    
+                    <div class="card-name">
+                        <div class="name">French</div>
+                        
+                    </div>
+                    <div class="ml-auto">
+                        <i class="material-icons">get_app</i>
+                    </div>
+                </div>
+            </div>
+        </a>
+            <!-- /User -->
+            <!-- User -->
+            <a href="assets/digidocs/Digi-ID-Intro_DE.pdf" download="Digi-ID-Intro_DE.pdf">
+            <div class="flex-card light-bordered hover-inset padding-10 mb-10">
+                <div class="content content-flex">
+                    
+                    <div class="card-name">
+                        <div class="name">German</div>
+                        
+                    </div>
+                    <div class=" ml-auto">
+                        <i class="material-icons">get_app</i>
+                    </div>
+                </div>
+            </div>
+        </a>
+            <!-- /User -->
+
+              <!-- User -->
+            <a href="assets/digidocs/Digi-ID-Intro_EL.pdf" download="Digi-ID-Intro_EL.pdf">
+            <div class="flex-card light-bordered hover-inset padding-10 mb-10">
+                <div class="content content-flex">
+                    
+                    <div class="card-name">
+                        <div class="name">Greek</div>
+                        
+                    </div>
+                    <div class=" ml-auto">
+                        <i class="material-icons">get_app</i>
+                    </div>
+                </div>
+            </div>
+        </a>
+            <!-- /User -->
+             <!-- User -->
+            <a href="assets/digidocs/Digi-ID-Intro_RU.pdf" download="Digi-ID-Intro_RU.pdf">
+            <div class="flex-card light-bordered hover-inset padding-10 mb-10">
+                <div class="content content-flex">
+                    
+                    <div class="card-name">
+                        <div class="name">Russian</div>
+                        
+                    </div>
+                    <div class=" ml-auto">
+                        <i class="material-icons">get_app</i>
+                    </div>
+                </div>
+            </div>
+        </a>
+            <!-- /User -->
+               <!-- User -->
+            <a href="assets/digidocs/Digi-ID-Intro_HU.pdf" download="Digi-ID-Intro_HU.pdf">
+            <div class="flex-card light-bordered hover-inset padding-10 mb-10">
+                <div class="content content-flex">
+                    
+                    <div class="card-name">
+                        <div class="name">Hungarian</div>
+                        
+                    </div>
+                    <div class=" ml-auto">
+                        <i class="material-icons">get_app</i>
+                    </div>
+                </div>
+            </div>
+        </a>
+            <!-- /User -->
+                        <!-- User -->
+            <a href="assets/digidocs/Digi-ID-Intro_IT.pdf" download="Digi-ID-Intro_IT.pdf">
+            <div class="flex-card light-bordered hover-inset padding-10 mb-10">
+                <div class="content content-flex">
+                    
+                    <div class="card-name">
+                        <div class="name">Italian</div>
+                        
+                    </div>
+                    <div class=" ml-auto">
+                        <i class="material-icons">get_app</i>
+                    </div>
+                </div>
+            </div>
+        </a>
+            <!-- /User -->
+
+               <!-- User -->
+            <a href="assets/digidocs/Digi-ID-Intro_JA.pdf" download="Digi-ID-Intro_JA.pdf">
+            <div class="flex-card light-bordered hover-inset padding-10 mb-10">
+                <div class="content content-flex">
+                    
+                    <div class="card-name">
+                        <div class="name">Japanese</div>
+                        
+                    </div>
+                    <div class=" ml-auto">
+                        <i class="material-icons">get_app</i>
+                    </div>
+                </div>
+            </div>
+        </a>
+            <!-- /User -->
+                 <!-- User -->
+            <a href="assets/digidocs/Digi-ID-Intro_PT.pdf" download="Digi-ID-Intro_PT.pdf">
+            <div class="flex-card light-bordered hover-inset padding-10 mb-10">
+                <div class="content content-flex">
+                    
+                    <div class="card-name">
+                        <div class="name">Portuguese</div>
+                        
+                    </div>
+                    <div class=" ml-auto">
+                        <i class="material-icons">get_app</i>
+                    </div>
+                </div>
+            </div>
+        </a>
+            <!-- /User -->
+
+              <!-- User -->
+            <a href="assets/digidocs/Digi-ID-Intro_ES.pdf" download="Digi-ID-Intro_ES.pdf">
+            <div class="flex-card light-bordered hover-inset padding-10 mb-10">
+                <div class="content content-flex">
+                    
+                    <div class="card-name">
+                        <div class="name">Spanish</div>
+                        
+                    </div>
+                    <div class=" ml-auto">
+                        <i class="material-icons">get_app</i>
+                    </div>
+                </div>
+            </div>
+        </a>
+            <!-- /User -->
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-link modal-dismiss">Close</button>
+        </footer>
+    </div>
+</div>
+<!-- /Modal Markup -->
+
+                                        
+
+                                   
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /CTA content -->
+                    
+                    <!-- City illustration -->
+                    <div class="column is-5 is-offset-2">
+                        <div class="city-container">
+                            <img src="assets/images/illustrations/drawings/city.svg" alt="">
+                        </div>
+                    </div>
+                    <!-- /City illustration -->
+                </div>
+            </div>
+        </section>
+        <!-- /CTA Banner -->
+
+                <div class="columns is-vcentered apps" style="padding-top: 8%;">
+                    <div class="column is-7 has-text-centered">
+                        <img class="featured-svg" style="max-width: 80%;padding: 2%;" src="assets/images/digi-id-mockup.png" alt="">
+                    </div>
+
+                    <div class="column is-4" style="margin: 3%;">
+                        
+                        <h2 class="title quick-feature text-bold no-margin">
+                            Access in the DigiByte app.
+                        </h2>
+
+                        <div style="padding-bottom: 2%;" class="title-divider"></div>
+
+                        <span class="section-feature-description">It is completely free & you don't need to own any DGB!</span>
+
+                        <div class="pt-10 pb-10">
+
+                            
+                        </div>
+                        <div class="apps-logos">
+                            <a target="_blank" href="https://play.google.com/store/apps/details?id=io.digibyte&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
+                                <img alt="Get it on Google Play" src="assets/images/logos/google-play-store-logo.svg"/>
+                            </a>
+                            <a href="https://itunes.apple.com/app/digibyte/id1378061425?ls=1&mt=8" target="_blank">
+                                <img src="assets/images/logos/ios-store-logo.svg" alt="Get it on App Store">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Feature -->
+                <!-- Numbered Features section -->
+        <section class="section is-medium section-how-it-works">
+            <div class="container">
+                <div class="section-title-wrapper">
+                    
+                    <h2 class="title section-title has-text-centered dark-text text-bold">
+                        So, it works like this.
+                    </h2>
+                </div>
+
+                <!-- Feature -->
+                <div class="columns is-vcentered">
+                    <div class="column is-7 has-text-centered">
+                        <img class="featured-svg" src="assets/scenarium/generate-02.svg" alt="">
+                    </div>
+
+                    <div class="column is-4">
+                        <div class="icon-subtitle"><i class="im im-icon-Gears"></i></div>
+                        <h2 class="title quick-feature text-bold no-margin">
+                            Generation
+                            <span class="bg-number">1</span>
+                        </h2>
+                        <div class="title-divider"></div>
+                        <span class="section-feature-description">The website/app generates a unique & Digi-ID QR code and presents it.</span>
+                        <div class="pt-10 pb-10">
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- /Feature -->
+
+                <!-- Feature -->
+                <div class="columns is-vcentered">
+                    <div class="column is-7 has-text-centered is-hidden-tablet is-hidden-desktop">
+                        <img class="featured-svg" src="assets/scenarium/scan-01.svg" alt="">
+                    </div>
+
+                    <div class="column is-4 is-offset-1">
+                        <div class="icon-subtitle"><i class="im im-icon-QR-Code"></i></div>
+                        <h2 class="title quick-feature text-bold no-margin">
+                            Scanning
+                            <span class="bg-number">2</span>
+                        </h2>
+                        <div class="title-divider"></div>
+                        <span class="section-feature-description">The user scans the QR through the Digi-ID function of the DigiByte Wallet.</span>
+                        <div class="pt-10 pb-10">
+                            
+                        </div>
+                    </div>
+
+                    <div class="column is-7 has-text-centered is-hidden-mobile">
+                        <img class="featured-svg levitate" src="assets/scenarium/scan-01.svg" alt="">
+                    </div>
+                </div>
+                <!-- /Feature -->
+
+                <!-- Feature -->
+                <div class="columns is-vcentered">
+                    <div class="column is-7 has-text-centered">
+                        <img class="featured-svg" src="assets/scenarium/auth-03.svg" alt="">
+                    </div>
+
+                    <div class="column is-4">
+                        <div class="icon-subtitle"><i class="im im-icon-Fingerprint-2"></i></div>
+                        <h2 class="title quick-feature text-bold no-margin">
+                            Authentication
+                            <span class="bg-number">3</span>
+                        </h2>
+                        <div class="title-divider"></div>
+                        <span class="section-feature-description">The user authenticates the request by entering their PIN or scanning their fingerprint.</span>
+                        <div class="pt-10 pb-10">
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- /Feature -->
+
+                 <!-- Feature -->
+                <div class="columns is-vcentered">
+                    <div class="column is-7 has-text-centered is-hidden-tablet is-hidden-desktop">
+                        <img class="featured-svg levitate" src="assets/scenarium/confirm-04.svg" alt="">
+                    </div>
+
+                    <div class="column is-4 is-offset-1">
+                        <div class="icon-subtitle"><i class="im im-icon-Yes"></i></div>
+                        <h2 class="title quick-feature text-bold no-margin">
+                            Confirmation
+                            <span class="bg-number">4</span>
+                        </h2>
+                        <div class="title-divider"></div>
+                        <span class="section-feature-description">Digi-ID sends the cryptographically-signed request back to the website/app and the user is successfully logged in.</span>
+                        <div class="pt-10 pb-10">
+                            
+                        </div>
+                    </div>
+
+                    <div class="column is-7 has-text-centered is-hidden-mobile">
+                        <img class="featured-svg levitate" src="assets/scenarium/confirm-04.svg" alt="">
+                    </div>
+                </div>
+                <!-- /Feature -->
+
+            </div>
+        </section>
+        <!-- /Numbered Features section -->
+
+        <div class="has-text-centered">
+
+        <iframe class="fp-iframe" src="https://www.youtube.com/embed/pLrQycud5GI?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+
+        <section class="is-medium mb-40" style="padding-top:3%;">
+        <div class="column is-6 is-offset-3">
+            <div class="navigation-tabs full-pills rounded primary animated-tabs">
+    <div class="tabs is-centered">
+        <ul>
+            <li class="tab-link is-active" data-tab="tab-j1"><a>Website login</a></li>
+            <li class="tab-link" data-tab="tab-j2"><a>Game access</a></li>
+            <li class="tab-link" data-tab="tab-j3"><a>Physical access</a></li>
+            <li class="tab-link" data-tab="tab-j4"><a>ID verification</a></li>
+            <li class="tab-link" data-tab="tab-j5"><a>Secure shopping</a></li>
+        </ul>
+    </div>
+    <div id="tab-j1" class="navtab-content is-active">
+        <div class="columns">
+        <div class="column is-one-third"><img src="assets/scenarium/website.svg"></div>
+       <div class="column is-two-thirds"><p class="subtitle light-subtitle">Login to websites like never before.</p>
+        <p style="width: 100%;">No more username &amp; password combinations. No more SMS authentication. No more 2FA. All you need is in a single function, supported by all DigiByte wallets. No need to remember all the different passwords, or (even worse) store them in a single application.</p></div>
+   </div>
+    </div>
+
+    <div id="tab-j2" class="navtab-content">
+      <div class="columns">
+        <div class="column is-one-third"><img src="assets/scenarium/game.svg"></div>
+       <div class="column is-two-thirds"><p class="subtitle light-subtitle">Keep your legendary items safe!</p>
+        <p style="width: 100%;">Experience, ranks, items and community respect? All that lost for a forgotten password or a hacked account? Not anymore. With Digi-ID, blockchain-based tech protects your game accounts. </p></div>
+    </div>
+</div>
+
+    <div id="tab-j3" class="navtab-content">
+        <div class="columns">
+        <div class="column is-one-third"><img src="assets/scenarium/physical.svg"></div>
+       <div class="column is-two-thirds"><p class="subtitle light-subtitle">Secure building entrances or keep your valuables safe.</p>
+        <p style="width: 100%;">Digi-ID can be integrated with physical security systems to replace swipe cards or biometrics. </p></div>
+    </div>
+</div>
+
+   <div id="tab-j4" class="navtab-content">
+        <div class="columns">
+        <div class="column is-one-third"><img src="assets/scenarium/id.svg"></div>
+       <div class="column is-two-thirds"><p class="subtitle light-subtitle">Prove it's really you!</p>
+        <p style="width: 100%;"> Aren't we a little too far ahead for paper ID? It's time to make lives easier, help the environment and make forgery next to impossible. All in a single move.</p></div>
+    </div>
+</div>
+
+   <div id="tab-j5" class="navtab-content">
+        <div class="columns">
+        <div class="column is-one-third"><img src="assets/scenarium/shopping.svg"></div>
+       <div class="column is-two-thirds"><p class="subtitle light-subtitle">Love online shopping but hate creating accounts?</p>
+        <p style="width: 100%;"> Same here. That's why we made plugins for many e-commerce platforms. Just scan a QR code aaaand check your tracking number. Yes, that simple.</p></div>
+    </div>
+</div>
+
+        </div>
+
+</section>
+
+        <!-- Digi-ID Implementations - BEG -->
+        <section id="implementations" class="section">
+            <div class="container">
+                <div class="column is-6 is-offset-3">
+                    <h2 class="title section-title has-text-centered dark-text text-bold">
+                        Digi-ID Found In:
+                    </h2>
+		    <div class="title-divider is-centered"></div>
+		    <a href="https://www.coinomi.com/" target="_blank"><img class="mt-60" src="assets/images/logos/Coinomi-logo-typography.png"></a>
+                    <div class="title-divider is-centered"></div>
+                    <a href="https://www.antum.be/" target="_blank"><img class="mt-60" src="assets/scenarium/antum-logo.svg" alt="Antum Logo"></a>
+                </div>
+            </div>
+        </section>
+        <!-- Digi-ID Implementations - END -->
+
+                 <!-- CTA Banner -->
+        <section style="margin-top:3%; background: #002451;" class="section">
+            <div class="container">
+                <div class="columns is-vcentered">
+                    <!-- CTA content -->
+                    <div class="column is-4 is-offset-4" align="center">
+                        <a style="margin: 1%;"href="documentation.html" class="button button-cta light-btn rounded raised">Documentation</a>
+                        <a style="margin: 1%;"href="https://github.com/digibyte-core/digiid-js" class="button button-cta light-btn rounded raised btn-outlined"><i class="fa fa-github fa-2x"></i> GitHub</a>
+                    </div>
+
+                    
+                    
+                </div>
+            </div>
+        </section>
+        <!-- /CTA Banner -->
+       
+        <!-- Footer -->
+        <footer class="footer footer-light-medium">
+            <div class="container">
+                <div class="columns">
+                    <!-- Column -->
+                    <div class="column is-4">
+                        <div class="pt-10 pb-10">
+                            <img class="medium-footer-logo" src="assets/scenarium/logo.svg" alt="">
+                            <div class="footer-description pt-10 pb-10">
+                                Digi-ID is an open-source, community-driven Open Auth project based on the DigiByte Blockchain. It will always remain free. <br><br>
+                                <b>Brought to you by the <a href="https://digibytefoundation.org/">DigiByte Foundation</a>.</b>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="moto">Web by <a href="https://damircengic.me">Damir</a>.</span>
+                             <br><span class="moto">Digi-ID &copy; 2018</span>
+                            <div class="social-links pt-10 pb-10">
+                                
+                                <a href="https://twitter.com/digibytecoin">
+                                    <span class="icon"><i class="fa fa-twitter"></i></span>
+                                </a>
+                                <a href="https://t.me/DigiByteCoin">
+                                    <span class="icon"><i class="fa fa-paper-plane"></i></span>
+                                </a>
+                                <a href="https://t.me/DigiByteDevelopers">
+                                    <span class="icon"><i class="fa fa-paper-plane"></i></span>
+                                </a>
+                                <a href="https://github.com/digibyte-core/digiid-js">
+                                    <span class="icon"><i class="fa fa-github"></i></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="column is-6 is-offset-2">
+                        <div class="columns">
+                            <!-- Column -->
+                            <div class="column">
+                                <ul class="footer-column">
+                                    <li class="column-header">
+                                        Digi-ID
+                                    </li>
+                                    <li class="column-item"><a href="https://digi-id.io">Home</a></li>
+                                    <li class="column-item"><a href="https://digi-id.io/#getting_started">Getting started</a></li>
+                                    <li class="column-item"><a href="pricing.html">Pricing (Free)</a></li>
+                                    <li class="column-item"><a href="https://digibytefoundation.org/donate">Donate</a></li>
+                                    
+                                    </a>
+                                </ul>
+                            </div>
+                            <!-- Column -->
+                            <div class="column">
+                                <ul class="footer-column">
+                                    <li class="column-header">
+                                        Resources
+                                    </li>
+                                    <li class="column-item"><a href="https://github.com/digibyte-core/digiid-js">GitHub Repo</a></li>
+                                    <li class="column-item"><a href="faq.html">Frequent questions</a></li>
+                                    <li class="column-item"><a href="https://digibyte.io">DigiByte</a></li>
+                                    <li class="column-item"><a href="https://dgbwiki.com">DigiByte Wiki</a></li>
+                                    <li class="column-item"><a href="https://promotedgb.com">PromoteDGB</a></li>
+                                    <li class="column-item"><a href="https://digibyteforums.io">Digi-ID Demo Site</a></li>
+                                </ul>
+                            </div>
+                            <!-- Column -->
+                            <div class="column">
+                                <ul class="footer-column">
+                                    <li class="column-header">
+                                        Terms
+                                    </li>
+                                    <li class="column-item"><a href="ToS.html" target="_blank">Terms of Service</a></li>
+                                    <li class="column-item"><a href="disclaimer.html" target="_blank">Disclaimer</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- /Footer -->
+
+        <!-- Side navigation -->
+        <div class="side-navigation-menu">
+            <!-- Categories menu -->
+            <div class="category-menu-wrapper">
+                <!-- Menu -->
+                <ul class="categories">
+                    <li class="square-logo"><img src="assets/images/logos/square-white.svg" alt=""></li>
+                    <li class="category-link is-active" data-navigation-menu="demo-pages"><i class="sl sl-icon-layers"></i></li>
+                    <li class="category-link" data-navigation-menu="components"><i class="sl sl-icon-grid"></i></li>
+                    <li class="category-link" data-navigation-menu="extras"><i class="sl sl-icon-present"></i></li>
+                </ul>
+                <!-- Menu -->
+
+                <ul class="author">
+                    <li>
+                        <!-- Theme author -->
+                        <a href="javascript:void(0);">
+                            <img class="main-menu-author" src="assets/images/logos/cssninja.svg" alt="">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /Categories menu -->
+
+            <!-- Navigation menu -->
+            <div id="demo-pages" class="navigation-menu-wrapper animated preFadeInRight fadeInRight">
+                <!-- Navigation Header -->
+                <div class="navigation-menu-header">
+                    <span>Demo pages</span>
+                    <a class="ml-auto hamburger-btn navigation-close" href="javascript:void(0);">
+                        <span class="menu-toggle">	
+                            <span class="icon-box-toggle"> 	
+                                <span class="rotate">
+                                    <i class="icon-line-top"></i>
+                                    <i class="icon-line-center"></i>
+                                    <i class="icon-line-bottom"></i> 
+                                </span>
+                            </span>
+                        </span>
+                    </a>
+                </div>
+                <!-- Navigation Body -->
+               
+
+        <!-- Back To Top Button -->
+        <div id="backtotop"><a href="#"></a></div>
+
+       
+ 
+
+
+
+
+        <!-- Core js -->
+        <script src="assets/js/core/jquery.min.js"></script>
+        <script src="assets/js/pages/components-modals.js"></script>
+        <script src="assets/js/core/modernizr.min.js"></script>
+        <!-- Plugins js -->
+        <script src="assets/js/ggpopover/ggtooltip.js"></script>
+        <script src="assets/js/embed/embed.js"></script>
+        <!-- Bulkit js -->
+        <script src="assets/js/main.js"></script>
+        <!-- Page specific js -->
+        <script src="assets/js/pages/landingv3.js"></script>
+        
+        <script src="assets/js/jqdropdown/jquery.dropdown.min.js"></script>
+      
+      <!-- Quantcast Tag -->
+<script type="text/javascript">
+var _qevents = _qevents || [];
+
+(function() {
+var elem = document.createElement('script');
+elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";
+elem.async = true;
+elem.type = "text/javascript";
+var scpt = document.getElementsByTagName('script')[0];
+scpt.parentNode.insertBefore(elem, scpt);
+})();
+
+_qevents.push({
+qacct:"p-QMFw8w8-S-5EY"
+});
+</script>
+
+<noscript>
+<div style="display:none;">
+<img src="//pixel.quantserve.com/pixel/p-QMFw8w8-S-5EY.gif" border="0" height="1" width="1" alt="Quantcast"/>
+</div>
+</noscript>
+<!-- End Quantcast tag -->
+
+    </body>
+</html>
