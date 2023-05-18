@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteCond %{HTTP_HOST}  !^www\.digi-id\.io$ [NC]
+RewriteRule ^(.*) http://www.digi-id.io/$1 [L,R]
