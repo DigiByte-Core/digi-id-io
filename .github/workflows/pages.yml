@@ -39,7 +39,7 @@ jobs:
 
       # Updated step to use 'actions/upload-artifact' for clarity in artifact handling
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v1
         with:
           name: github-pages-artifact # Naming the artifact for clarity
           path: |
