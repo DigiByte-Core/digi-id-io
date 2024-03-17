@@ -42,10 +42,7 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           name: github-pages-artifact # Naming the artifact for clarity
-          path: |
-            **/*
-            !.git/**
-            !.github/**
+          path: .
 
       - name: Deploy to GitHub Pages
         id: deployment
