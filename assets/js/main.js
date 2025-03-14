@@ -623,5 +623,7 @@ $(document).ready(function($){
     });
     $(".trigger.opened").addClass("active").next(".toggle-container").show();
 
-
+    // update dynamicaly the copy right year 
+    var currentYear = (new Date).getFullYear();
+    $('.copy-year').text(currentYear);
 })
