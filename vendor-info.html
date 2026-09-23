@@ -172,53 +172,91 @@
                                 
                                 <!-- Article content -->
                                 <div class="content">
-                                   <p> Digi-ID is an authentication method based on the security of the DigiByte blockchain. This allows you to log in to a website, application, building security and more by simply scanning or tapping on a QR code.</p>
-<p>Digi-ID does away with the need for usernames and password, or it can be used to compliment them for additional security.
+                                    <h3 class="title is-4 dark-text">Digi-ID: Websites &amp; Apps</h3>
 
-</p>
-                                    
-                                    <h4 class="subtitle is-5 dark-text">What’s involved in integrating Digi-ID into my website / application?</h4>
-                                    
-                                    <p>Integration work will greatly depend on what your product is built using. Where existing plugins are available, you can be up and running using Digi-ID in a matter of minutes.</p>
+                                    <p>Digi-ID lets users sign in by scanning or tapping a QR code and approving the request in a compatible app. It uses public key cryptography: a private key creates a digital signature that your server verifies. No DigiByte blockchain connection is required.</p>
 
-                                    <p>Where there is no existing plugin for your platform or application, we have some sample libraries that may be of use and we recommend checking out our Integration Document for Digi-ID.</p>
-                              
+                                    <h4 class="subtitle is-5 dark-text">How a sign-in works:</h4>
 
-                                    <h4 class="subtitle is-5 dark-text">What are the security benefits as an operator and for my users?</h4>
-                                    
-                                    <p>Digi-ID can be used as an additional layer of security for your users, to compliment a traditional “Username + Password” authentication method, or alternatively as users upgrade their account and add Digi-ID you can even do away with usernames / passwords entirely.</p>
+                                    <ol style="font-size: 16px;">
+                                        <li>Your service creates a unique challenge, links it to the pending session, and displays a Digi-ID QR code.</li>
+                                        <li>The user scans or taps the code and approves the request.</li>
+                                        <li>The app sends a signed response and public Digi-ID address, which acts as the login identifier.</li>
+                                        <li>Your server verifies the response and challenge, then grants access to the associated account and session.</li>
+                                    </ol>
 
-                                    <p>This means end-users are unable to re-use passwords, or choose insecure passwords, if there is no “password” on their account when replaced by Digi-ID. Should a security breach occur through some other method, there would be no usernames / passwords for an attacker to obtain. It also means your users are protected from password re-use from other websites too.</p>
-                                    
-                                    <h4 class="subtitle is-5 dark-text">How would my product work without passwords? Why would I or my users want this?</h4>
-                                    
-                                    <p>Platforms can replace their Username + Password authentication entirely with Digi-ID, giving users a Digi-ID QR Code to tap / scan to validate their identity. Login is much faster this way compared to entering credentials, not to mention you can log in to a shared PC (Such as a cyber cafe or family computing device) without worrying about your details being saved.</p>
+                                    <h4 class="subtitle is-5 dark-text">What does integration involve?</h4>
 
-                                    <p>Each login attempt is valid only for that one session, so the ‘challenge’ response cannot be resent and reused for a later login attempt on a website / application.
- The validation connects them to the individual “session”, be it on a website, inside a mobile application, or an attempt to access building security.
-</p>
+                                    <p>Integration depends on your platform. A compatible plugin may reduce setup time; otherwise, the PHP and JavaScript examples provide a starting point. Review compatibility, dependencies, and maintenance before production use. The PHP sample includes a fixed, dated copy of an external cryptography library that should be reviewed and updated, and it limits login attempts to one per IP address at a time by default.</p>
 
-<p>This means a few things:</p>
-<ol>
-<li>Users are proving they are “me” without any personally identifiable information</li>
-<li>The weakest point of authentication, Usernames + Passwords, are removed</li>
-<li>Sharing of credentials becomes far more difficult for end-users</li>
-<li>Users no longer need to remember multiple sets of credentials where they use the service with more than one account (eg a home + work email login). By cryptographically proving they are who they say they are, users could associate multiple accounts with their identity.</li>
-</ol>
+                                    <p>Your application must create sign-in requests, verify responses, and link the Digi-ID address to the correct account. You also need to design enrollment, recovery, and session handling.</p>
 
-                                    <h4 class="subtitle is-5 dark-text">How will I get in contact with users if there’s no username / password?</h4>
-                                    
-                                    <p>Once your users are logged in, you are still welcome to ask them for an email address etc as you would currently. Same goes for a name etc, especially if you’ll be shipping them a product or wanting to address your users in an email.</p>
+                                    <p>Account recovery depends on the user’s wallet recovery phrase. If it is lost, the identifier cannot be recovered.</p>
 
-                                      <h4 class="subtitle is-5 dark-text">What is a preferred time for the nonce timeout?</h4>
-                                    
-                                    <p>Depending on the application this may need to be shortened or lengthened. For most websites, a 90-second expiration is likely sufficient, in order to minimize time for replay attempts.</p>
+                                    <h4 class="subtitle is-5 dark-text">Can Digi-ID replace passwords?</h4>
 
-                                    <p>Digi-ID is pseudo-anonymous in so much that the only identifiable information is what they give you after the authentication request.</p>
+                                    <p>Yes. Digi-ID can be used as the sign-in method or as an additional step after a password. Offering two sign-in choices does not automatically add a second security check.</p>
 
-                                     
-                            
-                                    
+                                    <p>If passwords are disabled for an account, users cannot choose weak or reused passwords, and your service has no password or password hash to store. Other account data and active sessions still require protection.</p>
+
+                                    <h3 class="title is-4 dark-text">Security, Privacy &amp; Setup</h3>
+
+                                    <h4 class="subtitle is-5 dark-text">Can a sign-in response be reused?</h4>
+
+                                    <p>Replay protection depends on your server. Use a fresh, unpredictable nonce (a value for one sign-in request), link it to the pending session, set an expiration, and reject it after use. Verify the signature and expected callback URL before granting access. ~90 seconds is a reasonable starting point for website sign-in; shorten or lengthen it to suit your application.</p>
+
+                                    <h4 class="subtitle is-5 dark-text">Can a Digi-ID QR code be relayed?</h4>
+
+                                    <p>Yes. An attacker could present a real Digi-ID QR code from your site to another user and capture the session if they approve it.</p>
+
+                                    <p>Callback validation does not stop this because the request is genuinely for your site. Require a fresh approval for sensitive actions, and tell users to approve only codes on pages they opened themselves. Short nonce lifetimes help with stale or forwarded codes, but not live relay attacks.</p>
+
+                                    <h4 class="subtitle is-5 dark-text">Is signing in on a shared computer safe?</h4>
+
+                                    <p>Digi-ID avoids typing a website password on that computer. It does not make the computer safe; an attacker could still capture the active session or data shown in the browser. Users should sign out when finished.</p>
+
+                                    <h4 class="subtitle is-5 dark-text">Can users share access or use multiple accounts?</h4>
+
+                                    <p>Yes. Users can share a device or restore the same keys elsewhere. Your application may also allow one Digi-ID address to access multiple accounts, but it must manage account linking and selection.</p>
+
+                                    <h4 class="subtitle is-5 dark-text">What is the Digi-ID address derived from?</h4>
+
+                                    <p>The address depends on the callback URI, so changing the domain, path, or host can produce a different address for the same user. Choose a stable callback URL before enrollment and plan for re-enrollment if it changes.</p>
+
+                                    <h4 class="subtitle is-5 dark-text">How do I collect contact details?</h4>
+
+                                    <p>Digi-ID does not provide email, name, or delivery details. Collect them separately when needed. Its login identifier is pseudonymous, not anonymous, because your service can associate it with an account, activity, and user-provided information.</p>
+
+                                    <h4 class="subtitle is-5 dark-text">Do I need extra servers or a blockchain connection?</h4>
+
+                                    <p>Digi-ID does not require a DigiByte node or external identity provider. Signature verification can run on your server, but the app must reach your callback endpoint. Use HTTPS in production; plain HTTP is for development only with <code>&amp;u=1</code> appended.</p>
+
+                                    <h3 class="title is-4 dark-text">Questions? Contact us.</h3>
+
+                                    <p><strong>Development support:</strong> Developer channels exist on Telegram, Discord, and Gitter. GitHub Discussions on the DigiByte Core repository is another route for development questions: <a href="https://app.gitter.im/#/room/#DigiByte-Core_community:gitter.im" target="_blank" rel="noopener">https://app.gitter.im/#/room/#DigiByte-Core_community:gitter.im</a></p>
+
+                                    <p><strong>Updates / new releases:</strong> We recommend subscribing to the GitHub repository to keep informed about all updates, releases, and any information pertaining to DigiByte development.</p>
+
+                                    <p>Watch the Digi-ID reference repositories for changes:</p>
+                                    <ul>
+                                        <li><a href="https://github.com/DigiByte-Core/digiid-php" target="_blank" rel="noopener">https://github.com/DigiByte-Core/digiid-php</a></li>
+                                        <li><a href="https://github.com/DigiByte-Core/digiid-js" target="_blank" rel="noopener">https://github.com/DigiByte-Core/digiid-js</a></li>
+                                    </ul>
+
+                                    <p>Both are stable but dormant, so also track your own dependency chain. For DigiByte Core node releases, which are separate from Digi-ID, see: <a href="https://github.com/DigiByte-Core/digibyte/releases" target="_blank" rel="noopener">https://github.com/DigiByte-Core/digibyte/releases</a></p>
+
+                                    <p><strong>General questions:</strong> If you have any questions about this documentation or wish to communicate with DigiByte community support, reach out to <a href="https://x.com/DigiAwareness_" target="_blank" rel="noopener">@DigiAwareness_</a> with requests.</p>
+
+                                    <p><strong>Implementation resources and references:</strong></p>
+                                    <ul>
+                                        <li><a href="integration.html">Digi-ID integration guide</a></li>
+                                        <li><a href="https://github.com/DigiByte-Core/digiid-js" target="_blank" rel="noopener">Digi-ID JavaScript library</a></li>
+                                        <li><a href="https://github.com/DigiByte-Core/digiid-php" target="_blank" rel="noopener">Digi-ID PHP implementation</a></li>
+                                        <li><a href="https://github.com/DigiByte-Core/digiid-php/blob/master/callback.php" target="_blank" rel="noopener">PHP callback validation example</a></li>
+                                        <li><a href="https://pages.nist.gov/800-63-4/sp800-63b.html" target="_blank" rel="noopener">NIST authentication guidance</a></li>
+                                        <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP session management guidance</a></li>
+                                        <li><a href="faq.html">Digi-ID FAQ — device support</a></li>
+                                    </ul>
                                 </div>
                                 <!-- /Article content -->
                                 
