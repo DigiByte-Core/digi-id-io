@@ -100,7 +100,7 @@ function highlightPlugin(highlighter) {
       } else {
         code = collectText(node.content).replace(/^\n/, '');
       }
-      const html = highlighter.codeToHtml(code.trimEnd(), { lang, theme: 'github-dark-default' });
+      const html = highlighter.codeToHtml(code.trimEnd(), { lang, themes: { light: 'github-light-default', dark: 'github-dark-default' } });
       const label = node.attrs['data-label'];
       node.tag = 'div';
       node.attrs = { class: 'code-block', 'data-code-block': '' };
@@ -258,7 +258,7 @@ export async function build({ clean = true, minify = true } = {}) {
   const started = Date.now();
   if (clean) await rm(OUT, { recursive: true, force: true });
   await mkdir(OUT, { recursive: true });
-  const highlighter = await createHighlighter({ themes: ['github-dark-default'], langs: SHIKI_LANGS });
+  const highlighter = await createHighlighter({ themes: ['github-light-default', 'github-dark-default'], langs: SHIKI_LANGS });
   const data = await loadData();
   const usedIcons = new Set();
   const count = await buildPages({ highlighter, data, usedIcons });
