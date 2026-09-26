@@ -1,0 +1,72 @@
+---
+{
+  "title": "Ecosystem – Wallets, libraries and apps using Digi-ID",
+  "description": "Libraries, plugins, wallets and apps that support Digi-ID passwordless login, and how to add your own project to the list."
+}
+---
+<section class="border-b border-slate-200 dark:border-navy-700" aria-labelledby="eco-title">
+  <div class="container-x py-16 sm:py-20">
+    <p class="eyebrow">Ecosystem</p>
+    <h1 id="eco-title" class="max-w-3xl text-4xl sm:text-5xl">Built with Digi-ID.</h1>
+    <p class="section-lead">Open-source building blocks and the projects that ship them. Every entry links to proof of Digi-ID support, and the list lives in this site's repository.</p>
+    <a href="#submit" class="btn btn-primary mt-8">Submit your project <icon name="arrow-right" class="size-4"></icon></a>
+  </div>
+</section>
+
+<each loop="cat, index in site.ecosystemCategories">
+<section id="{{ cat.id }}s" class="section {{ index % 2 ? 'section-alt' : '' }}" aria-labelledby="eco-{{ cat.id }}">
+  <div class="container-x">
+    <h2 id="eco-{{ cat.id }}" class="section-title">{{ cat.title }}</h2>
+    <if condition="ecosystem.some((e) => e.category === cat.id)">
+    <ul class="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <each loop="p in ecosystem.filter((e) => e.category === cat.id)">
+      <li>
+        <article class="card flex h-full flex-col">
+          <div class="flex items-start justify-between gap-3">
+            <img src="/{{ p.logo }}" alt="" class="h-10 w-auto max-w-[6rem] rounded bg-white p-1" loading="lazy">
+            <if condition="p.status === 'unmaintained'"><span class="badge badge-warn">Unmaintained</span></if>
+            <else><span class="badge badge-ok">Active</span></else>
+          </div>
+          <h3 class="mt-4 text-lg">{{ p.name }}</h3>
+          <p class="mt-2 text-sm">{{ p.description }}</p>
+          <div class="mt-auto flex flex-wrap gap-4 pt-5 text-sm font-medium">
+            <a href="{{ p.url }}" rel="noopener" target="_blank">Visit<span class="sr-only"> {{ p.name }}</span></a>
+            <a href="{{ p.proofUrl }}" rel="noopener" target="_blank">Proof of support<span class="sr-only"> for {{ p.name }}</span></a>
+          </div>
+        </article>
+      </li>
+      </each>
+    </ul>
+    </if>
+    <else>
+    <div class="card mt-8 border-dashed">
+      <p class="text-sm">{{ cat.empty }} <a href="#submit">Submit a project</a>.</p>
+    </div>
+    </else>
+  </div>
+</section>
+</each>
+
+<section id="submit" class="section section-alt" aria-labelledby="submit-title">
+  <div class="container-x grid gap-10 lg:grid-cols-2">
+    <div>
+      <p class="eyebrow">Get listed</p>
+      <h2 id="submit-title" class="section-title">Submit your project.</h2>
+      <p class="section-lead">Listings are free and reviewed in the open on GitHub.</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="{{ site.repo }}/issues/new?template=ecosystem-submission.yml" rel="noopener" target="_blank" class="btn btn-primary"><icon name="github" class="size-4"></icon> Open a submission issue</a>
+        <a href="{{ site.repo }}/edit/main/src/data/ecosystem.json" rel="noopener" target="_blank" class="btn btn-secondary">Or send a pull request</a>
+      </div>
+    </div>
+    <div class="card">
+      <h3 class="text-lg">What we need</h3>
+      <ul class="mt-4 list-disc space-y-2 pl-5 text-sm">
+        <li>Name, category (wallet, library, plugin or app) and a description up to 160 characters</li>
+        <li>An HTTPS project URL</li>
+        <li>An SVG or PNG logo, max 50&nbsp;KB</li>
+        <li>A <strong>proof link</strong> showing Digi-ID support today: docs, source or a page where sign-in can be tried</li>
+      </ul>
+      <p class="mt-4 text-sm text-slate-600 dark:text-slate-400">Pull requests are checked automatically against the <a href="{{ site.repo }}/blob/main/src/data/ecosystem.schema.json" rel="noopener" target="_blank">ecosystem schema</a>.</p>
+    </div>
+  </div>
+</section>

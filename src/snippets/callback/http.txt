@@ -1,0 +1,9 @@
+POST /callback HTTP/1.1
+Host: digiid.digibyteprojects.com
+Content-Type: application/json
+
+{
+  "address": "DJDAkjie6nrW6RpFZSTpNUXsZ9JE2x6p1o",
+  "uri": "digiid://digiid.digibyteprojects.com/callback?x=c6140375e5bae71e",
+  "signature": "H3tlK3RciMR60PuE0jE6JuClqgh+E8MmMz+n+4+P7FAIVuUccs+npnIa6Gz8XAJeOilTWpLNbomXtVDe4gR0CNk="
+}

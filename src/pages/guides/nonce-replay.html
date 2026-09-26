@@ -1,0 +1,79 @@
+---
+{
+  "title": "Guide: Nonces, timeouts and replay protection – Digi-ID",
+  "description": "How to generate, bind, expire and consume Digi-ID nonces so a signed challenge can never be replayed, with SQL schema and handler examples."
+}
+---
+<article class="section" aria-labelledby="guide-title">
+  <div class="container-x">
+    <nav aria-label="Breadcrumb" class="text-sm">
+      <ol class="flex flex-wrap gap-2 text-slate-600 dark:text-slate-400">
+        <li><a href="/developers.html">Developers</a> <span aria-hidden="true">/</span></li>
+        <li><a href="/developers.html#guides">Guides</a> <span aria-hidden="true">/</span></li>
+        <li aria-current="page">Nonces &amp; replay protection</li>
+      </ol>
+    </nav>
+    <div class="prose-doc mt-6">
+      <p class="eyebrow">Guide &middot; 10 minutes &middot; Any language</p>
+      <h1 id="guide-title" class="text-4xl">Nonces, timeouts and replay protection</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-400">A Digi-ID signature proves that a wallet signed <em>a specific URI</em>. The nonce inside that URI is what makes the proof fresh and single-use. Get the nonce right and replay attacks are impossible.</p>
+
+      <h2>The four rules</h2>
+      <table>
+        <thead><tr><th scope="col">Rule</th><th scope="col">Why</th><th scope="col">How</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Unpredictable</strong></td><td>An attacker must not be able to guess a future challenge.</td><td>≥128 bits from a CSPRNG, hex or base64url.</td></tr>
+          <tr><td><strong>Bound</strong></td><td>The callback comes from a phone; you need to know which browser to sign in.</td><td>Store the nonce with the browser's session ID.</td></tr>
+          <tr><td><strong>Short-lived</strong></td><td>Limits the window for a captured QR code to be used.</td><td>Expire after ~90&nbsp;s (shorter for kiosks and doors).</td></tr>
+          <tr><td><strong>Single-use</strong></td><td>A signed callback replayed later must fail.</td><td>Atomically mark the nonce as used on first valid callback.</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Schema</h2>
+      <pre data-lang="text" data-label="schema.sql">CREATE TABLE digiid_nonces (
+  nonce       CHAR(32)     PRIMARY KEY,
+  session_id  VARCHAR(128) NOT NULL,
+  expires_at  TIMESTAMP    NOT NULL,
+  address     VARCHAR(40)  NULL,          -- set once, on the first valid callback
+  created_at  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX digiid_nonces_expires ON digiid_nonces (expires_at);</pre>
+
+      <h2>Consume atomically</h2>
+      <p>Two identical callbacks can arrive at the same time. Checking and then updating in two steps lets both succeed. Use a single conditional update and check the affected row count:</p>
+      <pre data-lang="text" data-label="consume.sql">UPDATE digiid_nonces
+   SET address = :address
+ WHERE nonce = :nonce
+   AND address IS NULL
+   AND expires_at &gt; CURRENT_TIMESTAMP;
+-- 1 row  -> first valid use: sign the session in
+-- 0 rows -> unknown, expired or already used: reject</pre>
+      <p>Only run this <em>after</em> the signature and URI have been verified.</p>
+
+      <h2>Order of checks in the callback</h2>
+      <ol>
+        <li>Reject missing or non-string <code>address</code>, <code>uri</code>, <code>signature</code> (400).</li>
+        <li>Parse the URI; host and path must equal your callback, and <code>u=1</code> must be absent in production (400).</li>
+        <li>Verify the signature (401).</li>
+        <li>Atomically consume the nonce (404/409/410 on failure).</li>
+        <li>Respond 200. The waiting browser picks up the result on its next poll.</li>
+      </ol>
+
+      <h2>Choosing the timeout</h2>
+      <ul>
+        <li><strong>Websites:</strong> 90&nbsp;s is enough for users to unlock their phone and approve. Regenerate the QR code automatically when it expires.</li>
+        <li><strong>Doors and kiosks:</strong> 20&ndash;30&nbsp;s and a fresh challenge after every scan, so a photographed code is useless.</li>
+        <li><strong>Clock skew:</strong> compare against the server clock only; never trust timestamps from the client.</li>
+      </ul>
+
+      <h2>Common mistakes</h2>
+      <ul>
+        <li>Reusing one nonce per session instead of per challenge.</li>
+        <li>Returning the verified address to anyone who knows the nonce &mdash; only the bound session may read it.</li>
+        <li>Deleting nonces before the browser has polled, leaving users stuck. Mark used, then clean up later.</li>
+        <li>Accepting <code>u=1</code> or plain HTTP callbacks in production.</li>
+      </ul>
+      <p>Try it: the <a href="/demo.html">sandbox demo</a> has &ldquo;Replay&rdquo; and &ldquo;Tamper&rdquo; buttons that show these checks rejecting bad requests.</p>
+    </div>
+  </div>
+</article>

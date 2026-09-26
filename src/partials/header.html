@@ -1,0 +1,32 @@
+<header class="sticky top-0 z-40 border-b border-slate-200/80 bg-white/85 backdrop-blur dark:border-navy-700/80 dark:bg-navy-900/85">
+  <div class="container-x flex h-16 items-center justify-between gap-4">
+    <a href="/" class="flex items-center gap-2 no-underline hover:no-underline" aria-label="Digi-ID home">
+      <img src="/assets/images/logo-light.svg" alt="" width="107" height="60" class="h-9 w-auto dark:hidden">
+      <img src="/assets/images/logo-dark.svg" alt="" width="107" height="60" class="hidden h-9 w-auto dark:block">
+    </a>
+
+    <nav aria-label="Main" class="flex items-center gap-2">
+      <button type="button" class="inline-flex size-10 items-center justify-center rounded-lg text-navy lg:hidden dark:text-white" aria-expanded="false" aria-controls="site-menu" data-nav-toggle>
+        <span class="sr-only">Menu</span>
+        <icon name="menu" class="size-6" data-nav-icon-open></icon>
+        <icon name="x" class="hidden size-6" data-nav-icon-close></icon>
+      </button>
+      <ul id="site-menu" class="absolute inset-x-0 top-16 hidden flex-col gap-1 border-b border-slate-200 bg-white px-5 py-4 text-base data-[open]:flex lg:static lg:flex lg:flex-row lg:items-center lg:gap-0.5 lg:border-0 lg:bg-transparent lg:p-0 lg:text-sm dark:border-navy-700 dark:bg-navy-900 lg:dark:bg-transparent">
+        <li><a data-nav href="/developers.html" class="block rounded-lg px-3 py-2 font-medium text-slate-700 no-underline hover:bg-slate-100 hover:text-navy hover:no-underline aria-[current=page]:text-primary-strong dark:text-slate-300 dark:hover:bg-navy-800 dark:hover:text-white dark:aria-[current=page]:text-accent">Developers</a></li>
+        <li><a data-nav href="/demo.html" class="block rounded-lg px-3 py-2 font-medium text-slate-700 no-underline hover:bg-slate-100 hover:text-navy hover:no-underline aria-[current=page]:text-primary-strong dark:text-slate-300 dark:hover:bg-navy-800 dark:hover:text-white dark:aria-[current=page]:text-accent">Demo</a></li>
+        <li><a data-nav href="/use-cases.html" class="block rounded-lg px-3 py-2 font-medium text-slate-700 no-underline hover:bg-slate-100 hover:text-navy hover:no-underline aria-[current=page]:text-primary-strong dark:text-slate-300 dark:hover:bg-navy-800 dark:hover:text-white dark:aria-[current=page]:text-accent">Use cases</a></li>
+        <li><a data-nav href="/ecosystem.html" class="block rounded-lg px-3 py-2 font-medium text-slate-700 no-underline hover:bg-slate-100 hover:text-navy hover:no-underline aria-[current=page]:text-primary-strong dark:text-slate-300 dark:hover:bg-navy-800 dark:hover:text-white dark:aria-[current=page]:text-accent">Ecosystem</a></li>
+        <li><a data-nav href="/documentation.html" class="block rounded-lg px-3 py-2 font-medium text-slate-700 no-underline hover:bg-slate-100 hover:text-navy hover:no-underline aria-[current=page]:text-primary-strong dark:text-slate-300 dark:hover:bg-navy-800 dark:hover:text-white dark:aria-[current=page]:text-accent">Docs</a></li>
+        <li><a data-nav href="/contact.html" class="block rounded-lg px-3 py-2 font-medium text-slate-700 no-underline hover:bg-slate-100 hover:text-navy hover:no-underline aria-[current=page]:text-primary-strong dark:text-slate-300 dark:hover:bg-navy-800 dark:hover:text-white dark:aria-[current=page]:text-accent">Community</a></li>
+      </ul>
+      <button type="button" class="inline-flex size-10 items-center justify-center rounded-lg text-slate-600 hover:text-navy dark:text-slate-300 dark:hover:text-white" aria-pressed="false" data-theme-toggle>
+        <span class="sr-only">Dark theme</span>
+        <icon name="moon" class="dark:hidden"></icon>
+        <icon name="sun" class="hidden dark:inline-block"></icon>
+      </button>
+      <a href="https://github.com/DigiByte-Core?q=digiid" class="hidden items-center gap-2 rounded-full bg-navy px-4 py-2 text-sm font-medium text-white no-underline hover:bg-navy-700 hover:no-underline sm:inline-flex dark:bg-white dark:text-navy dark:hover:bg-slate-200" rel="noopener" target="_blank">
+        <icon name="github" class="size-4"></icon> GitHub
+      </a>
+    </nav>
+  </div>
+</header>

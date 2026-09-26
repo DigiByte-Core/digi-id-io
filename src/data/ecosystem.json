@@ -1,0 +1,62 @@
+[
+  {
+    "id": "digiid-core",
+    "name": "digiid-core",
+    "category": "library",
+    "description": "TypeScript URI, key-derivation and signature verification used by this site's demo and playground.",
+    "url": "https://github.com/DennisPitallano/digi-id-io/tree/main/packages/digiid-core",
+    "logo": "assets/images/ecosystem/digiid-core.svg",
+    "proofUrl": "https://github.com/DennisPitallano/digi-id-io/tree/main/packages/digiid-core",
+    "platforms": ["browser", "node"],
+    "status": "active",
+    "addedAt": "2026-09-27"
+  },
+  {
+    "id": "digiid-js",
+    "name": "digiid-js",
+    "category": "library",
+    "description": "Node.js library to build Digi-ID challenges and verify wallet signatures.",
+    "url": "https://github.com/DigiByte-Core/digiid-js",
+    "logo": "assets/images/ecosystem/digiid-js.svg",
+    "proofUrl": "https://github.com/DigiByte-Core/digiid-js",
+    "platforms": ["node"],
+    "status": "active",
+    "addedAt": "2026-09-27"
+  },
+  {
+    "id": "digiid-php",
+    "name": "digiid-php",
+    "category": "library",
+    "description": "Pure PHP implementation with a complete login example. Requires the GMP extension.",
+    "url": "https://github.com/DigiByte-Core/digiid-php",
+    "logo": "assets/images/ecosystem/digiid-php.svg",
+    "proofUrl": "https://github.com/DigiByte-Core/digiid-php",
+    "platforms": ["php"],
+    "status": "active",
+    "addedAt": "2026-09-27"
+  },
+  {
+    "id": "digiid-wordpress",
+    "name": "Digi-ID for WordPress",
+    "category": "plugin",
+    "description": "Adds Digi-ID login to WordPress. Last tested with WordPress 4.1.",
+    "url": "https://github.com/DigiByte-Core/digiid-wp-authentication",
+    "logo": "assets/images/ecosystem/digiid-wordpress.svg",
+    "proofUrl": "https://github.com/DigiByte-Core/digiid-wp-authentication",
+    "platforms": ["php", "wordpress"],
+    "status": "unmaintained",
+    "addedAt": "2026-09-27"
+  },
+  {
+    "id": "digiid-phpbb",
+    "name": "Digi-ID for phpBB",
+    "category": "plugin",
+    "description": "Passwordless forum login; members link a wallet from the user control panel.",
+    "url": "https://github.com/DigiByte-Core/digiid-phpbb-extension",
+    "logo": "assets/images/ecosystem/digiid-phpbb.svg",
+    "proofUrl": "https://github.com/DigiByte-Core/digiid-phpbb-extension",
+    "platforms": ["php", "phpbb"],
+    "status": "unmaintained",
+    "addedAt": "2026-09-27"
+  }
+]

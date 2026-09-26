@@ -1,0 +1,74 @@
+---
+{
+  "title": "Use cases – Digi-ID in real-world apps",
+  "description": "How Digi-ID replaces passwords in real products: website login, checkout without accounts, gaming, doors and IoT, identity checks, internal tools, forums and event check-in."
+}
+---
+<section class="border-b border-slate-200 dark:border-navy-700" aria-labelledby="uc-title">
+  <div class="container-x py-16 sm:py-20">
+    <p class="eyebrow">Use cases</p>
+    <h1 id="uc-title" class="max-w-3xl text-4xl sm:text-5xl">One protocol for every door &mdash; digital or physical.</h1>
+    <p class="section-lead">Digi-ID works anywhere you can show a QR code and receive an HTTPS callback. Here's how teams use it, and how to build each one.</p>
+    <nav aria-label="Use cases" class="mt-8">
+      <ul class="flex flex-wrap gap-2 text-sm">
+        <each loop="uc in useCases">
+        <li><a href="#{{ uc.id }}" class="badge badge-muted !px-3 !py-1.5 no-underline">{{ uc.title }}</a></li>
+        </each>
+      </ul>
+    </nav>
+  </div>
+</section>
+
+<each loop="uc, index in useCases">
+<section id="{{ uc.id }}" class="section {{ index % 2 ? 'section-alt' : '' }}" aria-labelledby="{{ uc.id }}-title">
+  <div class="container-x grid items-start gap-12 lg:grid-cols-[1fr_1.1fr]">
+    <div>
+      <div class="illustration-surface inline-block !p-4"><img src="{{ uc.illustration }}" alt="" class="h-40 w-auto" loading="lazy"></div>
+      <h2 id="{{ uc.id }}-title" class="section-title mt-8">{{ uc.title }}</h2>
+      <p class="mt-2 text-lg font-medium text-primary-strong dark:text-accent">{{ uc.tagline }}</p>
+      <dl class="mt-6 space-y-5">
+        <div><dt class="font-mono text-xs uppercase tracking-wider text-slate-600 dark:text-slate-400">Problem</dt><dd class="mt-1">{{ uc.problem }}</dd></div>
+        <div><dt class="font-mono text-xs uppercase tracking-wider text-slate-600 dark:text-slate-400">With Digi-ID</dt><dd class="mt-1">{{ uc.solution }}</dd></div>
+      </dl>
+    </div>
+    <div class="space-y-6">
+      <div class="card">
+        <h3 class="text-lg">Benefits</h3>
+        <ul class="mt-4 space-y-2 text-sm">
+          <each loop="benefit in uc.benefits">
+          <li class="flex gap-3"><icon name="check" class="mt-0.5 text-accent-strong dark:text-accent"></icon> {{ benefit }}</li>
+          </each>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 class="text-lg">Flow</h3>
+        <ol class="mt-4 grid gap-3 sm:grid-cols-2">
+          <each loop="step, i in uc.flow">
+          <li class="flex gap-3 rounded-xl bg-slate-50 p-3 text-sm dark:bg-navy-900">
+            <span class="inline-flex size-6 shrink-0 items-center justify-center rounded-full bg-primary-strong font-mono text-xs text-white dark:bg-accent dark:text-navy">{{ i + 1 }}</span>
+            <span>{{ step }}</span>
+          </li>
+          </each>
+        </ol>
+      </div>
+      <div class="flex flex-wrap items-center gap-3">
+        <if condition="guides.find((g) => g.id === uc.guideId).status === 'complete'">
+        <a href="/guides/{{ uc.guideId }}.html" class="btn btn-primary">Build this: {{ guides.find((g) => g.id === uc.guideId).title }} <icon name="arrow-right" class="size-4"></icon></a>
+        </if>
+        <else>
+        <a href="{{ guides.find((g) => g.id === uc.guideId).readmeUrl }}" rel="noopener" target="_blank" class="btn btn-secondary">Guide coming soon &middot; start from the library README <icon name="external-link" class="size-4"></icon></a>
+        </else>
+        <if condition="uc.projectIds.length">
+        <p class="text-sm text-slate-600 dark:text-slate-400">Works with:
+          <each loop="pid, j in uc.projectIds">
+          <a href="{{ ecosystem.find((p) => p.id === pid).url }}" rel="noopener" target="_blank">{{ ecosystem.find((p) => p.id === pid).name }}</a>{{ j + 1 === uc.projectIds.length ? '' : ',' }}
+          </each>
+        </p>
+        </if>
+      </div>
+    </div>
+  </div>
+</section>
+</each>
+
+<include src="cta-community.html"></include>

@@ -1,0 +1,262 @@
+@import "tailwindcss" source(none);
+
+@source "../pages";
+@source "../partials";
+@source "../js";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/roboto-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/roboto-500.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/roboto-700.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Nexa";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("../fonts/nexa-light.woff") format("woff");
+}
+@font-face {
+  font-family: "Nexa";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/nexa-bold.woff") format("woff");
+}
+
+/* Brand tokens mirror assets/scss/themes/_lemonade.scss. */
+@theme {
+  --color-primary: #039be5;
+  --color-secondary: #0084c4;
+  --color-accent: #00d1b2;
+  --color-navy: #002451;
+
+  /* AA-safe variants for text and filled buttons on light surfaces. */
+  --color-primary-strong: #0369a1;
+  --color-primary-deep: #075985;
+  --color-accent-strong: #007a68;
+
+  --color-navy-950: #000d20;
+  --color-navy-900: #001633;
+  --color-navy-800: #001d42;
+  --color-navy-700: #0a2f5c;
+  --color-navy-600: #16406f;
+
+  --font-sans: "Roboto", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Nexa", "Roboto", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", "SFMono-Regular", Menlo, Consolas, monospace;
+
+  --shadow-primary: 0 14px 26px -12px rgb(3 155 229 / 0.42), 0 4px 23px 0 rgb(0 0 0 / 0.12), 0 8px 10px -5px rgb(3 155 229 / 0.2);
+  --shadow-accent: 0 14px 26px -12px rgb(0 209 178 / 0.42), 0 4px 23px 0 rgb(0 0 0 / 0.12), 0 8px 10px -5px rgb(0 209 178 / 0.2);
+  --shadow-card: 0 1px 2px rgb(0 36 81 / 0.06), 0 8px 24px -12px rgb(0 36 81 / 0.18);
+
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth bg-white text-slate-700 antialiased;
+    scroll-padding-top: 5rem;
+  }
+  html[data-theme="dark"] {
+    @apply bg-navy-900 text-slate-300;
+    color-scheme: dark;
+  }
+  body {
+    @apply font-sans leading-relaxed;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display font-bold tracking-tight text-navy dark:text-white;
+  }
+  a {
+    @apply text-primary-strong underline decoration-1 underline-offset-4 hover:decoration-2 dark:text-primary;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary;
+  }
+  code:not(pre code) {
+    @apply rounded bg-slate-100 px-1.5 py-0.5 font-mono text-[0.875em] text-navy dark:bg-navy-700 dark:text-slate-100;
+    overflow-wrap: anywhere;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
+  }
+  .section {
+    @apply py-20 sm:py-28;
+  }
+  .section-alt {
+    @apply bg-slate-50 dark:bg-navy-950;
+  }
+  .eyebrow {
+    @apply mb-3 inline-flex items-center gap-2 font-mono text-xs font-medium uppercase tracking-[0.18em] text-primary-strong dark:text-accent;
+  }
+  .section-title {
+    @apply text-3xl sm:text-4xl;
+  }
+  .section-lead {
+    @apply mt-4 max-w-2xl text-lg text-slate-600 dark:text-slate-400;
+  }
+  .text-gradient {
+    @apply bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-base font-medium no-underline transition hover:no-underline focus-visible:outline-offset-4;
+  }
+  /* Compose as class="btn btn-primary"; Tailwind v4 cannot @apply component classes. */
+  .btn-primary {
+    @apply bg-primary-strong text-white shadow-primary hover:bg-primary-deep dark:bg-primary dark:text-navy-950 dark:hover:bg-accent;
+  }
+  .btn-secondary {
+    @apply border border-slate-300 bg-white text-navy hover:border-primary hover:text-primary-strong dark:border-navy-600 dark:bg-transparent dark:text-white dark:hover:border-accent dark:hover:text-accent;
+  }
+  .btn-light {
+    @apply bg-white text-navy hover:bg-slate-100;
+  }
+  .btn:disabled {
+    @apply pointer-events-none opacity-50 shadow-none;
+  }
+
+  .card {
+    @apply rounded-2xl border border-slate-200 bg-white p-6 shadow-card dark:border-navy-700 dark:bg-navy-800;
+  }
+  .card-link {
+    @apply block text-inherit no-underline transition hover:-translate-y-0.5 hover:border-primary hover:no-underline dark:hover:border-accent;
+  }
+  .badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+  .badge-ok {
+    @apply bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-200;
+  }
+  .badge-warn {
+    @apply bg-amber-100 text-amber-900 dark:bg-amber-900/40 dark:text-amber-200;
+  }
+  .badge-muted {
+    @apply bg-slate-100 text-slate-700 dark:bg-navy-700 dark:text-slate-300;
+  }
+
+  .icon {
+    @apply inline-block size-5 shrink-0;
+  }
+  .icon-tile {
+    @apply inline-flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary-strong dark:bg-accent/10 dark:text-accent;
+  }
+
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-navy focus:shadow-card;
+  }
+
+  .code-block {
+    @apply relative overflow-hidden rounded-xl border border-navy-700 bg-[#0d1117] text-sm;
+  }
+  .code-block pre {
+    @apply overflow-x-auto p-5 font-mono leading-6;
+  }
+  .code-block__label {
+    @apply border-b border-navy-700 px-5 py-2 font-mono text-xs text-slate-400;
+  }
+  .code-block__copy {
+    @apply absolute top-2 right-2 rounded-md border border-navy-600 bg-navy-800 px-2.5 py-1 font-mono text-xs text-slate-200 transition hover:border-accent hover:text-accent;
+  }
+
+  .tabs__list {
+    @apply flex flex-wrap gap-1 border-b border-slate-200 dark:border-navy-700;
+  }
+  .tabs__tab {
+    @apply -mb-px cursor-pointer border-b-2 border-transparent px-4 py-2.5 text-sm font-medium text-slate-600 transition hover:text-navy dark:text-slate-400 dark:hover:text-white;
+  }
+  .tabs__tab[aria-selected="true"] {
+    @apply border-primary text-primary-strong dark:border-accent dark:text-accent;
+  }
+  .tabs__panel {
+    @apply pt-4;
+  }
+  .terminal .tabs__list {
+    @apply border-navy-700 bg-navy-900 px-3 pt-2;
+  }
+  .terminal .tabs__tab {
+    @apply text-slate-400 hover:text-white;
+  }
+  .terminal .tabs__tab[aria-selected="true"] {
+    @apply border-accent text-accent;
+  }
+  .terminal .tabs__panel {
+    @apply p-0;
+  }
+  .terminal .code-block {
+    @apply rounded-none border-0;
+  }
+
+  .prose-doc {
+    @apply min-w-0 max-w-3xl text-base leading-7;
+  }
+  .prose-doc h2 {
+    @apply mt-14 mb-4 text-2xl;
+  }
+  .prose-doc h3 {
+    @apply mt-10 mb-3 text-xl;
+  }
+  .prose-doc p,
+  .prose-doc ul,
+  .prose-doc ol {
+    @apply my-4;
+  }
+  .prose-doc ul {
+    @apply list-disc pl-6;
+  }
+  .prose-doc ol {
+    @apply list-decimal pl-6;
+  }
+  .prose-doc li {
+    @apply my-1.5;
+  }
+  .prose-doc .code-block {
+    @apply my-6;
+  }
+  .prose-doc table {
+    @apply my-6 w-full border-collapse text-sm;
+  }
+  .prose-doc th,
+  .prose-doc td {
+    @apply border-b border-slate-200 px-3 py-2 text-left align-top dark:border-navy-700;
+  }
+
+  .illustration-surface {
+    @apply rounded-3xl bg-white p-6 dark:bg-slate-100;
+  }
+}

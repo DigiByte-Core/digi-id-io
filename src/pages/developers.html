@@ -1,0 +1,374 @@
+---
+{
+  "title": "Developer hub – Digi-ID",
+  "description": "Add passwordless Digi-ID login to your app: 5-minute quickstart, SDKs for Node.js, PHP and WordPress, guides, protocol reference and an in-browser signature playground.",
+  "scripts": ["playground"]
+}
+---
+<section class="relative overflow-hidden border-b border-slate-200 dark:border-navy-700" aria-labelledby="dev-title">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(50rem_24rem_at_90%_0%,rgb(0_209_178/0.14),transparent)]"></div>
+  <div class="container-x py-16 sm:py-20">
+    <p class="eyebrow">Developer hub</p>
+    <h1 id="dev-title" class="max-w-3xl text-4xl sm:text-5xl">Ship passwordless login this afternoon.</h1>
+    <p class="section-lead">Everything you need to integrate Digi-ID: copy-paste code, libraries, the full protocol and tools to test signatures without a wallet.</p>
+    <nav aria-label="On this page" class="mt-8">
+      <ul class="flex flex-wrap gap-2 text-sm">
+        <li><a href="#quickstart" class="badge badge-muted !px-3 !py-1.5 no-underline">Quickstart</a></li>
+        <li><a href="#sdks" class="badge badge-muted !px-3 !py-1.5 no-underline">SDKs &amp; plugins</a></li>
+        <li><a href="#guides" class="badge badge-muted !px-3 !py-1.5 no-underline">Guides</a></li>
+        <li><a href="#examples" class="badge badge-muted !px-3 !py-1.5 no-underline">Examples &amp; demos</a></li>
+        <li><a href="#protocol" class="badge badge-muted !px-3 !py-1.5 no-underline">Protocol reference</a></li>
+        <li><a href="#playground" class="badge badge-muted !px-3 !py-1.5 no-underline">Playground</a></li>
+        <li><a href="#brand" class="badge badge-muted !px-3 !py-1.5 no-underline">Brand &amp; UI kit</a></li>
+        <li><a href="#support" class="badge badge-muted !px-3 !py-1.5 no-underline">Support</a></li>
+      </ul>
+    </nav>
+  </div>
+</section>
+
+<section id="quickstart" class="section" aria-labelledby="qs-title">
+  <div class="container-x">
+    <p class="eyebrow">Quickstart &middot; ~5 minutes</p>
+    <h2 id="qs-title" class="section-title">Three steps to a working login.</h2>
+    <p class="section-lead">Your server issues a challenge, the wallet signs it, your server verifies the signature. Pick a language once &mdash; every example on this site follows.</p>
+
+    <ol class="mt-12 space-y-14">
+      <li class="grid gap-8 lg:grid-cols-[18rem_1fr]">
+        <div>
+          <p class="font-mono text-xs text-primary-strong dark:text-accent">Step 1</p>
+          <h3 class="mt-1 text-xl">Install a library</h3>
+          <p class="mt-2 text-sm">Verification needs no DigiByte node and no network calls.</p>
+        </div>
+        <div class="terminal overflow-hidden rounded-2xl border border-navy-700 bg-[#0d1117]" data-tabs data-tabs-group="lang">
+          <div role="tablist" aria-label="Install" class="tabs__list">
+            <button role="tab" type="button" class="tabs__tab" id="qs1-tab-node" aria-controls="qs1-panel-node" aria-selected="true" data-tab-key="node">Node.js</button>
+            <button role="tab" type="button" class="tabs__tab" id="qs1-tab-php" aria-controls="qs1-panel-php" aria-selected="false" data-tab-key="php">PHP</button>
+            <button role="tab" type="button" class="tabs__tab" id="qs1-tab-js" aria-controls="qs1-panel-js" aria-selected="false" data-tab-key="js">Browser</button>
+          </div>
+          <div role="tabpanel" class="tabs__panel" id="qs1-panel-node" aria-labelledby="qs1-tab-node" tabindex="0"><pre data-lang="bash">npm install digiid express</pre></div>
+          <div role="tabpanel" class="tabs__panel" id="qs1-panel-php" aria-labelledby="qs1-tab-php" tabindex="0"><pre data-lang="bash"># PHP 7.4+ with the GMP extension
+git clone --recursive https://github.com/DigiByte-Core/digiid-php
+php -m | grep -i gmp</pre></div>
+          <div role="tabpanel" class="tabs__panel" id="qs1-panel-js" aria-labelledby="qs1-tab-js" tabindex="0"><pre data-lang="bash">npm install qrcode   # render the challenge as a QR code</pre></div>
+        </div>
+      </li>
+
+      <li class="grid gap-8 lg:grid-cols-[18rem_1fr]">
+        <div>
+          <p class="font-mono text-xs text-primary-strong dark:text-accent">Step 2</p>
+          <h3 class="mt-1 text-xl">Issue a challenge</h3>
+          <p class="mt-2 text-sm">Create a random nonce, remember it for ~90&nbsp;seconds, and show the <code>digiid://</code> URI as a QR code and a link.</p>
+        </div>
+        <div class="terminal overflow-hidden rounded-2xl border border-navy-700 bg-[#0d1117]" data-tabs data-tabs-group="lang">
+          <div role="tablist" aria-label="Issue a challenge" class="tabs__list">
+            <button role="tab" type="button" class="tabs__tab" id="qs2-tab-node" aria-controls="qs2-panel-node" aria-selected="true" data-tab-key="node">Node.js</button>
+            <button role="tab" type="button" class="tabs__tab" id="qs2-tab-php" aria-controls="qs2-panel-php" aria-selected="false" data-tab-key="php">PHP</button>
+            <button role="tab" type="button" class="tabs__tab" id="qs2-tab-js" aria-controls="qs2-panel-js" aria-selected="false" data-tab-key="js">Browser</button>
+          </div>
+          <div role="tabpanel" class="tabs__panel" id="qs2-panel-node" aria-labelledby="qs2-tab-node" tabindex="0"><pre data-lang="js" data-src="generate/node.js"></pre></div>
+          <div role="tabpanel" class="tabs__panel" id="qs2-panel-php" aria-labelledby="qs2-tab-php" tabindex="0"><pre data-lang="php" data-src="generate/php.php"></pre></div>
+          <div role="tabpanel" class="tabs__panel" id="qs2-panel-js" aria-labelledby="qs2-tab-js" tabindex="0"><pre data-lang="js" data-src="generate/js.js"></pre></div>
+        </div>
+      </li>
+
+      <li class="grid gap-8 lg:grid-cols-[18rem_1fr]">
+        <div>
+          <p class="font-mono text-xs text-primary-strong dark:text-accent">Step 3</p>
+          <h3 class="mt-1 text-xl">Verify the callback</h3>
+          <p class="mt-2 text-sm">The wallet POSTs <code>address</code>, <code>uri</code> and <code>signature</code>. Check the URI, the nonce and the signature, then consume the nonce.</p>
+        </div>
+        <div class="terminal overflow-hidden rounded-2xl border border-navy-700 bg-[#0d1117]" data-tabs data-tabs-group="lang">
+          <div role="tablist" aria-label="Verify the callback" class="tabs__list">
+            <button role="tab" type="button" class="tabs__tab" id="qs3-tab-node" aria-controls="qs3-panel-node" aria-selected="true" data-tab-key="node">Node.js</button>
+            <button role="tab" type="button" class="tabs__tab" id="qs3-tab-php" aria-controls="qs3-panel-php" aria-selected="false" data-tab-key="php">PHP</button>
+            <button role="tab" type="button" class="tabs__tab" id="qs3-tab-js" aria-controls="qs3-panel-js" aria-selected="false" data-tab-key="js">Browser</button>
+          </div>
+          <div role="tabpanel" class="tabs__panel" id="qs3-panel-node" aria-labelledby="qs3-tab-node" tabindex="0"><pre data-lang="js" data-src="verify/node.js"></pre></div>
+          <div role="tabpanel" class="tabs__panel" id="qs3-panel-php" aria-labelledby="qs3-tab-php" tabindex="0"><pre data-lang="php" data-src="verify/php.php"></pre></div>
+          <div role="tabpanel" class="tabs__panel" id="qs3-panel-js" aria-labelledby="qs3-tab-js" tabindex="0"><pre data-lang="js" data-src="verify/js.js"></pre></div>
+        </div>
+      </li>
+    </ol>
+
+    <div class="mt-12 flex flex-wrap gap-3">
+      <a href="/guides/web-app-login.html" class="btn btn-primary">Follow the full web-app guide <icon name="arrow-right" class="size-4"></icon></a>
+      <a href="/demo.html" class="btn btn-secondary">See it in the demo</a>
+    </div>
+  </div>
+</section>
+
+<section id="sdks" class="section section-alt" aria-labelledby="sdks-title">
+  <div class="container-x">
+    <p class="eyebrow">SDKs &amp; plugins</p>
+    <h2 id="sdks-title" class="section-title">Libraries for your stack.</h2>
+    <p class="section-lead">Open-source and community maintained. Status labels are honest &mdash; contributions to older plugins are very welcome.</p>
+    <ul class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <each loop="sdk in sdks">
+      <li class="card flex flex-col">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <h3 class="text-lg">{{ sdk.name }}</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400">{{ sdk.language }}</p>
+          </div>
+          <if condition="sdk.status === 'maintained'"><span class="badge badge-ok">Maintained</span></if>
+          <elseif condition="sdk.status === 'community'"><span class="badge badge-muted">Community</span></elseif>
+          <else><span class="badge badge-warn">Unmaintained</span></else>
+        </div>
+        <p class="mt-3 text-sm">{{ sdk.summary }}</p>
+        <code class="mt-4 block break-words !bg-slate-100 !px-3 !py-2 text-xs dark:!bg-navy-900">{{ sdk.install }}</code>
+        <a href="{{ sdk.repo }}" rel="noopener" target="_blank" class="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-medium"><icon name="github" class="size-4"></icon> Source on GitHub</a>
+      </li>
+      </each>
+    </ul>
+  </div>
+</section>
+
+<section id="guides" class="section" aria-labelledby="guides-title">
+  <div class="container-x">
+    <p class="eyebrow">Guides</p>
+    <h2 id="guides-title" class="section-title">Step-by-step tutorials.</h2>
+    <ul class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <each loop="guide in guides">
+      <li>
+        <if condition="guide.status === 'complete'">
+        <a href="/guides/{{ guide.id }}.html" class="card card-link flex h-full flex-col">
+          <span class="badge badge-ok self-start">{{ guide.durationMin }} min</span>
+          <h3 class="mt-4 text-lg">{{ guide.title }}</h3>
+          <p class="mt-2 text-sm">{{ guide.summary }}</p>
+          <span class="mt-auto inline-flex items-center gap-1 pt-4 text-sm font-medium text-primary-strong dark:text-accent">Read guide <icon name="arrow-right" class="size-4"></icon></span>
+        </a>
+        </if>
+        <else>
+        <a href="{{ guide.readmeUrl }}" rel="noopener" target="_blank" class="card card-link flex h-full flex-col border-dashed">
+          <span class="badge badge-muted self-start">Coming soon</span>
+          <h3 class="mt-4 text-lg">{{ guide.title }}</h3>
+          <p class="mt-2 text-sm">{{ guide.summary }}</p>
+          <span class="mt-auto inline-flex items-center gap-1 pt-4 text-sm font-medium text-primary-strong dark:text-accent">Library README <icon name="external-link" class="size-4"></icon></span>
+        </a>
+        </else>
+      </li>
+      </each>
+    </ul>
+  </div>
+</section>
+
+<section id="examples" class="section section-alt" aria-labelledby="examples-title">
+  <div class="container-x">
+    <p class="eyebrow">Examples &amp; demos</p>
+    <h2 id="examples-title" class="section-title">See it working, then fork it.</h2>
+    <ul class="mt-10 grid gap-6 md:grid-cols-3">
+      <li>
+        <a href="/demo.html" class="card card-link flex h-full flex-col">
+          <span class="icon-tile"><icon name="scan-qr-code"></icon></span>
+          <h3 class="mt-4 text-lg">Sandbox demo</h3>
+          <p class="mt-2 text-sm">The full protocol in your browser with a simulated wallet &mdash; challenge, key derivation, signature and verification.</p>
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/DigiByte-Core/digiid-php" rel="noopener" target="_blank" class="card card-link flex h-full flex-col">
+          <span class="icon-tile"><icon name="server"></icon></span>
+          <h3 class="mt-4 text-lg">PHP login example</h3>
+          <p class="mt-2 text-sm">A complete MySQL-backed login flow with polling, callback and session hand-off.</p>
+        </a>
+      </li>
+      <li>
+        <a href="#playground" class="card card-link flex h-full flex-col">
+          <span class="icon-tile"><icon name="flask-conical"></icon></span>
+          <h3 class="mt-4 text-lg">Signature playground</h3>
+          <p class="mt-2 text-sm">Paste a callback from your wallet or server logs and see exactly which check passes or fails.</p>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section id="protocol" class="section" aria-labelledby="protocol-title">
+  <div class="container-x grid gap-12 lg:grid-cols-[14rem_1fr]">
+    <nav aria-label="Protocol reference" class="hidden lg:block">
+      <ul class="sticky top-24 space-y-2 text-sm">
+        <li><a href="#protocol-uri">Challenge URI</a></li>
+        <li><a href="#protocol-callback">Callback</a></li>
+        <li><a href="#protocol-verify">Verification</a></li>
+        <li><a href="#protocol-keys">Key derivation</a></li>
+        <li><a href="#protocol-vector">Test vector</a></li>
+        <li><a href="#protocol-security">Security checklist</a></li>
+      </ul>
+    </nav>
+    <div class="prose-doc">
+      <p class="eyebrow">Protocol reference</p>
+      <h2 id="protocol-title" class="!mt-0 section-title">How Digi-ID works, precisely.</h2>
+      <p>Digi-ID is an open protocol for authentication with public-key cryptography, derived from the BitID draft. It works much like keyless SSH, with a wallet as the user-friendly key manager. Only the user's public address is ever stored by a service.</p>
+
+      <h3 id="protocol-uri">Challenge URI</h3>
+      <p>Before granting access, the service shows a QR code (and, on mobile, a link) containing:</p>
+      <pre data-lang="text">digiid://www.example.com/callback?x=NONCE</pre>
+      <table>
+        <thead><tr><th scope="col">Part</th><th scope="col">Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>digiid://</code></td><td>Scheme that opens a Digi-ID wallet when tapped or scanned.</td></tr>
+          <tr><td><code>www.example.com/callback</code></td><td>Callback URL without scheme. HTTPS is assumed and strongly recommended.</td></tr>
+          <tr><td><code>x=NONCE</code></td><td>Unique, unpredictable value linked to the user's session. Never reuse it.</td></tr>
+          <tr><td><code>u=1</code> (optional)</td><td>Tells the wallet to POST over plain HTTP. For local development only &mdash; never in production. Digi-ID is not a substitute for TLS.</td></tr>
+        </tbody>
+      </table>
+      <p>Prefix the QR code with &ldquo;Sign in with Digi-ID&rdquo; so users know what they are scanning. The DigiByte &ldquo;D&rdquo; in the QR code is optional.</p>
+
+      <h3 id="protocol-callback">Callback</h3>
+      <p>After the user confirms with their PIN or fingerprint, the wallet POSTs to the callback URL (JSON body; some tools send form fields):</p>
+      <pre data-lang="http" data-src="callback/http.txt"></pre>
+      <table>
+        <thead><tr><th scope="col">Field</th><th scope="col">Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>address</code></td><td>The user's DigiByte address for your site (starts with <code>D</code>). Use it as the stable user ID.</td></tr>
+          <tr><td><code>uri</code></td><td>The exact challenge URI that was signed.</td></tr>
+          <tr><td><code>signature</code></td><td>Base64, 65-byte compact recoverable ECDSA signature of <code>uri</code>.</td></tr>
+        </tbody>
+      </table>
+      <p>Respond with <code>200</code> on success. Wallets show a success or error message to the user based on the response.</p>
+
+      <h3 id="protocol-verify">Verification</h3>
+      <ol>
+        <li>Parse <code>uri</code>; confirm the scheme is <code>digiid</code> and host + path equal <em>your</em> callback.</li>
+        <li>Reject <code>u=1</code> in production.</li>
+        <li>Look up the nonce: it must exist, be unexpired (≈90&nbsp;s) and unused.</li>
+        <li>Verify the signature: hash <code>"\x19DigiByte Signed Message:\n" + varint(len) + uri</code> with double SHA-256, recover the public key, derive the P2PKH address (version byte <code>0x1E</code>) and compare with <code>address</code>.</li>
+        <li>Mark the nonce as used and attach <code>address</code> to the waiting session.</li>
+      </ol>
+      <p>No DigiByte node or external service is required &mdash; the libraries implement all of this locally.</p>
+
+      <h3 id="protocol-keys">Key derivation</h3>
+      <p>Wallets derive a separate key per site, so users can't be tracked across services. The derivation input is the callback URL with its scheme and path, without the query string (for example <code>https://www.example.com/callback</code>). Keep one stable callback URL per site so user addresses stay the same.</p>
+      <ol>
+        <li>Concatenate the little-endian 32-bit <code>index</code> (usually <code>0</code>) with the callback URL.</li>
+        <li>Compute SHA-256 of the result.</li>
+        <li>Split the first 128 bits into four little-endian 32-bit numbers A, B, C, D.</li>
+        <li>Set the highest bit of each (hardened).</li>
+        <li>Derive BIP32 node <code>m/13'/A'/B'/C'/D'</code>.</li>
+      </ol>
+
+      <h3 id="protocol-vector">Test vector</h3>
+      <table>
+        <tbody>
+          <tr><th scope="row">BIP39 seed</th><td><code>myth glimpse mystery abstract embark net faint hospital catch hint develop state</code></td></tr>
+          <tr><th scope="row">Digi-ID URI</th><td><code>digiid://digiid.digibyteprojects.com/callback?x=c6140375e5bae71e</code></td></tr>
+          <tr><th scope="row">Index</th><td><code>0</code></td></tr>
+          <tr><th scope="row">SHA-256</th><td><code class="break-all">460ebbfd1df7410106d62d41f802f769bc00db825e9cf8c649cb069dec35e8fb</code></td></tr>
+          <tr><th scope="row">BIP32 path</th><td><code class="break-all">m/2147483661/4256894534/2168583965/3241006598/3925279480</code></td></tr>
+          <tr><th scope="row">Address</th><td><code>DJDAkjie6nrW6RpFZSTpNUXsZ9JE2x6p1o</code></td></tr>
+        </tbody>
+      </table>
+      <p>The callback example above is a real signature from this vector &mdash; paste it into the <a href="#playground">playground</a> to check it.</p>
+
+      <h3 id="protocol-security">Security checklist</h3>
+      <ul>
+        <li>Serve the callback over HTTPS; never accept <code>u=1</code> in production.</li>
+        <li>Generate nonces from a CSPRNG (≥128 bits), bind them to a session, expire them after ~90&nbsp;s and delete them after first use.</li>
+        <li>Compare the signed URI with the one you issued &mdash; host, path and nonce.</li>
+        <li>Rate-limit the callback and challenge endpoints.</li>
+        <li>Treat the address as an identifier, not an authorization: map it to roles in your own system.</li>
+        <li>Offer a recovery path (e.g. link a second wallet) &mdash; a lost seed means a lost key.</li>
+      </ul>
+      <p>More in the <a href="/documentation.html#security">security model</a> and <a href="/documentation.html#faq">FAQ</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section id="playground" class="section section-alt" aria-labelledby="playground-title">
+  <div class="container-x grid gap-10 lg:grid-cols-[1fr_1.2fr]">
+    <div>
+      <p class="eyebrow">Playground</p>
+      <h2 id="playground-title" class="section-title">Check a signature, right here.</h2>
+      <p class="section-lead">Paste a callback payload to see which checks pass. Everything runs in your browser; nothing is sent anywhere.</p>
+      <p class="mt-6 text-sm">Only paste public values: an address, a URI and a signature. Never paste a seed phrase or private key into any website.</p>
+    </div>
+    <form class="card space-y-4" data-playground novalidate>
+      <div>
+        <label for="pg-uri" class="block text-sm font-medium text-navy dark:text-white">Signed URI</label>
+        <input id="pg-uri" name="uri" type="text" autocomplete="off" spellcheck="false" class="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 font-mono text-sm dark:border-navy-600 dark:bg-navy-900" placeholder="digiid://www.example.com/callback?x=…">
+      </div>
+      <div>
+        <label for="pg-address" class="block text-sm font-medium text-navy dark:text-white">Address</label>
+        <input id="pg-address" name="address" type="text" autocomplete="off" spellcheck="false" class="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 font-mono text-sm dark:border-navy-600 dark:bg-navy-900" placeholder="D…">
+      </div>
+      <div>
+        <label for="pg-signature" class="block text-sm font-medium text-navy dark:text-white">Signature (base64)</label>
+        <textarea id="pg-signature" name="signature" rows="2" autocomplete="off" spellcheck="false" class="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 font-mono text-sm dark:border-navy-600 dark:bg-navy-900"></textarea>
+      </div>
+      <div>
+        <label for="pg-callback" class="block text-sm font-medium text-navy dark:text-white">Expected callback <span class="font-normal text-slate-600 dark:text-slate-400">(optional)</span></label>
+        <input id="pg-callback" name="callback" type="text" autocomplete="off" spellcheck="false" class="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 font-mono text-sm dark:border-navy-600 dark:bg-navy-900" placeholder="https://www.example.com/callback">
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <button type="submit" class="btn btn-primary">Verify</button>
+        <button type="button" class="btn btn-secondary" data-playground-example>Load example</button>
+      </div>
+      <div data-playground-result aria-live="polite" class="text-sm"></div>
+      <noscript><p class="text-sm">The playground needs JavaScript. You can verify signatures offline with digiid-core or digiid-php.</p></noscript>
+    </form>
+  </div>
+</section>
+
+<section id="brand" class="section" aria-labelledby="brand-title">
+  <div class="container-x">
+    <p class="eyebrow">Brand &amp; UI kit</p>
+    <h2 id="brand-title" class="section-title">Make it recognisable.</h2>
+    <p class="section-lead">A consistent &ldquo;Sign in with Digi-ID&rdquo; button and QR presentation help users trust the flow.</p>
+    <div class="mt-10 grid gap-6 lg:grid-cols-3">
+      <div class="card">
+        <h3 class="text-lg">Sign-in button</h3>
+        <div class="mt-5 flex flex-wrap items-center gap-4 rounded-xl bg-slate-50 p-5 dark:bg-navy-900">
+          <img src="/assets/images/brand/signin-light.svg" alt="Sign in with Digi-ID button, light" width="232" height="48">
+          <img src="/assets/images/brand/signin-dark.svg" alt="Sign in with Digi-ID button, dark" width="232" height="48">
+        </div>
+        <ul class="mt-4 flex gap-4 text-sm">
+          <li><a href="/assets/images/brand/signin-light.svg" download>Light SVG</a></li>
+          <li><a href="/assets/images/brand/signin-dark.svg" download>Dark SVG</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 class="text-lg">QR code guidance</h3>
+        <ul class="mt-4 list-disc space-y-2 pl-5 text-sm">
+          <li>Label it &ldquo;Sign in with Digi-ID&rdquo; above the code.</li>
+          <li>At least 200&nbsp;px, dark modules on a light background, quiet zone intact.</li>
+          <li>Also render the URI as a tappable link for mobile users.</li>
+          <li>Show a countdown and regenerate after expiry.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 class="text-lg">Logo</h3>
+        <div class="mt-5 flex items-center justify-center gap-6 rounded-xl bg-slate-50 p-5 dark:bg-navy-900">
+          <img src="/assets/images/logo-light.svg" alt="Digi-ID logo for light backgrounds" class="h-12 w-auto dark:hidden">
+          <img src="/assets/images/logo-dark.svg" alt="Digi-ID logo for dark backgrounds" class="hidden h-12 w-auto dark:block">
+        </div>
+        <ul class="mt-4 flex gap-4 text-sm">
+          <li><a href="/assets/images/logo-light.svg" download>Logo (light bg)</a></li>
+          <li><a href="/assets/images/logo-dark.svg" download>Logo (dark bg)</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="support" class="section section-alt" aria-labelledby="support-title">
+  <div class="container-x">
+    <p class="eyebrow">Support</p>
+    <h2 id="support-title" class="section-title">Stuck? Ask the builders.</h2>
+    <div class="mt-10 grid gap-6 md:grid-cols-3">
+      <a href="{{ site.discussions }}" rel="noopener" target="_blank" class="card card-link">
+        <span class="icon-tile"><icon name="messages-square"></icon></span>
+        <h3 class="mt-4 text-lg">GitHub Discussions</h3>
+        <p class="mt-2 text-sm">Integration questions, ideas and show-and-tell.</p>
+      </a>
+      <a href="{{ site.repo }}/issues" rel="noopener" target="_blank" class="card card-link">
+        <span class="icon-tile"><icon name="bug"></icon></span>
+        <h3 class="mt-4 text-lg">Report an issue</h3>
+        <p class="mt-2 text-sm">Found a bug in the docs, demo or playground? Open an issue.</p>
+      </a>
+      <a href="/documentation.html#faq" class="card card-link">
+        <span class="icon-tile"><icon name="circle-help"></icon></span>
+        <h3 class="mt-4 text-lg">Integrator FAQ</h3>
+        <p class="mt-2 text-sm">Nonce timeouts, offline use, building access, 3rd-party wallets.</p>
+      </a>
+    </div>
+  </div>
+</section>

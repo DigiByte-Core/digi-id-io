@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <include src="head.html"></include>
+</head>
+<body class="{{ page.bodyClass }}">
+  <a href="#main" class="skip-link">Skip to content</a>
+  <include src="header.html"></include>
+  <main id="main" tabindex="-1" class="outline-none">
+<!-- @content -->
+  </main>
+  <include src="footer.html"></include>
+  <div id="live-region" class="sr-only" aria-live="polite"></div>
+  <script type="module" src="/assets/js/site.js"></script>
+  <each loop="script in page.scripts">
+  <script type="module" src="/assets/js/{{ script }}.js"></script>
+  </each>
+</body>
+</html>

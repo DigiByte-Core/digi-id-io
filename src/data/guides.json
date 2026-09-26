@@ -1,0 +1,55 @@
+[
+  {
+    "id": "web-app-login",
+    "title": "Add Digi-ID login to a web app",
+    "summary": "Challenge, QR code, wallet callback and session hand-off in a small Express app.",
+    "status": "complete",
+    "audience": "web",
+    "durationMin": 15,
+    "useCaseId": "website-login"
+  },
+  {
+    "id": "nonce-replay",
+    "title": "Nonces, timeouts and replay protection",
+    "summary": "Generate, bind, expire and consume nonces so a signed challenge can never be reused.",
+    "status": "complete",
+    "audience": "web",
+    "durationMin": 10
+  },
+  {
+    "id": "wordpress",
+    "title": "Add Digi-ID to WordPress",
+    "summary": "Install and configure the WordPress plugin, then let users link their wallets.",
+    "status": "coming-soon",
+    "readmeUrl": "https://github.com/DigiByte-Core/digiid-wp-authentication",
+    "audience": "cms",
+    "durationMin": 10
+  },
+  {
+    "id": "account-linking",
+    "title": "Link Digi-ID to existing accounts",
+    "summary": "Offer Digi-ID next to passwords and migrate users gradually.",
+    "status": "coming-soon",
+    "readmeUrl": "https://github.com/DigiByte-Core/digiid-php",
+    "audience": "web",
+    "durationMin": 20
+  },
+  {
+    "id": "physical-access",
+    "title": "Build a door-access prototype",
+    "summary": "A screen, a unique callback per door and an allow-list of Digi-ID addresses.",
+    "status": "coming-soon",
+    "readmeUrl": "https://github.com/DigiByte-Core/digiid-js",
+    "audience": "iot",
+    "durationMin": 45
+  },
+  {
+    "id": "wallet-integration",
+    "title": "Support Digi-ID in your wallet",
+    "summary": "Parse digiid:// URIs, derive per-site keys and post signed callbacks.",
+    "status": "coming-soon",
+    "readmeUrl": "https://github.com/DigiByte-Core/digiid-js",
+    "audience": "wallet",
+    "durationMin": 60
+  }
+]

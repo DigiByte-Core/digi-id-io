@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e -- --pass-with-no-tests
+      - name: Check internal links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --offline --no-progress --root-dir ${{ github.workspace }}/_site '_site/**/*.html'
+          fail: true
+      - name: Lighthouse budgets
+        run: npx --yes @lhci/cli@0.14 autorun --config=tests/lighthouserc.json

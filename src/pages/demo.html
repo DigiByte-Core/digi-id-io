@@ -1,0 +1,120 @@
+---
+{
+  "title": "Demo – Try Digi-ID sign-in in a sandbox",
+  "description": "Walk through a real Digi-ID sign-in in your browser: challenge, per-site key derivation, signature and verification with a simulated wallet. Nothing leaves your browser.",
+  "scripts": ["demo"]
+}
+---
+<section class="border-b border-slate-200 dark:border-navy-700" aria-labelledby="demo-title">
+  <div class="container-x py-14 sm:py-16">
+    <p class="eyebrow">Sandbox demo</p>
+    <h1 id="demo-title" class="max-w-3xl text-4xl sm:text-5xl">Sign in with Digi-ID &mdash; no wallet required.</h1>
+    <p class="section-lead">This page plays both roles: a website issuing a challenge, and a <strong>simulated wallet</strong> that signs it. It runs the real protocol code, entirely in your browser.</p>
+  </div>
+</section>
+
+<section class="section !pt-12" aria-label="Interactive demo">
+  <div class="container-x" data-demo>
+    <noscript>
+      <div class="card mb-8">
+        <p class="font-medium text-navy dark:text-white">The interactive demo needs JavaScript.</p>
+        <p class="mt-2 text-sm">You can still <a href="#walkthrough">watch the walkthrough</a> or read <a href="/#how-it-works">how it works</a>.</p>
+      </div>
+    </noscript>
+
+    <div class="grid gap-8 lg:grid-cols-2">
+      <div class="card">
+        <div class="flex items-center gap-2 border-b border-slate-200 pb-3 dark:border-navy-700" aria-hidden="true">
+          <span class="size-3 rounded-full bg-slate-300 dark:bg-navy-600"></span><span class="size-3 rounded-full bg-slate-300 dark:bg-navy-600"></span><span class="size-3 rounded-full bg-slate-300 dark:bg-navy-600"></span>
+          <span class="ml-2 truncate rounded bg-slate-100 px-2 py-0.5 font-mono text-xs dark:bg-navy-900">https://www.digi-id.io/demo</span>
+        </div>
+        <h2 class="mt-5 text-xl">1 &middot; The website</h2>
+        <p class="mt-1 text-sm">Issues a one-time challenge and waits for a signed callback.</p>
+
+        <div class="mt-6 flex flex-col items-center gap-5 sm:flex-row sm:items-start">
+          <figure class="relative shrink-0">
+            <div class="grid size-44 grid-cols-11 gap-px rounded-xl border-8 border-white bg-white p-1 opacity-60 dark:border-slate-100 dark:bg-slate-100" data-demo-qr aria-hidden="true"></div>
+            <figcaption class="absolute inset-0 flex items-center justify-center">
+              <span class="-rotate-12 rounded-md bg-amber-300 px-2 py-1 text-center font-mono text-[0.7rem] font-bold uppercase tracking-wider text-navy shadow">Simulated<br>do not scan</span>
+            </figcaption>
+          </figure>
+          <div class="min-w-0 flex-1">
+            <p class="text-sm font-medium text-navy dark:text-white">Sign in with Digi-ID</p>
+            <p class="mt-2 text-xs text-slate-600 dark:text-slate-400">Challenge URI</p>
+            <p class="mt-1 break-all rounded-lg bg-slate-100 p-2 font-mono text-xs text-navy dark:bg-navy-900 dark:text-slate-100" data-demo-uri id="demo-uri">&hellip;</p>
+            <p class="mt-3 flex items-center gap-2 text-sm"><icon name="timer" class="size-4"></icon> Expires in <strong class="font-mono" data-demo-countdown>90s</strong></p>
+            <p class="mt-3 text-xs text-slate-600 dark:text-slate-400">This sandbox challenge is for the simulated wallet only. A real wallet can't reach a callback on this static site.</p>
+          </div>
+        </div>
+
+        <p class="mt-6 rounded-lg border border-slate-200 p-3 text-sm font-medium data-[kind=ok]:border-accent data-[kind=ok]:text-accent-strong data-[kind=fail]:border-red-300 data-[kind=fail]:text-red-700 dark:border-navy-700 dark:data-[kind=ok]:text-accent dark:data-[kind=fail]:border-red-800 dark:data-[kind=fail]:text-red-300" data-demo-status role="status">Loading&hellip;</p>
+        <div class="mt-4 flex flex-wrap gap-2">
+          <button type="button" class="btn btn-secondary !px-4 !py-2 text-sm" data-demo-reset><icon name="refresh-cw" class="size-4"></icon> New challenge</button>
+          <button type="button" class="btn btn-secondary !px-4 !py-2 text-sm" data-demo-replay hidden>Replay the request</button>
+          <button type="button" class="btn btn-secondary !px-4 !py-2 text-sm" data-demo-tamper hidden>Tamper with the nonce</button>
+        </div>
+      </div>
+
+      <div class="card border-2 border-dashed !border-amber-400 dark:!border-amber-500">
+        <div class="flex items-center justify-between">
+          <span class="badge bg-amber-300 text-navy">Simulated wallet</span>
+          <icon name="smartphone" class="text-slate-500"></icon>
+        </div>
+        <h2 class="mt-5 text-xl">2 &middot; The wallet</h2>
+        <p class="mt-1 text-sm">A throwaway key created in this tab. It is never stored and disappears when you leave. Real wallets keep keys on your phone.</p>
+        <dl class="mt-6 space-y-3 rounded-xl bg-slate-50 p-4 text-sm dark:bg-navy-900">
+          <div><dt class="text-xs text-slate-600 dark:text-slate-400">Site requesting sign-in</dt><dd class="font-medium text-navy dark:text-white" data-demo-site>&hellip;</dd></div>
+          <div><dt class="text-xs text-slate-600 dark:text-slate-400">Your Digi-ID for this site</dt><dd class="break-all font-mono text-xs text-navy dark:text-slate-100" data-demo-address>&hellip;</dd></div>
+        </dl>
+        <div class="mt-6 grid grid-cols-2 gap-3">
+          <button type="button" class="btn btn-primary" data-demo-approve disabled><icon name="fingerprint" class="size-4"></icon> Approve</button>
+          <button type="button" class="btn btn-secondary" data-demo-decline disabled>Decline</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-8">
+      <h2 class="text-xl">What just happened</h2>
+      <ol class="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <li class="group rounded-xl border border-slate-200 p-4 data-[done]:border-accent dark:border-navy-700" data-demo-step data-pending="Waiting…">
+          <p class="font-mono text-xs text-primary-strong dark:text-accent">01 &middot; Challenge</p>
+          <p class="mt-1 font-medium text-navy dark:text-white">Website creates a nonce</p>
+          <p class="mt-2 break-all font-mono text-xs text-slate-600 dark:text-slate-400" data-detail>Waiting&hellip;</p>
+        </li>
+        <li class="group rounded-xl border border-slate-200 p-4 data-[done]:border-accent dark:border-navy-700" data-demo-step data-pending="Waiting for approval…">
+          <p class="font-mono text-xs text-primary-strong dark:text-accent">02 &middot; Derive</p>
+          <p class="mt-1 font-medium text-navy dark:text-white">Wallet derives a per-site key</p>
+          <p class="mt-2 break-all font-mono text-xs text-slate-600 dark:text-slate-400" data-detail>Waiting for approval&hellip;</p>
+        </li>
+        <li class="group rounded-xl border border-slate-200 p-4 data-[done]:border-accent dark:border-navy-700" data-demo-step data-pending="Waiting for approval…">
+          <p class="font-mono text-xs text-primary-strong dark:text-accent">03 &middot; Sign</p>
+          <p class="mt-1 font-medium text-navy dark:text-white">Wallet signs and calls back</p>
+          <p class="mt-2 break-all font-mono text-xs text-slate-600 dark:text-slate-400" data-detail>Waiting for approval&hellip;</p>
+        </li>
+        <li class="group rounded-xl border border-slate-200 p-4 data-[done]:border-accent dark:border-navy-700" data-demo-step data-pending="Waiting for callback…">
+          <p class="font-mono text-xs text-primary-strong dark:text-accent">04 &middot; Verify</p>
+          <p class="mt-1 font-medium text-navy dark:text-white">Website verifies and consumes the nonce</p>
+          <p class="mt-2 break-all font-mono text-xs text-slate-600 dark:text-slate-400" data-detail>Waiting for callback&hellip;</p>
+        </li>
+      </ol>
+      <p class="mt-5 text-sm text-slate-600 dark:text-slate-400"><icon name="lock" class="size-4 align-[-0.2em]"></icon> Privacy: this demo makes no network requests and stores nothing. Refreshing the page erases the simulated key.</p>
+    </div>
+
+    <div class="mt-8" data-live-slot hidden></div>
+  </div>
+</section>
+
+<section id="walkthrough" class="section section-alt" aria-labelledby="walkthrough-title">
+  <div class="container-x grid items-center gap-12 lg:grid-cols-2">
+    <div>
+      <p class="eyebrow">With a real wallet</p>
+      <h2 id="walkthrough-title" class="section-title">See the real thing on a phone.</h2>
+      <p class="section-lead">In production, the QR code is scanned with a Digi-ID-capable DigiByte wallet, and the wallet posts the signature to the site's server. A live-wallet mode for this page is coming.</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="https://www.digibyte.org/" rel="noopener" target="_blank" class="btn btn-secondary">Get a DigiByte wallet <icon name="external-link" class="size-4"></icon></a>
+        <a href="/developers.html#quickstart" class="btn btn-primary">Build it into your app <icon name="arrow-right" class="size-4"></icon></a>
+      </div>
+    </div>
+    <include src="video.html" locals='{"title": "Watch a Digi-ID sign-in"}'></include>
+  </div>
+</section>

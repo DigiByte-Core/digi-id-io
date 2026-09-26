@@ -1,0 +1,18 @@
+{
+  "name": "digiid-core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Digi-ID URI, key derivation, signing and verification shared by the site demo and playground",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@noble/curves": "^2.4.0",
+    "@noble/hashes": "^2.4.0",
+    "@scure/base": "^2.4.0",
+    "@scure/bip32": "^2.4.0",
+    "@scure/bip39": "^2.4.0"
+  }
+}
