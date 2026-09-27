@@ -215,6 +215,10 @@
   .tabs__tab[aria-selected="true"] {
     @apply border-primary text-primary-strong dark:border-accent dark:text-accent;
   }
+  /* Before tabs.js runs, show only the first panel so collapsing the others doesn't shift the layout. */
+  .js [data-tabs]:not([data-tabs-ready]) > [role="tabpanel"] ~ [role="tabpanel"] {
+    display: none;
+  }
   .tabs__panel {
     @apply pt-4;
   }

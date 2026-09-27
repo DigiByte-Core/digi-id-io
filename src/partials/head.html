@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="/assets/css/site.css">
 <script>
   (function () {
+    document.documentElement.classList.add('js');
     try {
       var stored = localStorage.getItem('theme');
       var theme = stored || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');

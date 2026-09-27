@@ -41,6 +41,7 @@ export function initTabs(root = document) {
       } catch {}
     }
     select(tabset, initial, { persist: false });
+    el.setAttribute('data-tabs-ready', '');
 
     el.addEventListener('click', (e) => {
       const tab = e.target.closest('[role="tab"]');

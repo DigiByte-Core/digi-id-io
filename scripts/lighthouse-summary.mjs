@@ -25,4 +25,14 @@ const rows = reports.map((r) => {
 const header = ['URL', 'Perf', 'FCP', 'LCP', 'SI', 'TBT', 'CLS', 'Top opportunities', 'LCP element'];
 const table = [header, header.map(() => '---'), ...rows].map((r) => `| ${r.join(' | ')} |`).join('\n');
 console.log(table);
+
+const shifts = reports
+  .filter((r, i, all) => all.findIndex((o) => o.finalUrl === r.finalUrl) === i)
+  .flatMap((r) =>
+    (r.audits['layout-shifts']?.details?.items ?? []).slice(0, 5).map((item) => {
+      const causes = (item.subItems?.items ?? []).map((s) => s.extra?.value?.url || s.cause || '').filter(Boolean).join(', ');
+      return `- ${new URL(r.finalUrl).pathname}: ${item.score?.toFixed(3)} on \`${(item.node?.snippet ?? '').slice(0, 90)}\`${causes ? ` (cause: ${causes})` : ''}`;
+    })
+  );
+if (shifts.length) console.log('\nLayout shifts:\n' + shifts.join('\n'));
 if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `### Lighthouse\n\n${table}\n`);
