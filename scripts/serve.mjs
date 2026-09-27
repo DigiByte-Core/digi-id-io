@@ -19,7 +19,10 @@ const TYPES = {
   '.pdf': 'application/pdf',
   '.woff': 'font/woff',
   '.woff2': 'font/woff2',
-  '.zip': 'application/zip'
+  '.zip': 'application/zip',
+  '.xml': 'application/xml; charset=utf-8',
+  '.txt': 'text/plain; charset=utf-8',
+  '.webmanifest': 'application/manifest+json'
 };
 
 async function resolveFile(urlPath) {
@@ -42,10 +45,12 @@ export function serve(port = Number(process.env.PORT) || 8080) {
   const server = createServer(async (req, res) => {
     try {
       const file = await resolveFile(req.url || '/');
-      const body = file ? await readFile(file) : null;
+      const body = file ? await readFile(file).catch(() => null) : null;
       if (!body) {
-        res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
-        res.end('Not found');
+        // Mirror GitHub Pages: unknown paths get the site's 404 page.
+        const notFound = await readFile(path.join(ROOT, '404.html')).catch(() => 'Not found');
+        res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+        res.end(notFound);
         return;
       }
       res.writeHead(200, {

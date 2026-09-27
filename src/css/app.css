@@ -135,7 +135,7 @@
   }
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-base font-medium no-underline transition hover:no-underline focus-visible:outline-offset-4;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-base font-medium no-underline transition-[color,background-color,border-color,box-shadow] hover:no-underline focus-visible:outline-offset-4;
   }
   /* Compose as class="btn btn-primary"; Tailwind v4 cannot @apply component classes. */
   .btn-primary {

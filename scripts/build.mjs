@@ -163,6 +163,7 @@ function basePathPlugin() {
 async function buildPages({ highlighter, data, usedIcons }) {
   const layout = await readFile(path.join(PARTIALS, 'layout.html'), 'utf8');
   const pages = (await walk(path.join(SRC, 'pages'))).filter((f) => f.endsWith('.html'));
+  const built = [];
   for (const file of pages) {
     const { meta, body } = parseFrontMatter(await readFile(file, 'utf8'), file);
     const rel = outputPathFor(file);
@@ -170,7 +171,8 @@ async function buildPages({ highlighter, data, usedIcons }) {
     const page = {
       scripts: [],
       redirect: '',
-      ogImage: '/assets/scenarium/GeneralOG-03.png',
+      noindex: false,
+      ogImage: ogImageFor(rel),
       bodyClass: '',
       ...meta,
       url: SITE_URL + (meta.canonical || urlPath),
@@ -189,8 +191,44 @@ async function buildPages({ highlighter, data, usedIcons }) {
     const dest = path.join(OUT, rel);
     await mkdir(path.dirname(dest), { recursive: true });
     await writeFile(dest, result.html);
+    built.push({ rel, urlPath, page });
   }
-  return pages.length;
+  return built;
+}
+
+export function pageSlug(rel) {
+  return rel.replace(/\.html$/, '').split(path.sep).join('-');
+}
+
+function ogImageFor(rel) {
+  const file = `assets/images/og/${pageSlug(rel)}.png`;
+  return existsSync(path.join(ROOT, file)) ? `/${file}` : '/assets/images/og/index.png';
+}
+
+async function writeSeoFiles(pages) {
+  const indexable = pages.filter(({ page }) => !page.redirect && !page.noindex);
+  const today = new Date().toISOString().slice(0, 10);
+  const urls = indexable
+    .map(({ urlPath }) => `  <url><loc>${SITE_URL}${urlPath}</loc><lastmod>${today}</lastmod></url>`)
+    .join('\n');
+  await writeFile(path.join(OUT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`);
+  await writeFile(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);
+  const manifest = {
+    name: 'Digi-ID',
+    short_name: 'Digi-ID',
+    description: 'Passwordless login secured by the DigiByte blockchain.',
+    start_url: `${BASE_PATH}/`,
+    scope: `${BASE_PATH}/`,
+    display: 'standalone',
+    background_color: '#ffffff',
+    theme_color: '#002451',
+    icons: [
+      { src: `${BASE_PATH}/assets/images/icons/icon-192.png`, sizes: '192x192', type: 'image/png' },
+      { src: `${BASE_PATH}/assets/images/icons/icon-512.png`, sizes: '512x512', type: 'image/png' },
+      { src: `${BASE_PATH}/assets/images/icons/icon-maskable-512.png`, sizes: '512x512', type: 'image/png', purpose: 'maskable' }
+    ]
+  };
+  await writeFile(path.join(OUT, 'site.webmanifest'), JSON.stringify(manifest, null, 2));
 }
 
 async function buildIcons(used) {
@@ -246,17 +284,24 @@ async function copyAssets() {
 }
 
 async function writeLogoVariants() {
-  const source = await readFile(path.join(ROOT, 'assets', 'scenarium', 'logo.svg'), 'utf8');
+  const { light, dark, badge } = logoVariants(await readFile(path.join(ROOT, 'assets', 'scenarium', 'logo.svg'), 'utf8'));
+  await writeFile(path.join(OUT, 'assets', 'images', 'logo-light.svg'), light);
+  await writeFile(path.join(OUT, 'assets', 'images', 'logo-dark.svg'), dark);
+  await writeFile(path.join(OUT, 'favicon.svg'), badge);
+}
+
+export function logoVariants(source) {
   // The source canvas is mostly empty space; crop to the artwork bounds (measured via getBBox) so it renders crisp at small sizes.
-  const svg = source
+  const light = source
     .replace(/\swidth="[^"]*"\s+height="[^"]*"/, ' width="5920" height="2230"')
     .replace(/viewBox="[^"]*"/, 'viewBox="45 575 5920 2230"')
     .replace(/\senable-background="[^"]*"/, '');
   let seen = 0;
   // The first navy fill is the badge background; the rest form the wordmark, which must turn white on dark surfaces.
-  const dark = svg.replace(/fill="#002352"/g, (m) => (seen++ === 0 ? m : 'fill="#FFFFFF"'));
-  await writeFile(path.join(OUT, 'assets', 'images', 'logo-light.svg'), svg);
-  await writeFile(path.join(OUT, 'assets', 'images', 'logo-dark.svg'), dark);
+  const dark = light.replace(/fill="#002352"/g, (m) => (seen++ === 0 ? m : 'fill="#FFFFFF"'));
+  // Badge only (no wordmark): the circle spans roughly x 75-2244, y 605-2775 in the source.
+  const badge = light.replace(/\swidth="[^"]*"\s+height="[^"]*"/, ' width="64" height="64"').replace(/viewBox="[^"]*"/, 'viewBox="70 600 2180 2180"');
+  return { light, dark, badge };
 }
 
 export async function build({ clean = true, minify = true } = {}) {
@@ -266,7 +311,8 @@ export async function build({ clean = true, minify = true } = {}) {
   const highlighter = await createHighlighter({ themes: ['github-light-default', 'github-dark-default'], langs: SHIKI_LANGS });
   const data = await loadData();
   const usedIcons = new Set();
-  const count = await buildPages({ highlighter, data, usedIcons });
+  const built = await buildPages({ highlighter, data, usedIcons });
+  await writeSeoFiles(built);
   for (const file of await walk(path.join(SRC, 'js'))) {
     for (const [, name] of (await readFile(file, 'utf8')).matchAll(/icons\.svg#([a-z0-9-]+)/g)) usedIcons.add(name);
   }
@@ -274,7 +320,7 @@ export async function build({ clean = true, minify = true } = {}) {
   await buildJs({ minify });
   if (clean) await copyAssets();
   highlighter.dispose();
-  console.log(`Built ${count} pages in ${Date.now() - started} ms${BASE_PATH ? ` (base path ${BASE_PATH})` : ''}`);
+  console.log(`Built ${built.length} pages in ${Date.now() - started} ms${BASE_PATH ? ` (base path ${BASE_PATH})` : ''}`);
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

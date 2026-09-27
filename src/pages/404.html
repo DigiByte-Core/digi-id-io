@@ -1,0 +1,26 @@
+---
+{
+  "title": "Page not found – Digi-ID",
+  "description": "The page you were looking for doesn't exist. Find your way back to Digi-ID.",
+  "noindex": true
+}
+---
+<section class="section" aria-labelledby="notfound-title">
+  <div class="container-x grid items-center gap-12 lg:grid-cols-2">
+    <div>
+      <p class="eyebrow">Error 404</p>
+      <h1 id="notfound-title" class="text-4xl sm:text-5xl">This page doesn't exist.</h1>
+      <p class="section-lead">It may have moved when the site was redesigned. Try one of these instead:</p>
+      <ul class="mt-8 grid gap-3 sm:grid-cols-2">
+        <li><a href="/" class="card card-link flex items-center gap-3 !py-4"><icon name="house" class="text-primary-strong dark:text-accent"></icon><span class="font-medium text-navy dark:text-white">Home</span></a></li>
+        <li><a href="/developers.html" class="card card-link flex items-center gap-3 !py-4"><icon name="code-xml" class="text-primary-strong dark:text-accent"></icon><span class="font-medium text-navy dark:text-white">Developer hub</span></a></li>
+        <li><a href="/demo.html" class="card card-link flex items-center gap-3 !py-4"><icon name="scan-qr-code" class="text-primary-strong dark:text-accent"></icon><span class="font-medium text-navy dark:text-white">Try the demo</span></a></li>
+        <li><a href="/documentation.html" class="card card-link flex items-center gap-3 !py-4"><icon name="book-open" class="text-primary-strong dark:text-accent"></icon><span class="font-medium text-navy dark:text-white">Docs &amp; FAQ</span></a></li>
+      </ul>
+      <p class="mt-8 text-sm">Followed a broken link on this site? <a href="{{ site.repo }}/issues/new" rel="noopener" target="_blank">Let us know</a>.</p>
+    </div>
+    <div class="illustration-surface hidden lg:block">
+      <img src="/assets/scenarium/scan-01.svg" alt="" class="mx-auto h-72 w-auto">
+    </div>
+  </div>
+</section>

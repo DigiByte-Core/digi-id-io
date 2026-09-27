@@ -19,7 +19,8 @@
     "test:e2e": "playwright test",
     "test:links": "node scripts/check-links.mjs",
     "lighthouse": "npx --yes @lhci/cli@0.14 autorun --config=tests/lighthouserc.json",
-    "lint:data": "node scripts/lint-data.mjs"
+    "lint:data": "node scripts/lint-data.mjs",
+    "images": "node scripts/generate-images.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
