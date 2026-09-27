@@ -25,7 +25,7 @@
     </nav>
 
     <div class="prose-doc">
-      <section id="faq" aria-labelledby="faq-title">
+      <section id="faq" aria-labelledby="faq-title" data-faq>
         <h2 id="faq-title" class="!mt-0">FAQ for users</h2>
         <h3>What is Digi-ID?</h3>
         <p>Digi-ID lets you sign in to a website, app or location using a QR code. The service must support Digi-ID before you can use it there. It uses cryptography &mdash; the same type of mathematics used to secure DigiByte &mdash; to verify your sign-in. Digi-ID can replace a username and password or be used alongside them.</p>
@@ -83,7 +83,7 @@
         <p>Once users are signed in you can still ask for an email address or name, just as you do today &mdash; for example to ship a product or send receipts. Digi-ID is pseudonymous: the only identifying information is what users choose to give you after authenticating.</p>
       </section>
 
-      <section id="integrators" aria-labelledby="integrators-title">
+      <section id="integrators" aria-labelledby="integrators-title" data-faq>
         <h2 id="integrators-title">Integrator FAQ</h2>
         <h3>What is a good nonce timeout?</h3>
         <p>About 90 seconds for most websites, shorter for doors and kiosks. See <a href="/guides/nonce-replay.html">Nonces, timeouts and replay protection</a>.</p>
@@ -94,7 +94,7 @@
         <h3>Does it work offline or on a local network?</h3>
         <p>Yes, as long as the wallet can reach the callback URL (for example over local Wi-Fi) and the callback is served over HTTPS.</p>
         <h3>How can Digi-ID be used for building access?</h3>
-        <p>Put a screen that shows a QR code at each door, each with its own callback. When a user scans and approves, your access server receives the signed message, checks the address against that door's allow-list and unlocks it.</p>
+        <p>Put a screen that shows a fresh QR code at each door. Use one callback URL for all doors and record which door issued each nonce &mdash; separate callback paths would give each person a different address per door. When a user scans and approves, your access server verifies the signature, checks the address against that door's allow-list and unlocks it. See the <a href="/guides/physical-access.html">door-access guide</a>.</p>
         <h3>Why do users get different addresses on different sites?</h3>
         <p>Wallets derive a separate key for every callback URL, so sites can't correlate users. Keep your callback URL stable &mdash; changing it gives every user a new address.</p>
         <h3>Can Digi-ID be added to a third-party wallet?</h3>

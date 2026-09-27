@@ -142,6 +142,72 @@ function currentLinkPlugin(urlPath) {
   };
 }
 
+function textOf(node) {
+  return collectText(typeof node === 'string' ? [node] : node.content).replace(/\s+/g, ' ').trim();
+}
+
+// FAQ entries come from <section data-faq>: each h3 is a question, following siblings until the next h3 form the answer.
+function faqEntries(tree) {
+  const entries = [];
+  tree.match({ tag: 'section', attrs: { 'data-faq': true } }, (section) => {
+    let current = null;
+    for (const child of section.content || []) {
+      if (typeof child !== 'object') continue;
+      if (child.tag === 'h3') {
+        current = { question: textOf(child), answer: [] };
+        entries.push(current);
+      } else if (current && ['p', 'ul', 'ol', 'table'].includes(child.tag)) {
+        current.answer.push(textOf(child));
+      }
+    }
+    delete section.attrs['data-faq'];
+    return section;
+  });
+  return entries.filter((e) => e.answer.length);
+}
+
+function structuredDataPlugin(page, urlPath, data) {
+  return (tree) => {
+    const org = {
+      '@type': 'Organization',
+      name: 'Digi-ID',
+      url: SITE_URL + '/',
+      logo: `${SITE_URL}/assets/images/icons/icon-512.png`,
+      sameAs: [data.site.github, 'https://www.digibyte.org/', data.site.repo]
+    };
+    const graph = [];
+    if (urlPath === '/') {
+      graph.push({ ...org, '@id': `${SITE_URL}/#org` });
+      graph.push({ '@type': 'WebSite', '@id': `${SITE_URL}/#website`, name: 'Digi-ID', url: `${SITE_URL}/`, publisher: { '@id': `${SITE_URL}/#org` } });
+    }
+    if (page.schema === 'TechArticle') {
+      graph.push({
+        '@type': 'TechArticle',
+        headline: page.title.replace(/\s+[–-]\s+Digi-ID$/, '').replace(/^Guide:\s*/, ''),
+        description: page.description,
+        url: page.url,
+        image: SITE_URL + page.ogImage,
+        author: org,
+        publisher: org
+      });
+    }
+    const faq = faqEntries(tree);
+    if (faq.length) {
+      graph.push({
+        '@type': 'FAQPage',
+        mainEntity: faq.map((e) => ({ '@type': 'Question', name: e.question, acceptedAnswer: { '@type': 'Answer', text: e.answer.join(' ') } }))
+      });
+    }
+    if (!graph.length) return tree;
+    const json = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c');
+    tree.match({ tag: 'head' }, (head) => {
+      head.content = [...(head.content || []), { tag: 'script', attrs: { type: 'application/ld+json' }, content: [json] }, '\n'];
+      return head;
+    });
+    return tree;
+  };
+}
+
 function basePathPlugin() {
   const prefix = (url) => (url.startsWith('/') && !url.startsWith('//') ? BASE_PATH + url : url);
   return (tree) => {
@@ -186,6 +252,7 @@ async function buildPages({ highlighter, data, usedIcons }) {
       iconPlugin(usedIcons),
       highlightPlugin(highlighter),
       currentLinkPlugin(urlPath),
+      structuredDataPlugin(page, urlPath, data),
       basePathPlugin()
     ]).process(source, { from: file });
     const dest = path.join(OUT, rel);

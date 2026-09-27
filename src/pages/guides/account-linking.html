@@ -1,0 +1,99 @@
+---
+{
+  "title": "Guide: Link Digi-ID to existing accounts – Digi-ID",
+  "description": "Offer Digi-ID next to passwords: let signed-in users link one or more wallets, sign in with them, unlink safely and migrate away from passwords over time.",
+  "schema": "TechArticle"
+}
+---
+<article class="section" aria-labelledby="guide-title">
+  <div class="container-x">
+    <nav aria-label="Breadcrumb" class="text-sm">
+      <ol class="flex flex-wrap gap-2 text-slate-600 dark:text-slate-400">
+        <li><a href="/developers.html">Developers</a> <span aria-hidden="true">/</span></li>
+        <li><a href="/developers.html#guides">Guides</a> <span aria-hidden="true">/</span></li>
+        <li aria-current="page">Account linking</li>
+      </ol>
+    </nav>
+    <div class="prose-doc mt-6">
+      <p class="eyebrow">Guide &middot; 20 minutes &middot; Node.js</p>
+      <h1 id="guide-title" class="text-4xl">Link Digi-ID to existing accounts</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-400">Most products can't drop passwords overnight. Let users add Digi-ID to the account they already have, sign in with it, and keep a second wallet as a recovery key. Passwords can then be retired one user at a time.</p>
+      <p>This guide builds on <a href="/guides/web-app-login.html">Add Digi-ID login to a web app</a>; read that first for the challenge, callback and polling basics.</p>
+
+      <h2>1. Store addresses, not secrets</h2>
+      <p>A user can link several wallets. Each Digi-ID address belongs to exactly one account.</p>
+      <pre data-lang="text" data-label="schema.sql">CREATE TABLE user_digiids (
+  address     VARCHAR(40)  PRIMARY KEY,           -- site-specific Digi-ID address
+  user_id     BIGINT       NOT NULL REFERENCES users(id),
+  label       VARCHAR(60)  NOT NULL DEFAULT 'My wallet',
+  created_at  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  last_used_at TIMESTAMP   NULL
+);
+CREATE INDEX user_digiids_user ON user_digiids (user_id);</pre>
+
+      <h2>2. Give every challenge a purpose</h2>
+      <p>The same callback serves two flows. Record why the challenge was issued, and for linking, who asked for it:</p>
+      <pre data-lang="js" data-label="server.js">app.post('/digiid/challenge', (req, res) =&gt; {
+  const purpose = req.body?.purpose === 'link' ? 'link' : 'login';
+  if (purpose === 'link' &amp;&amp; !req.session.userId) return res.status(401).end();
+
+  const nonce = crypto.randomBytes(16).toString('hex');
+  pending.set(nonce, {
+    purpose,
+    sessionId: req.sessionID,
+    userId: purpose === 'link' ? req.session.userId : null,
+    expires: Date.now() + 90_000
+  });
+  res.json({ nonce, uri: new DigiID({ nonce, callback: CALLBACK }).uri });
+});</pre>
+      <p>The callback handler stays exactly as in the web-app guide: verify the URI and signature, then record <code>challenge.address</code>. The difference is what happens when the browser polls.</p>
+
+      <h2>3. Finish the flow in the status handler</h2>
+      <pre data-lang="js" data-label="server.js">app.get('/digiid/status', async (req, res) =&gt; {
+  const nonce = String(req.query.nonce);
+  const challenge = pending.get(nonce);
+  if (!challenge || challenge.sessionId !== req.sessionID) return res.status(404).json({ state: 'unknown' });
+  if (!challenge.address) return res.json({ state: challenge.expires &lt; Date.now() ? 'expired' : 'pending' });
+  pending.delete(nonce);
+
+  const owner = await db.findUserIdByDigiId(challenge.address);
+
+  if (challenge.purpose === 'link') {
+    if (owner &amp;&amp; owner !== challenge.userId) return res.json({ state: 'error', reason: 'already linked to another account' });
+    if (!owner) await db.linkDigiId(challenge.userId, challenge.address);
+    return res.json({ state: 'linked' });
+  }
+
+  if (!owner) return res.json({ state: 'error', reason: 'no account uses this wallet yet' });
+  await db.touchDigiId(challenge.address);
+  req.session.regenerate(() =&gt; {
+    req.session.userId = owner;
+    res.json({ state: 'verified' });
+  });
+});</pre>
+
+      <h2>4. Settings page: link, list, unlink</h2>
+      <ul>
+        <li><strong>Link:</strong> a &ldquo;Add Digi-ID&rdquo; button requests a challenge with <code>purpose: 'link'</code> and shows the QR code.</li>
+        <li><strong>List:</strong> show each linked wallet's label, the first and last characters of the address and when it was last used.</li>
+        <li><strong>Unlink:</strong> require a fresh sign-in (password or another linked wallet) before removing an address, and never let a user remove their last way in.</li>
+      </ul>
+
+      <h2>5. Migrate away from passwords</h2>
+      <ol>
+        <li>Show &ldquo;Sign in with Digi-ID&rdquo; next to the password form.</li>
+        <li>After a password sign-in, suggest linking a wallet.</li>
+        <li>Once two wallets are linked, offer to <em>remove the password</em> entirely.</li>
+        <li>Keep your existing email-based recovery as a last resort, but require it to link a new wallet rather than set a password.</li>
+      </ol>
+
+      <h2>Pitfalls</h2>
+      <ul>
+        <li>Addresses are specific to your callback URL. Changing the URL (including its path) gives every user a new address and breaks their link &mdash; pick one and keep it.</li>
+        <li>Don't auto-create an account when an unknown address signs in during a <em>link</em> flow; that's how accounts get hijacked.</li>
+        <li>A lost recovery phrase means a lost key. Encourage a second wallet, and treat email recovery as high-risk.</li>
+      </ul>
+      <p>Next: <a href="/guides/nonce-replay.html">Nonces, timeouts and replay protection</a>.</p>
+    </div>
+  </div>
+</article>

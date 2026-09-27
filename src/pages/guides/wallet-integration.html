@@ -1,0 +1,72 @@
+---
+{
+  "title": "Guide: Support Digi-ID in your wallet – Digi-ID",
+  "description": "Add Digi-ID sign-in to a DigiByte wallet: parse digiid:// URIs, confirm the site with the user, derive per-site keys, sign the challenge and post the callback.",
+  "schema": "TechArticle"
+}
+---
+<article class="section" aria-labelledby="guide-title">
+  <div class="container-x">
+    <nav aria-label="Breadcrumb" class="text-sm">
+      <ol class="flex flex-wrap gap-2 text-slate-600 dark:text-slate-400">
+        <li><a href="/developers.html">Developers</a> <span aria-hidden="true">/</span></li>
+        <li><a href="/developers.html#guides">Guides</a> <span aria-hidden="true">/</span></li>
+        <li aria-current="page">Wallet integration</li>
+      </ol>
+    </nav>
+    <div class="prose-doc mt-6">
+      <p class="eyebrow">Guide &middot; 60 minutes &middot; Wallet developers</p>
+      <h1 id="guide-title" class="text-4xl">Support Digi-ID in your wallet</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-400">Wallets are where Digi-ID lives. If your wallet already holds a BIP39 seed, adding Digi-ID is four steps: parse, confirm, derive and sign, then post the callback.</p>
+      <p>The examples use <code>digiid-core</code> (<a href="https://github.com/DigiByte-Core/digi-id-io/tree/main/packages/digiid-core" rel="noopener" target="_blank">packages/digiid-core</a> in this site's repository), the TypeScript module that powers the <a href="/demo.html">demo</a>. It's small enough to read in one sitting if you're porting to Kotlin, Swift or Rust.</p>
+
+      <h2>1. Handle the URI</h2>
+      <p>Register the <code>digiid</code> URL scheme so tapping a link opens your wallet, and accept the same string from your QR scanner.</p>
+      <pre data-lang="ts">import { parseUri, callbackUrlFromUri } from 'digiid-core';
+
+const parsed = parseUri(scanned);   // null if not a valid digiid:// challenge
+if (!parsed) throw new Error('Not a Digi-ID request');
+
+const callbackUrl = callbackUrlFromUri(scanned); // https://host/path (http:// only when u=1)</pre>
+
+      <h2>2. Ask the user &mdash; show the domain</h2>
+      <p>The confirmation screen is the user's phishing defence. Show the <strong>host</strong> prominently (for example <code>www.example.com</code>), not a page title the site controls.</p>
+      <ul>
+        <li>If <code>u=1</code> is present, warn clearly that the connection is not encrypted and default to &ldquo;Cancel&rdquo;.</li>
+        <li>Require the same unlock you use for sending funds (PIN or biometrics).</li>
+        <li>Never sign automatically, and never sign a URI the user didn't just scan or tap.</li>
+      </ul>
+
+      <h2>3. Derive the site key and sign</h2>
+      <p>Each site gets its own key at <code>m/13'/A'/B'/C'/D'</code>, derived from the callback URL. It's separate from the user's funds &mdash; don't show its address as a receiving address.</p>
+      <pre data-lang="ts">import { deriveKey, deriveAddress, signMessage } from 'digiid-core';
+
+const key = deriveKey(seed, scanned);            // seed = BIP39 seed bytes, index 0
+const address = deriveAddress(key.publicKey!);   // D… address for this site only
+const signature = signMessage(scanned, key.privateKey!); // base64, DigiByte message format</pre>
+      <p>Signatures use the standard DigiByte signed-message format: double SHA-256 of <code>"\x19DigiByte Signed Message:\n" + varint(len) + uri</code>, 65-byte compact recoverable signature with a compressed-key header, base64 encoded.</p>
+
+      <h2>4. Post the callback</h2>
+      <pre data-lang="ts">const res = await fetch(callbackUrl, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ address, uri: scanned, signature })
+});
+showResult(res.ok ? 'Signed in' : `Sign-in failed (${res.status})`);</pre>
+      <p>Post the <em>exact</em> URI you signed. Show success or failure based on the HTTP status; services return 2xx on success.</p>
+
+      <h2>Test against the published vector</h2>
+      <p>With the test seed <code>myth glimpse mystery abstract embark net faint hospital catch hint develop state</code> and URI <code>digiid://digiid.digibyteprojects.com/callback?x=c6140375e5bae71e</code>, your wallet must derive <code>DJDAkjie6nrW6RpFZSTpNUXsZ9JE2x6p1o</code>. Paste your signature into the <a href="/developers.html#playground">playground</a> to check it verifies.</p>
+
+      <h2>Checklist</h2>
+      <ul>
+        <li>Derivation matches the test vector (path and address).</li>
+        <li>The host is shown before signing; <code>u=1</code> triggers a warning.</li>
+        <li>Signing requires the wallet's normal authentication.</li>
+        <li>Restoring the same seed on another device gives the same Digi-ID addresses.</li>
+        <li>Network errors and non-2xx responses are shown to the user.</li>
+      </ul>
+      <p>Shipped it? <a href="/ecosystem.html#submit">Add your wallet to the ecosystem</a> &mdash; wallets are the most-requested listing.</p>
+    </div>
+  </div>
+</article>

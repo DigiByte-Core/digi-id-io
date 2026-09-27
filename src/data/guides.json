@@ -20,7 +20,7 @@
     "id": "wordpress",
     "title": "Add Digi-ID to WordPress",
     "summary": "Install and configure the WordPress plugin, then let users link their wallets.",
-    "status": "coming-soon",
+    "status": "complete",
     "readmeUrl": "https://github.com/DigiByte-Core/digiid-wp-authentication",
     "audience": "cms",
     "durationMin": 10
@@ -29,7 +29,7 @@
     "id": "account-linking",
     "title": "Link Digi-ID to existing accounts",
     "summary": "Offer Digi-ID next to passwords and migrate users gradually.",
-    "status": "coming-soon",
+    "status": "complete",
     "readmeUrl": "https://github.com/DigiByte-Core/digiid-php",
     "audience": "web",
     "durationMin": 20
@@ -37,8 +37,8 @@
   {
     "id": "physical-access",
     "title": "Build a door-access prototype",
-    "summary": "A screen, a unique callback per door and an allow-list of Digi-ID addresses.",
-    "status": "coming-soon",
+    "summary": "A kiosk screen per door, one stable callback and an allow-list of Digi-ID addresses.",
+    "status": "complete",
     "readmeUrl": "https://github.com/DigiByte-Core/digiid-js",
     "audience": "iot",
     "durationMin": 45
@@ -47,7 +47,7 @@
     "id": "wallet-integration",
     "title": "Support Digi-ID in your wallet",
     "summary": "Parse digiid:// URIs, derive per-site keys and post signed callbacks.",
-    "status": "coming-soon",
+    "status": "complete",
     "readmeUrl": "https://github.com/DigiByte-Core/digiid-js",
     "audience": "wallet",
     "durationMin": 60

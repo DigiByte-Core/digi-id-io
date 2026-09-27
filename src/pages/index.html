@@ -27,9 +27,34 @@
       </div>
       <p class="mt-5 text-sm text-slate-600 dark:text-slate-400">MIT licensed &middot; No SDK fees &middot; No user data leaves the wallet</p>
     </div>
-    <div class="illustration-surface relative">
-      <img src="/assets/scenarium/main.svg" alt="A user scans a Digi-ID QR code on a website with their phone and is signed in" width="600" height="420" class="mx-auto w-full max-w-lg motion-safe:animate-float">
-    </div>
+    <figure class="relative mx-auto w-full max-w-md sm:pb-32 lg:max-w-none">
+      <figcaption class="sr-only">A website shows a Digi-ID QR code, the user's phone wallet asks to approve sign-in to www.example.com, and the site confirms the user is verified.</figcaption>
+      <div aria-hidden="true" class="absolute -inset-6 -z-10 rounded-[2.5rem] bg-gradient-to-br from-primary/15 via-transparent to-accent/20 blur-2xl"></div>
+      <div aria-hidden="true" class="rounded-2xl border border-slate-200 bg-white shadow-card dark:border-navy-700 dark:bg-navy-800">
+        <div class="flex items-center gap-2 border-b border-slate-200 px-4 py-2.5 dark:border-navy-700">
+          <span class="size-2.5 rounded-full bg-slate-300 dark:bg-navy-600"></span><span class="size-2.5 rounded-full bg-slate-300 dark:bg-navy-600"></span><span class="size-2.5 rounded-full bg-slate-300 dark:bg-navy-600"></span>
+          <span class="ml-2 flex items-center gap-1.5 rounded-md bg-slate-100 px-2 py-0.5 font-mono text-xs text-slate-600 dark:bg-navy-900 dark:text-slate-400"><icon name="lock" class="size-3"></icon> example.com/login</span>
+          <span class="ml-auto flex items-center gap-1 font-mono text-xs text-slate-600 dark:text-slate-400"><icon name="timer" class="size-3.5"></icon> 1:24</span>
+        </div>
+        <div class="grid items-center gap-6 p-6 sm:grid-cols-[auto_1fr] sm:p-8">
+          <img src="/assets/images/hero-qr.svg" alt="" width="160" height="160" class="size-36 rounded-lg border border-slate-200 sm:size-40 dark:border-navy-600">
+          <div>
+            <p class="font-display text-xl font-bold text-navy dark:text-white">Sign in with Digi-ID</p>
+            <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Scan with your DigiByte wallet. No password needed.</p>
+          </div>
+        </div>
+      </div>
+      <div aria-hidden="true" class="relative -mt-4 mr-2 ml-auto w-56 rounded-[1.75rem] border-4 border-navy bg-white p-4 shadow-primary motion-safe:animate-float sm:absolute sm:-right-4 sm:bottom-0 sm:mt-0 sm:mr-0 sm:w-60 dark:border-slate-600 dark:bg-navy-900">
+        <div class="mx-auto mb-3 h-1.5 w-12 rounded-full bg-slate-200 dark:bg-navy-700"></div>
+        <p class="text-xs text-slate-600 dark:text-slate-400">Digi-ID request</p>
+        <p class="mt-0.5 font-medium text-navy dark:text-white">www.example.com</p>
+        <p class="mt-1 text-xs text-slate-600 dark:text-slate-400">wants you to sign in</p>
+        <p class="mt-4 flex items-center justify-center gap-2 rounded-full bg-primary-strong py-2 text-sm font-medium text-white dark:bg-primary dark:text-navy-950"><icon name="fingerprint" class="size-4"></icon> Approve</p>
+      </div>
+      <div aria-hidden="true" class="absolute -top-3 left-4 flex items-center gap-2 rounded-full border border-emerald-200 bg-white px-3 py-1.5 text-xs font-medium text-emerald-800 shadow-card sm:-left-4 dark:border-emerald-800 dark:bg-navy-900 dark:text-emerald-200">
+        <icon name="circle-check" class="size-4"></icon> Verified &middot; DJDAk&hellip;6p1o
+      </div>
+    </figure>
   </div>
 </section>
 

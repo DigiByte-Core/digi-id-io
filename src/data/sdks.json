@@ -3,7 +3,7 @@
     "id": "digiid-core",
     "name": "digiid-core",
     "language": "TypeScript · browser & Node",
-    "repo": "https://github.com/DennisPitallano/digi-id-io/tree/main/packages/digiid-core",
+    "repo": "https://github.com/DigiByte-Core/digi-id-io/tree/main/packages/digiid-core",
     "install": "Copy packages/digiid-core from the digi-id.io repository",
     "status": "maintained",
     "summary": "URI helpers, key derivation and signature verification that run in browsers and Node. Powers this site's demo and playground; tested against the published vectors."

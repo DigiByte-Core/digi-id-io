@@ -41,7 +41,7 @@
     "tagline": "Replace swipe cards with a scan.",
     "illustration": "/assets/scenarium/physical.svg",
     "problem": "Access cards get lost, cloned and shared; changing who can enter means reissuing hardware.",
-    "solution": "Put a small screen at each door showing a fresh Digi-ID challenge with a per-door callback. The server checks the address against an allow-list and triggers the lock.",
+    "solution": "Put a small screen at each door showing a fresh, short-lived Digi-ID challenge. One callback serves every door; the server knows which door issued each nonce, checks the address against that door's allow-list and triggers the lock.",
     "benefits": ["No cards to issue or revoke", "Per-door audit trail by address", "Revoke access instantly in software", "Short challenge lifetime defeats photographed codes"],
     "flow": ["Door screen shows a per-door QR code", "Visitor scans and approves", "Access server checks the allow-list", "Lock opens and the event is logged"],
     "guideId": "physical-access",

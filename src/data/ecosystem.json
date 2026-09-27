@@ -4,9 +4,9 @@
     "name": "digiid-core",
     "category": "library",
     "description": "TypeScript URI, key-derivation and signature verification used by this site's demo and playground.",
-    "url": "https://github.com/DennisPitallano/digi-id-io/tree/main/packages/digiid-core",
+    "url": "https://github.com/DigiByte-Core/digi-id-io/tree/main/packages/digiid-core",
     "logo": "assets/images/ecosystem/digiid-core.svg",
-    "proofUrl": "https://github.com/DennisPitallano/digi-id-io/tree/main/packages/digiid-core",
+    "proofUrl": "https://github.com/DigiByte-Core/digi-id-io/tree/main/packages/digiid-core",
     "platforms": ["browser", "node"],
     "status": "active",
     "addedAt": "2026-09-27"
