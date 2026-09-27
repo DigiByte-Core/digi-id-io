@@ -323,6 +323,8 @@ export async function buildJs({ minify = true } = {}) {
     bundle: true,
     format: 'esm',
     splitting: true,
+    // Bundle digiid-core from its TypeScript source instead of the published dist/ build.
+    conditions: ['source'],
     target: 'es2022',
     minify,
     sourcemap: !minify,

@@ -1,5 +1,5 @@
 import { readFile } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
+import { existsSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Ajv from 'ajv/dist/2020.js';
@@ -29,6 +29,7 @@ for (const entry of Array.isArray(entries) ? entries : []) {
   if (ids.has(entry.id)) errors.push(`duplicate id "${entry.id}"`);
   ids.add(entry.id);
   if (entry.logo && !existsSync(path.join(ROOT, entry.logo))) errors.push(`${entry.id}: logo file not found (${entry.logo})`);
+  else if (entry.logo && statSync(path.join(ROOT, entry.logo)).size > 50 * 1024) errors.push(`${entry.id}: logo is larger than 50 KB`);
 }
 
 if (errors.length) {

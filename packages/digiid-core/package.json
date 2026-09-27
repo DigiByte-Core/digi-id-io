@@ -1,12 +1,36 @@
 {
   "name": "digiid-core",
   "version": "0.1.0",
-  "private": true,
   "type": "module",
-  "description": "Digi-ID URI, key derivation, signing and verification shared by the site demo and playground",
+  "description": "Digi-ID passwordless authentication for JavaScript: digiid:// URIs, per-site key derivation, DigiByte message signing and callback verification.",
   "license": "MIT",
+  "keywords": ["digi-id", "digiid", "digibyte", "authentication", "passwordless", "login", "bip32", "signature"],
+  "homepage": "https://www.digi-id.io/developers.html",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DigiByte-Core/digi-id-io.git",
+    "directory": "packages/digiid-core"
+  },
+  "bugs": "https://github.com/DigiByte-Core/digi-id-io/issues",
+  "engines": {
+    "node": ">=20"
+  },
+  "sideEffects": false,
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "source": "./src/index.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "src", "README.md", "LICENSE"],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "prepublishOnly": "npm run build"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   },
   "dependencies": {
     "@noble/curves": "^2.4.0",

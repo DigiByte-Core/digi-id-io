@@ -20,7 +20,8 @@
     "test:links": "node scripts/check-links.mjs",
     "lighthouse": "npx --yes @lhci/cli@0.14 autorun --config=tests/lighthouserc.json",
     "lint:data": "node scripts/lint-data.mjs",
-    "images": "node scripts/generate-images.mjs"
+    "images": "node scripts/generate-images.mjs",
+    "verify": "npm test && npm run build && npm run test:links && npm run test:e2e && npm run lighthouse"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",

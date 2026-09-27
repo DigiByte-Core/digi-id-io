@@ -1,5 +1,17 @@
 [
   {
+    "id": "coinomi",
+    "name": "Coinomi",
+    "category": "wallet",
+    "description": "Multi-chain wallet for iOS, Android and desktop with Digi-ID sign-in built in.",
+    "url": "https://www.coinomi.com/en/",
+    "logo": "assets/images/ecosystem/coinomi.png",
+    "proofUrl": "https://coinomi.freshdesk.com/support/solutions/articles/29000039854-digi-id",
+    "platforms": ["ios", "android", "desktop"],
+    "status": "active",
+    "addedAt": "2026-09-27"
+  },
+  {
     "id": "digiid-core",
     "name": "digiid-core",
     "category": "library",

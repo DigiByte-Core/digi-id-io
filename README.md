@@ -15,6 +15,8 @@ npm run build      # production build -> _site/
 npm test           # data lint + unit tests (packages/digiid-core)
 npm run test:e2e   # Playwright + axe against _site/ (run `npx playwright install chromium` once)
 npm run lighthouse # Lighthouse budgets for / and /developers.html
+npm run verify     # every launch gate above, in order
+npm run images     # regenerate app icons and social preview images after title or logo changes
 ```
 
 | Path | What it is |
@@ -25,7 +27,7 @@ npm run lighthouse # Lighthouse budgets for / and /developers.html
 | `src/data/` | `sdks.json`, `guides.json`, `use-cases.json`, `ecosystem.json` (+ schema), `site.json` |
 | `src/js/` | Browser modules (`site.js`, `demo.js`, `playground.js`) |
 | `src/css/app.css` | Tailwind entry with brand tokens and light/dark themes |
-| `packages/digiid-core/` | Digi-ID URI, key derivation, signing and verification (used by the demo and playground) |
+| `packages/digiid-core/` | Digi-ID URI, key derivation, signing and verification (used by the demo and playground; published to npm as `digiid-core` by tagging `digiid-core-v<version>`) |
 
 ## Add your project to the ecosystem
 

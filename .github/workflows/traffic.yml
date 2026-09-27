@@ -1,0 +1,41 @@
+name: Traffic snapshot
+
+# GitHub keeps only 14 days of traffic data; this records weekly snapshots for the SC-006 baseline.
+# Needs a TRAFFIC_TOKEN secret: a fine-grained token with read access to "Administration" on the repos below.
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.TRAFFIC_TOKEN }}
+    steps:
+      - name: Skip without token
+        if: env.GH_TOKEN == ''
+        run: echo "TRAFFIC_TOKEN is not set; skipping." 
+      - name: Collect views and referrers
+        if: env.GH_TOKEN != ''
+        run: |
+          mkdir -p traffic
+          for repo in DigiByte-Core/digiid-js DigiByte-Core/digiid-php DigiByte-Core/digiid-wp-authentication DigiByte-Core/digi-id-io; do
+            name="${repo#*/}"
+            gh api "repos/$repo/traffic/views" > "traffic/$name-views.json"
+            gh api "repos/$repo/traffic/popular/referrers" > "traffic/$name-referrers.json"
+          done
+          echo "Referrals from digi-id.io:" >> "$GITHUB_STEP_SUMMARY"
+          for f in traffic/*-referrers.json; do
+            echo "- $(basename "$f" -referrers.json): $(jq '[.[] | select(.referrer | test("digi-id"))] | map(.count) | add // 0' "$f")" >> "$GITHUB_STEP_SUMMARY"
+          done
+      - name: Upload snapshot
+        if: env.GH_TOKEN != ''
+        uses: actions/upload-artifact@v7
+        with:
+          name: traffic-${{ github.run_id }}
+          path: traffic/
+          retention-days: 400
