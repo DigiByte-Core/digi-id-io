@@ -246,7 +246,12 @@ async function copyAssets() {
 }
 
 async function writeLogoVariants() {
-  const svg = await readFile(path.join(ROOT, 'assets', 'scenarium', 'logo.svg'), 'utf8');
+  const source = await readFile(path.join(ROOT, 'assets', 'scenarium', 'logo.svg'), 'utf8');
+  // The source canvas is mostly empty space; crop to the artwork bounds (measured via getBBox) so it renders crisp at small sizes.
+  const svg = source
+    .replace(/\swidth="[^"]*"\s+height="[^"]*"/, ' width="5920" height="2230"')
+    .replace(/viewBox="[^"]*"/, 'viewBox="45 575 5920 2230"')
+    .replace(/\senable-background="[^"]*"/, '');
   let seen = 0;
   // The first navy fill is the badge background; the rest form the wordmark, which must turn white on dark surfaces.
   const dark = svg.replace(/fill="#002352"/g, (m) => (seen++ === 0 ? m : 'fill="#FFFFFF"'));
