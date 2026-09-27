@@ -118,6 +118,12 @@
   .section {
     @apply py-20 sm:py-28;
   }
+  /* Long pages (lots of highlighted code) spend most time on style/layout; defer off-screen sections. */
+  main > section ~ section,
+  main > div.section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 900px;
+  }
   .section-alt {
     @apply bg-slate-50 dark:bg-navy-950;
   }
