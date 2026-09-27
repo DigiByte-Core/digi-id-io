@@ -4,6 +4,7 @@
   "github": "https://github.com/DigiByte-Core",
   "discussions": "https://github.com/orgs/DigiByte-Core/discussions",
   "video": "pLrQycud5GI",
+  "web3formsKey": "3d4319f1-66fa-4d15-9a53-4058cc60a425",
   "ecosystemCategories": [
     { "id": "library", "title": "Libraries & SDKs", "empty": "" },
     { "id": "plugin", "title": "Plugins", "empty": "" },

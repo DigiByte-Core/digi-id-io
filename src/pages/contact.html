@@ -1,7 +1,8 @@
 ---
 {
   "title": "Community – Get help and contribute to Digi-ID",
-  "description": "Get help with Digi-ID integrations, report issues, submit ecosystem projects and join the DigiByte developer community."
+  "description": "Get help with Digi-ID integrations, report issues, submit ecosystem projects, contact the community and join the DigiByte developer community.",
+  "scripts": ["contact"]
 }
 ---
 <section class="border-b border-slate-200 dark:border-navy-700" aria-labelledby="community-page-title">
@@ -41,7 +42,55 @@
   </div>
 </section>
 
-<section class="section section-alt" aria-labelledby="help-scope-title">
+<section id="contact" class="section section-alt" aria-labelledby="contact-title">
+  <div class="container-x grid gap-10 lg:grid-cols-[1fr_1.3fr]">
+    <div>
+      <p class="eyebrow">Contact</p>
+      <h2 id="contact-title" class="section-title">Want to work with Digi-ID?</h2>
+      <p class="section-lead">Integrations, wallet support, partnerships or press. Tell us what you're working on and a DigiByte community member will get back to you.</p>
+      <p class="mt-6 text-sm text-slate-600 dark:text-slate-400">For technical questions, <a href="{{ site.discussions }}" rel="noopener" target="_blank">GitHub Discussions</a> is usually faster, and the answers help everyone.</p>
+    </div>
+    <form class="card space-y-4" data-contact-form data-access-key="{{ site.web3formsKey }}" novalidate>
+      <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off">
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label for="cf-name" class="block text-sm font-medium text-navy dark:text-white">Your name</label>
+          <input id="cf-name" name="name" type="text" required autocomplete="name" class="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-navy-600 dark:bg-navy-900">
+        </div>
+        <div>
+          <label for="cf-email" class="block text-sm font-medium text-navy dark:text-white">Email</label>
+          <input id="cf-email" name="email" type="email" required autocomplete="email" class="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-navy-600 dark:bg-navy-900">
+        </div>
+        <div>
+          <label for="cf-org" class="block text-sm font-medium text-navy dark:text-white">Organization <span class="font-normal text-slate-600 dark:text-slate-400">(optional)</span></label>
+          <input id="cf-org" name="organization" type="text" autocomplete="organization" class="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-navy-600 dark:bg-navy-900">
+        </div>
+        <div>
+          <label for="cf-interest" class="block text-sm font-medium text-navy dark:text-white">I'm interested in</label>
+          <select id="cf-interest" name="interest" required class="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-navy-600 dark:bg-navy-900">
+            <option value="Integration">Integrating Digi-ID in my app or site</option>
+            <option value="Wallet support">Adding Digi-ID to a wallet</option>
+            <option value="Collaboration">Collaboration or partnership</option>
+            <option value="Media / press">Media / press</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label for="cf-message" class="block text-sm font-medium text-navy dark:text-white">Tell us a bit more</label>
+        <textarea id="cf-message" name="message" rows="5" required class="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-navy-600 dark:bg-navy-900"></textarea>
+      </div>
+      <p class="text-xs text-slate-600 dark:text-slate-400">By submitting, you agree to have your message forwarded to a DigiByte community member via our form processor (Web3Forms). See the <a href="/ToS.html#privacy">privacy policy</a>. Never include a recovery phrase or private key.</p>
+      <div class="flex flex-wrap items-center gap-4">
+        <button type="submit" class="btn btn-primary" data-contact-submit><icon name="send" class="size-4"></icon> <span>Send message</span></button>
+        <p class="text-sm font-medium data-[kind=ok]:text-accent-strong data-[kind=error]:text-red-700 dark:data-[kind=ok]:text-accent dark:data-[kind=error]:text-red-300" data-contact-status role="status" aria-live="polite"></p>
+      </div>
+      <noscript><p class="text-sm">This form needs JavaScript. Please reach out via <a href="{{ site.discussions }}" rel="noopener" target="_blank">GitHub Discussions</a> instead.</p></noscript>
+    </form>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="help-scope-title">
   <div class="container-x grid gap-10 lg:grid-cols-2">
     <div>
       <h2 id="help-scope-title" class="section-title">Before you ask</h2>
