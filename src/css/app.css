@@ -10,35 +10,35 @@
   font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
-  font-display: swap;
+  font-display: optional;
   src: url("../fonts/roboto-400.woff2") format("woff2");
 }
 @font-face {
   font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
-  font-display: swap;
+  font-display: optional;
   src: url("../fonts/roboto-500.woff2") format("woff2");
 }
 @font-face {
   font-family: "Roboto";
   font-style: normal;
   font-weight: 700;
-  font-display: swap;
+  font-display: optional;
   src: url("../fonts/roboto-700.woff2") format("woff2");
 }
 @font-face {
   font-family: "Nexa";
   font-style: normal;
   font-weight: 300;
-  font-display: swap;
+  font-display: optional;
   src: url("../fonts/nexa-light.woff") format("woff");
 }
 @font-face {
   font-family: "Nexa";
   font-style: normal;
   font-weight: 700;
-  font-display: swap;
+  font-display: optional;
   src: url("../fonts/nexa-bold.woff") format("woff");
 }
 
