@@ -19,6 +19,8 @@ for (const url of pages()) {
     test(`a11y ${url} (${theme})`, async ({ page }) => {
       await page.addInitScript((t) => localStorage.setItem('theme', t), theme);
       await page.goto(url);
+      // content-visibility defers off-screen layout; force it so axe measures the real rendered colours.
+      await page.addStyleTag({ content: '* { content-visibility: visible !important; }' });
       const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
       expect(results.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target).join(', ')}`)).toEqual([]);
     });

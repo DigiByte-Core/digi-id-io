@@ -27,3 +27,6 @@ jobs:
           fail: true
       - name: Lighthouse budgets
         run: npx --yes @lhci/cli@0.14 autorun --config=tests/lighthouserc.json
+      - name: Lighthouse summary
+        if: always()
+        run: node scripts/lighthouse-summary.mjs
