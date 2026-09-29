@@ -9,8 +9,14 @@
   <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(50rem_24rem_at_90%_0%,rgb(0_209_178/0.14),transparent)]"></div>
   <div class="container-x py-16 sm:py-20">
     <p class="eyebrow">Developer hub</p>
-    <h1 id="dev-title" class="max-w-3xl text-4xl sm:text-5xl">Ship passwordless login this afternoon.</h1>
-    <p class="section-lead">Everything you need to integrate Digi-ID: copy-paste code, libraries, the full protocol and tools to test signatures without a wallet.</p>
+    <h1 id="dev-title" class="max-w-3xl text-4xl sm:text-5xl">Developer Documentation &amp; Quickstart</h1>
+    <p class="section-lead">Integrate Digi-ID authentication into any back-end service using standard message verification libraries.</p>
+    <h3 class="mt-8 text-lg">Core Concepts</h3>
+    <ul class="mt-4 max-w-3xl space-y-3 text-sm">
+      <li class="flex gap-3"><icon name="check" class="mt-0.5 shrink-0 text-accent-strong dark:text-accent"></icon><span><strong class="text-navy dark:text-white">Challenge Nonce:</strong> A random, time-bound string tied to the login session to prevent replay attacks.</span></li>
+      <li class="flex gap-3"><icon name="check" class="mt-0.5 shrink-0 text-accent-strong dark:text-accent"></icon><span><strong class="text-navy dark:text-white">Domain Binding:</strong> Key derivation uses your exact URI domain, ensuring keys generated for one website cannot authenticate on another.</span></li>
+      <li class="flex gap-3"><icon name="check" class="mt-0.5 shrink-0 text-accent-strong dark:text-accent"></icon><span><strong class="text-navy dark:text-white">Stateless Verification:</strong> Verification uses standard ECDSA signature checking on the server without pinging the blockchain or remote nodes.</span></li>
+    </ul>
     <nav aria-label="On this page" class="mt-8">
       <ul class="flex flex-wrap gap-2 text-sm">
         <li><a href="#quickstart" class="badge badge-muted !px-3 !py-1.5 no-underline">Quickstart</a></li>
@@ -29,8 +35,14 @@
 <section id="quickstart" class="section" aria-labelledby="qs-title">
   <div class="container-x">
     <p class="eyebrow">Quickstart &middot; ~5 minutes</p>
-    <h2 id="qs-title" class="section-title">Three steps to a working login.</h2>
-    <p class="section-lead">Your server issues a challenge, the wallet signs it, your server verifies the signature. Pick a language once &mdash; every example on this site follows.</p>
+    <h2 id="qs-title" class="section-title">Integrate passwordless authorization in three steps.</h2>
+    <p class="section-lead">Your server issues a challenge nonce, the wallet signs it, and your server verifies the signature locally. Choose your backend language to view code samples.</p>
+    <ol class="mt-8 grid max-w-5xl gap-4 text-sm sm:grid-cols-2">
+      <li class="flex gap-3"><span class="grid size-6 shrink-0 place-items-center rounded-full bg-accent/15 font-mono text-xs text-primary-strong dark:text-accent">1</span><span><strong class="text-navy dark:text-white">Generate Session:</strong> Create a unique nonce and render a <code>digiid://</code> URI as a QR code on your login page.</span></li>
+      <li class="flex gap-3"><span class="grid size-6 shrink-0 place-items-center rounded-full bg-accent/15 font-mono text-xs text-primary-strong dark:text-accent">2</span><span><strong class="text-navy dark:text-white">Listen for Payload:</strong> Set up an endpoint to receive <code>address</code>, <code>uri</code>, and <code>signature</code> via POST request.</span></li>
+      <li class="flex gap-3"><span class="grid size-6 shrink-0 place-items-center rounded-full bg-accent/15 font-mono text-xs text-primary-strong dark:text-accent">3</span><span><strong class="text-navy dark:text-white">Validate:</strong> Verify that the nonce hasn't expired, match the URI to your domain, and check the signature against the public address.</span></li>
+      <li class="flex gap-3"><span class="grid size-6 shrink-0 place-items-center rounded-full bg-accent/15 font-mono text-xs text-primary-strong dark:text-accent">4</span><span><strong class="text-navy dark:text-white">Authenticate:</strong> Match the validated address to an account in your database and issue your standard session token or cookie.</span></li>
+    </ol>
 
     <ol class="mt-12 space-y-14">
       <li class="grid gap-8 lg:grid-cols-[18rem_1fr]">
@@ -91,8 +103,8 @@ php -m | grep -i gmp</pre></div>
     </ol>
 
     <div class="mt-12 flex flex-wrap gap-3">
-      <a href="/guides/web-app-login.html" class="btn btn-primary">Follow the full web-app guide <icon name="arrow-right" class="size-4"></icon></a>
-      <a href="/demo.html" class="btn btn-secondary">See it in the demo</a>
+      <a href="/guides/web-app-login.html" class="btn btn-primary">Complete web-app guide <icon name="arrow-right" class="size-4"></icon></a>
+      <a href="/demo.html" class="btn btn-secondary">Try Demo</a>
     </div>
   </div>
 </section>
@@ -100,8 +112,8 @@ php -m | grep -i gmp</pre></div>
 <section id="sdks" class="section section-alt" aria-labelledby="sdks-title">
   <div class="container-x">
     <p class="eyebrow">SDKs &amp; plugins</p>
-    <h2 id="sdks-title" class="section-title">Libraries for your stack.</h2>
-    <p class="section-lead">Open-source and community maintained. Status labels are honest &mdash; contributions to older plugins are very welcome.</p>
+    <h2 id="sdks-title" class="section-title">Official SDKs &amp; Reference Libraries</h2>
+    <p class="section-lead">Pure-cryptography libraries that handle key derivation, URI parsing, and message signature verification without external API dependencies.</p>
     <ul class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
       <each loop="sdk in sdks">
       <li class="card flex flex-col">
@@ -126,7 +138,8 @@ php -m | grep -i gmp</pre></div>
 <section id="guides" class="section" aria-labelledby="guides-title">
   <div class="container-x">
     <p class="eyebrow">Guides</p>
-    <h2 id="guides-title" class="section-title">Step-by-step tutorials.</h2>
+    <h2 id="guides-title" class="section-title">Implementation Guides</h2>
+    <p class="section-lead">Architectural details for session security, key management, and edge cases.</p>
     <ul class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
       <each loop="guide in guides">
       <li>
@@ -155,7 +168,8 @@ php -m | grep -i gmp</pre></div>
 <section id="examples" class="section section-alt" aria-labelledby="examples-title">
   <div class="container-x">
     <p class="eyebrow">Examples &amp; demos</p>
-    <h2 id="examples-title" class="section-title">See it working, then fork it.</h2>
+    <h2 id="examples-title" class="section-title">Code Examples &amp; Sandbox</h2>
+    <p class="section-lead">Working reference implementations to clone and test locally.</p>
     <ul class="mt-10 grid gap-6 md:grid-cols-3">
       <li>
         <a href="/demo.html" class="card card-link flex h-full flex-col">

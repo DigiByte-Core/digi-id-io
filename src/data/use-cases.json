@@ -2,7 +2,7 @@
   {
     "id": "website-login",
     "title": "Website & SaaS login",
-    "tagline": "Drop passwords, resets and SMS codes.",
+    "tagline": "Eliminate passwords, reset flows, and SMS 2FA costs.",
     "illustration": "/assets/scenarium/website.svg",
     "problem": "Password databases leak, users reuse passwords everywhere, and every reset or SMS code costs support time and money.",
     "solution": "Show a Digi-ID QR code on the login page. The user scans, approves, and the callback signs the browser session in. You store one public address per user.",
@@ -26,7 +26,7 @@
   {
     "id": "gaming",
     "title": "Gaming accounts",
-    "tagline": "Keep legendary items safe.",
+    "tagline": "Bind player assets and profiles directly to wallet signatures.",
     "illustration": "/assets/scenarium/game.svg",
     "problem": "Ranks, items and years of progress are lost to phishing, credential stuffing and forgotten passwords.",
     "solution": "Use Digi-ID as the primary login or as a strong second factor for trades and account changes. Keys never leave the player's phone.",
@@ -50,7 +50,7 @@
   {
     "id": "identity",
     "title": "Identity & age checks",
-    "tagline": "Verify once, prove it's you every time after.",
+    "tagline": "Cryptographically prove returning status without re-entering personal data.",
     "illustration": "/assets/scenarium/id.svg",
     "problem": "Users upload the same ID documents to service after service, creating copies of sensitive data everywhere.",
     "solution": "After a one-time verification, a trusted verifier links the result to the user's Digi-ID address for your service. Later visits just prove control of that address.",
@@ -86,7 +86,7 @@
   {
     "id": "events",
     "title": "Events & check-in",
-    "tagline": "Tickets that can't simply be screenshotted.",
+    "tagline": "Dynamic ticket authentication that prevents screenshot fraud.",
     "illustration": "/assets/scenarium/scan-01.svg",
     "problem": "PDF and screenshot tickets are easy to duplicate and resell; check-in lines are slow.",
     "solution": "Bind each ticket to the buyer's Digi-ID address. At the gate a screen shows a challenge; the attendee scans and the ticket is checked against the signed address.",

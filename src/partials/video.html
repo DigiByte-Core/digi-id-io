@@ -1,10 +1,5 @@
 <div class="relative aspect-video overflow-hidden rounded-2xl border border-slate-200 bg-navy shadow-card dark:border-navy-700">
-  <button type="button" class="group absolute inset-0 flex size-full flex-col items-center justify-center gap-4 text-white" data-video-id="{{ site.video }}" data-video-title="{{ title }}">
-    <img src="/assets/scenarium/main.svg" alt="" class="absolute inset-0 size-full object-contain p-10 opacity-30" loading="lazy">
-    <span class="relative inline-flex size-16 items-center justify-center rounded-full bg-accent text-navy shadow-accent transition group-hover:scale-105">
-      <icon name="play" class="size-7 translate-x-0.5"></icon>
-    </span>
-    <span class="relative font-medium">{{ title }}</span>
-    <span class="relative text-xs text-slate-300">Loads a YouTube player from youtube-nocookie.com</span>
-  </button>
+  <video class="absolute inset-0 size-full" controls playsinline preload="metadata" poster="/assets/digidocs/digi_id-poster.jpg" aria-label="{{ title }}">
+    <source src="/assets/digidocs/digi_id.mp4" type="video/mp4">
+  </video>
 </div>

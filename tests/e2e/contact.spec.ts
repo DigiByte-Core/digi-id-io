@@ -19,7 +19,7 @@ test('contact form sends to Web3Forms with the access key and shows success', as
   await fill(page);
   await page.getByRole('button', { name: 'Send message' }).click();
   await expect(page.locator('[data-contact-status]')).toContainText('on its way');
-  expect(body).toContain('3d4319f1-66fa-4d15-9a53-4058cc60a425');
+  expect(body).toContain('e7b77a7b-6a9e-47a6-96c8-67ead259e659');
   expect(body).toContain('Wallet support');
   expect(body).toContain('ada@example.com');
   await expect(page.getByLabel('Your name')).toHaveValue('');

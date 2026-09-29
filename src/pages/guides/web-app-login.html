@@ -17,12 +17,12 @@
     <div class="prose-doc mt-6">
       <p class="eyebrow">Guide &middot; 15 minutes &middot; Node.js</p>
       <h1 id="guide-title" class="text-4xl">Add Digi-ID login to a web app</h1>
-      <p class="text-lg text-slate-600 dark:text-slate-400">You'll build a small Express app where users sign in by scanning a QR code with a DigiByte wallet. No passwords, no user table with secrets &mdash; just a verified address per user.</p>
+      <p class="text-lg text-slate-600 dark:text-slate-400">Build an Express application that authenticates users via DigiByte wallet signatures. Eliminates stored password hashes, secrets, and credential databases in favor of verified public addresses.</p>
 
       <h2>How the pieces fit</h2>
       <ol>
         <li>The browser asks your server for a <strong>challenge</strong> and shows it as a QR code.</li>
-        <li>The wallet scans it, signs it and <strong>POSTs</strong> the signature to your callback &mdash; from the phone, not the browser.</li>
+        <li>The wallet scans the QR code, signs the challenge string, and <strong>POSTs</strong> the payload directly to your server callback.</li>
         <li>The browser <strong>polls</strong> your server; once the callback is verified, the server upgrades the browser's session.</li>
       </ol>
       <p>Because the wallet calls back from a different device, you link the two with the nonce: it is stored next to the browser's session ID when the challenge is created.</p>
@@ -137,11 +137,12 @@ node server.js</pre>
 
       <h2>5. Before you go live</h2>
       <ul>
-        <li>Move <code>pending</code> to Redis or your database so it survives restarts and works across instances.</li>
+        <li>Store pending nonces in Redis or a database so active sessions persist across process restarts and load-balanced instances.</li>
         <li>Store users by address; let them link a second wallet as a recovery option.</li>
         <li>Rate-limit <code>/digiid/challenge</code> and <code>/digiid/callback</code>.</li>
-        <li>Keep one stable callback URL: wallets derive the user's key from it.</li>
-        <li>Read <a href="/guides/nonce-replay.html">Nonces, timeouts and replay protection</a>.</li>
+        <li>Maintain a static callback domain: key derivation paths are tied strictly to the domain in the callback URL.</li>
+        <li>Read <a href="/guides/nonce-replay.html">Nonces &amp; Replay Prevention</a>.</li>
+        <li>Need instant feedback instead of polling? See <a href="/guides/polling-websockets.html">Cross-Device Polling vs. WebSockets</a>.</li>
       </ul>
       <p>Want to see the flow without a wallet first? Try the <a href="/demo.html">sandbox demo</a>.</p>
     </div>

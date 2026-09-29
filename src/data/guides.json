@@ -10,11 +10,19 @@
   },
   {
     "id": "nonce-replay",
-    "title": "Nonces, timeouts and replay protection",
-    "summary": "Generate, bind, expire and consume nonces so a signed challenge can never be reused.",
+    "title": "Nonces & Replay Prevention",
+    "summary": "How to store, time-box (60–90 seconds), and consume nonces to eliminate replay attacks.",
     "status": "complete",
     "audience": "web",
     "durationMin": 10
+  },
+  {
+    "id": "polling-websockets",
+    "title": "Cross-Device Polling vs. WebSockets",
+    "summary": "Comparing short-polling HTTP endpoints against WebSocket connections for real-time QR authorization updates.",
+    "status": "complete",
+    "audience": "web",
+    "durationMin": 15
   },
   {
     "id": "wordpress",
@@ -27,8 +35,8 @@
   },
   {
     "id": "account-linking",
-    "title": "Link Digi-ID to existing accounts",
-    "summary": "Offer Digi-ID next to passwords and migrate users gradually.",
+    "title": "Account Binding & Recovery",
+    "summary": "Strategies for linking public wallet addresses to existing user databases and handling secondary device pairing.",
     "status": "complete",
     "readmeUrl": "https://github.com/DigiByte-Core/digiid-php",
     "audience": "web",
