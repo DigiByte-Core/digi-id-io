@@ -1,7 +1,7 @@
 ---
 {
-  "title": "Guide: Link Digi-ID to existing accounts – Digi-ID",
-  "description": "Offer Digi-ID next to passwords: let signed-in users link one or more wallets, sign in with them, unlink safely and migrate away from passwords over time.",
+  "title": "Guide: Account Binding & Recovery – Digi-ID",
+  "description": "Offer Digi-ID next to passwords: link one or more wallets to existing accounts, pair a second device, recover access safely and migrate away from passwords over time.",
   "schema": "TechArticle"
 }
 ---
@@ -11,12 +11,12 @@
       <ol class="flex flex-wrap gap-2 text-slate-600 dark:text-slate-400">
         <li><a href="/developers.html">Developers</a> <span aria-hidden="true">/</span></li>
         <li><a href="/developers.html#guides">Guides</a> <span aria-hidden="true">/</span></li>
-        <li aria-current="page">Account linking</li>
+        <li aria-current="page">Account binding &amp; recovery</li>
       </ol>
     </nav>
     <div class="prose-doc mt-6">
       <p class="eyebrow">Guide &middot; 20 minutes &middot; Node.js</p>
-      <h1 id="guide-title" class="text-4xl">Link Digi-ID to existing accounts</h1>
+      <h1 id="guide-title" class="text-4xl">Account Binding &amp; Recovery</h1>
       <p class="text-lg text-slate-600 dark:text-slate-400">Most products can't drop passwords overnight. Let users add Digi-ID to the account they already have, sign in with it, and keep a second wallet as a recovery key. Passwords can then be retired one user at a time.</p>
       <p>This guide builds on <a href="/guides/web-app-login.html">Add Digi-ID login to a web app</a>; read that first for the challenge, callback and polling basics.</p>
 
@@ -87,13 +87,22 @@ CREATE INDEX user_digiids_user ON user_digiids (user_id);</pre>
         <li>Keep your existing email-based recovery as a last resort, but require it to link a new wallet rather than set a password.</li>
       </ol>
 
+      <h2>6. Second devices and recovery</h2>
+      <ul>
+        <li><strong>Same wallet, new phone:</strong> restoring the wallet's recovery phrase on another device derives the same address for your site. Nothing changes on your side.</li>
+        <li><strong>A different wallet:</strong> pair it as a second device by signing in with the first one and running the link flow from step 2. Both addresses now open the same account.</li>
+        <li><strong>Lost device, phrase backed up:</strong> restore the wallet and sign in as before.</li>
+        <li><strong>Lost device and phrase:</strong> sign in with another linked wallet and unlink the lost one. Only fall back to email recovery when no linked wallet is left, and have it end in linking a new wallet.</li>
+        <li><strong>Notify on changes:</strong> email the user whenever a wallet is linked or unlinked, so an unexpected pairing is noticed quickly.</li>
+      </ul>
+
       <h2>Pitfalls</h2>
       <ul>
         <li>Addresses are specific to your callback URL. Changing the URL (including its path) gives every user a new address and breaks their link &mdash; pick one and keep it.</li>
         <li>Don't auto-create an account when an unknown address signs in during a <em>link</em> flow; that's how accounts get hijacked.</li>
         <li>A lost recovery phrase means a lost key. Encourage a second wallet, and treat email recovery as high-risk.</li>
       </ul>
-      <p>Next: <a href="/guides/nonce-replay.html">Nonces, timeouts and replay protection</a>.</p>
+      <p>Next: <a href="/guides/nonce-replay.html">Nonces &amp; Replay Prevention</a>.</p>
     </div>
   </div>
 </article>

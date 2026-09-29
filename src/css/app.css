@@ -124,6 +124,10 @@
     content-visibility: auto;
     contain-intrinsic-size: auto 900px;
   }
+  .cv-off main > section ~ section,
+  .cv-off main > div.section {
+    content-visibility: visible;
+  }
   .section-alt {
     @apply bg-slate-50 dark:bg-navy-950;
   }

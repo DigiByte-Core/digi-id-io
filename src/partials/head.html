@@ -20,6 +20,22 @@
 <script>
   (function () {
     document.documentElement.classList.add('js');
+    // content-visibility placeholders give wrong offsets, so render all sections before any anchor jump.
+    var cvOff = function () { document.documentElement.classList.add('cv-off'); };
+    if (location.hash) cvOff();
+    var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+    if (nav && (nav.type === 'back_forward' || nav.type === 'reload')) cvOff();
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href*="#"]');
+      if (a && a.hash && a.pathname === location.pathname) cvOff();
+    }, true);
+    // Hash changes not caused by a click (history, address bar) already scrolled with placeholder sizes.
+    addEventListener('hashchange', function () {
+      if (document.documentElement.classList.contains('cv-off')) return;
+      cvOff();
+      var t = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+      if (t) t.scrollIntoView();
+    });
     try {
       var stored = localStorage.getItem('theme');
       var theme = stored || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');

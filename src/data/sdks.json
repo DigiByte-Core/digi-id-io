@@ -15,7 +15,7 @@
     "repo": "https://github.com/DigiByte-Core/digiid-js",
     "install": "npm install digiid",
     "status": "community",
-    "summary": "Build challenges and verify wallet signatures in any Node.js backend."
+    "summary": "Lightweight npm package for Express, Fastify, and Next.js backends. Includes native TypeScript definitions."
   },
   {
     "id": "digiid-php",
@@ -24,7 +24,7 @@
     "repo": "https://github.com/DigiByte-Core/digiid-php",
     "install": "git clone https://github.com/DigiByte-Core/digiid-php",
     "status": "community",
-    "summary": "Pure PHP implementation with a working login example. Requires the GMP extension; no node needed."
+    "summary": "Supports PHP 7.4+ with GMP extension. Drop-in integration for standard web servers."
   },
   {
     "id": "digiid-wordpress",
@@ -33,7 +33,7 @@
     "repo": "https://github.com/DigiByte-Core/digiid-wp-authentication",
     "install": "Upload to wp-content/plugins and activate",
     "status": "unmaintained",
-    "summary": "Adds Digi-ID login to the WordPress login screen. Last tested with WordPress 4.1; requires the GMP extension."
+    "summary": "Enables passwordless sign-in for WP-Admin and subscriber logins out of the box."
   },
   {
     "id": "digiid-phpbb",
@@ -42,6 +42,6 @@
     "repo": "https://github.com/DigiByte-Core/digiid-phpbb-extension",
     "install": "Copy to ext/DigiByte/digiid and enable in the ACP",
     "status": "unmaintained",
-    "summary": "Passwordless forum login; users link a wallet under UCP → My Digi-ID. Requires the GMP extension."
+    "summary": "Native forum authentication plugin that replaces standard login forms."
   }
 ]

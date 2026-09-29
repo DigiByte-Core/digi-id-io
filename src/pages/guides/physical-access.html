@@ -46,7 +46,7 @@ CREATE TABLE door_events (
   granted   BOOLEAN     NOT NULL,
   at        TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP
 );</pre>
-      <p>Enrol people by having them sign in once on your admin site with the same callback URL, then add their address to <code>door_access</code>.</p>
+      <p>Enroll people by having them sign in once on your admin site with the same callback URL, then add their address to <code>door_access</code>.</p>
 
       <h2>2. Access server</h2>
       <pre data-lang="js" data-label="access-server.js">import crypto from 'node:crypto';

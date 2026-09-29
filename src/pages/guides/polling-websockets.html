@@ -1,0 +1,114 @@
+---
+{
+  "title": "Guide: Cross-Device Polling vs. WebSockets – Digi-ID",
+  "description": "How the login page learns that a phone has signed the Digi-ID challenge: short-polling an HTTP endpoint compared with a WebSocket push, with Node.js examples and a safe fallback.",
+  "schema": "TechArticle"
+}
+---
+<article class="section" aria-labelledby="guide-title">
+  <div class="container-x">
+    <nav aria-label="Breadcrumb" class="text-sm">
+      <ol class="flex flex-wrap gap-2 text-slate-600 dark:text-slate-400">
+        <li><a href="/developers.html">Developers</a> <span aria-hidden="true">/</span></li>
+        <li><a href="/developers.html#guides">Guides</a> <span aria-hidden="true">/</span></li>
+        <li aria-current="page">Polling vs. WebSockets</li>
+      </ol>
+    </nav>
+    <div class="prose-doc mt-6">
+      <p class="eyebrow">Guide &middot; 15 minutes &middot; Node.js</p>
+      <h1 id="guide-title" class="text-4xl">Cross-Device Polling vs. WebSockets</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-400">Digi-ID is a cross-device flow: the <em>phone</em> posts the signature to your callback, but the <em>browser</em> showing the QR code is the one that needs to sign in. Something has to tell the browser that the scan succeeded. You can ask repeatedly (polling) or be told (WebSockets).</p>
+      <p>This guide builds on <a href="/guides/web-app-login.html">Add Digi-ID login to a web app</a>, which uses polling.</p>
+
+      <h2>At a glance</h2>
+      <table>
+        <thead><tr><th scope="col"></th><th scope="col">Short polling</th><th scope="col">WebSocket</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Delay after approval</strong></td><td>Up to one interval (1&ndash;2&nbsp;s)</td><td>Near-instant</td></tr>
+          <tr><td><strong>Requests per login</strong></td><td>~45 at 2&nbsp;s over a 90&nbsp;s challenge</td><td>One upgrade, one message</td></tr>
+          <tr><td><strong>Infrastructure</strong></td><td>Any HTTP server, CDN or serverless platform</td><td>Long-lived connections; proxies must allow upgrades</td></tr>
+          <tr><td><strong>Multiple instances</strong></td><td>Works with any shared store (Redis, SQL)</td><td>Needs pub/sub so the instance that got the callback can reach the socket</td></tr>
+          <tr><td><strong>Setting the session cookie</strong></td><td>Directly in the status response</td><td>Not possible over the socket; needs a follow-up HTTP request</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Recommendation:</strong> start with polling. Move to WebSockets when instant feedback matters (kiosks, doors, checkout) or login volume makes polling traffic noticeable, and keep polling as the fallback.</p>
+
+      <h2>1. Short polling</h2>
+      <p>The browser asks <code>/digiid/status</code> every two seconds. When the callback has been verified, that same response regenerates the session and sets the cookie.</p>
+      <pre data-lang="js" data-label="public/login.js">const poll = setInterval(async () =&gt; {
+  const { state } = await fetch(`/digiid/status?nonce=${nonce}`).then((r) =&gt; r.json());
+  if (state === 'verified') { clearInterval(poll); location.assign('/account'); }
+  if (state === 'expired') { clearInterval(poll); start(); }
+}, 2000);</pre>
+      <ul>
+        <li>Keep the interval at 1&ndash;2&nbsp;s. Faster adds load without a noticeable gain; slower feels broken.</li>
+        <li>Stop polling when the tab is hidden (<code>document.visibilityState</code>) and resume when it returns.</li>
+        <li>Rate-limit the status endpoint per session, not per IP, so shared networks aren't blocked.</li>
+      </ul>
+
+      <h2>2. WebSocket push</h2>
+      <p>The browser opens a socket for its nonce. When the callback verifies the signature, the server pushes <code>verified</code> to that socket only.</p>
+      <pre data-lang="js" data-label="server.js">import { WebSocketServer } from 'ws';
+
+const sessionMiddleware = session({ /* same options as the web-app guide */ });
+app.use(sessionMiddleware);
+
+const server = app.listen(3000);
+const wss = new WebSocketServer({ noServer: true });
+const sockets = new Map(); // nonce -&gt; ws
+
+server.on('upgrade', (req, socket, head) =&gt; {
+  const url = new URL(req.url, `https://${req.headers.host}`);
+  if (url.pathname !== '/digiid/ws' || req.headers.origin !== process.env.SITE_ORIGIN) return socket.destroy();
+
+  sessionMiddleware(req, {}, () =&gt; {
+    const nonce = url.searchParams.get('nonce');
+    const challenge = pending.get(nonce);
+    if (!challenge || challenge.sessionId !== req.sessionID) return socket.destroy();
+
+    wss.handleUpgrade(req, socket, head, (ws) =&gt; {
+      sockets.set(nonce, ws);
+      ws.on('close', () =&gt; sockets.delete(nonce));
+    });
+  });
+});
+
+// In the callback handler, after the signature is verified:
+challenge.address = address;
+sockets.get(digiid.nonce)?.send(JSON.stringify({ state: 'verified' }));</pre>
+      <p>The push only says <em>that</em> the scan succeeded. The browser then calls the normal status endpoint, which regenerates the session and sets the cookie:</p>
+      <pre data-lang="js" data-label="public/login.js">const ws = new WebSocket(`wss://${location.host}/digiid/ws?nonce=${nonce}`);
+const expiry = setTimeout(() =&gt; { ws.close(); start(); }, 90_000);
+
+ws.onmessage = async (event) =&gt; {
+  if (JSON.parse(event.data).state !== 'verified') return;
+  clearTimeout(expiry);
+  ws.close();
+  const { state } = await fetch(`/digiid/status?nonce=${nonce}`).then((r) =&gt; r.json());
+  if (state === 'verified') location.assign('/account');
+};
+ws.onerror = () =&gt; { clearTimeout(expiry); startPolling(nonce); }; // proxies and some networks block upgrades</pre>
+
+      <h2>3. Running more than one server</h2>
+      <p>The wallet's callback can land on a different instance from the one holding the browser's socket. Keep challenges in Redis or your database, and publish a message when a callback is verified:</p>
+      <pre data-lang="js" data-label="server.js">// Callback instance
+await redis.publish('digiid:verified', digiid.nonce);
+
+// Every instance
+subscriber.subscribe('digiid:verified', (nonce) =&gt; {
+  sockets.get(nonce)?.send(JSON.stringify({ state: 'verified' }));
+});</pre>
+      <p>Polling needs only the shared store, which is one reason it is the simpler default.</p>
+
+      <h2>Security checklist</h2>
+      <ul>
+        <li><strong>Bind to the session:</strong> only the browser session that created the challenge may poll it or open its socket.</li>
+        <li><strong>Check <code>Origin</code> on upgrade:</strong> WebSocket handshakes aren't covered by CORS, so reject unexpected origins to prevent cross-site socket hijacking.</li>
+        <li><strong>Never push the address:</strong> send a state, and let the authenticated status request finish the sign-in.</li>
+        <li><strong>Close on expiry:</strong> drop sockets and polling when the challenge expires, then issue a new one.</li>
+        <li><strong>Use <code>wss://</code> only</strong> in production, just as callbacks must use HTTPS.</li>
+      </ul>
+      <p>Next: <a href="/guides/nonce-replay.html">Nonces &amp; Replay Prevention</a>.</p>
+    </div>
+  </div>
+</article>
