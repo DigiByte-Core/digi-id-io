@@ -21,6 +21,7 @@
     "benefits": ["One-scan return visits", "No password to forget between orders", "Collect only the data you need", "Order history without a password database"],
     "flow": ["Checkout shows the Digi-ID option", "Customer scans and approves", "Store links the order to the address", "Next visit: scan once to see orders"],
     "guideId": "account-linking",
+    "cta": "Try it: Account binding & recovery",
     "projectIds": ["digiid-wordpress"]
   },
   {
@@ -58,6 +59,7 @@
     "benefits": ["Stop re-collecting documents", "Store a verification flag, not a passport scan", "Hard to forge or share", "Pseudonymous by default"],
     "flow": ["User completes a one-time ID check", "Verifier records the address as verified", "Later, user signs in with Digi-ID", "Service trusts the stored verification"],
     "guideId": "account-linking",
+    "cta": "Try it: Set up an age restriction",
     "projectIds": []
   },
   {
@@ -82,6 +84,7 @@
     "benefits": ["No email or phone required to sign in", "Per-site addresses protect privacy", "Account takeover via leaked passwords is gone", "Plugins exist for phpBB and WordPress"],
     "flow": ["Member links Digi-ID in their profile", "Login page shows a QR code", "Member scans and approves", "Forum signs the member in"],
     "guideId": "account-linking",
+    "cta": "Try it: Account binding & recovery",
     "projectIds": ["digiid-phpbb", "digiid-wordpress"]
   },
   {
@@ -94,6 +97,7 @@
     "benefits": ["Tickets tied to a key, not an image", "Fast gate check-in", "Transfer by re-binding to a new address", "No attendee personal data needed at the gate"],
     "flow": ["Buyer links a ticket to their address", "Gate screen shows a challenge", "Attendee scans and approves", "Server marks the ticket as used"],
     "guideId": "nonce-replay",
+    "cta": "Try it: Nonces & replay prevention",
     "projectIds": []
   }
 ]
