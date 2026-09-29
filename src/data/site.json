@@ -1,0 +1,12 @@
+{
+  "url": "https://www.digi-id.io",
+  "repo": "https://github.com/DigiByte-Core/digi-id-io",
+  "github": "https://github.com/DigiByte-Core",
+  "discussions": "https://github.com/orgs/DigiByte-Core/discussions",
+  "web3formsKey": "e7b77a7b-6a9e-47a6-96c8-67ead259e659",
+  "ecosystemCategories": [
+    { "id": "library", "title": "Libraries & SDKs", "empty": "" },
+    { "id": "plugin", "title": "Plugins", "empty": "" },
+    { "id": "wallet", "title": "Wallets", "empty": "We only list wallets with current, checkable proof of Digi-ID sign-in, and we're re-verifying the wallets listed on the previous site. Using or building one that supports Digi-ID today? Submit it with a link we can check." }
+  ]
+}

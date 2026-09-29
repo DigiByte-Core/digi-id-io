@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.digi-id.io/schemas/ecosystem.schema.json",
+  "title": "Digi-ID ecosystem projects",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["id", "name", "category", "description", "url", "logo", "proofUrl", "status", "addedAt"],
+    "properties": {
+      "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+      "name": { "type": "string", "minLength": 1, "maxLength": 60 },
+      "category": { "enum": ["wallet", "library", "plugin", "app"] },
+      "description": { "type": "string", "maxLength": 160 },
+      "url": { "type": "string", "pattern": "^https://" },
+      "logo": { "type": "string", "pattern": "^assets/images/ecosystem/[a-z0-9-]+\\.(svg|png)$" },
+      "proofUrl": { "type": "string", "pattern": "^https://" },
+      "platforms": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+      "status": { "enum": ["active", "unmaintained"] },
+      "addedAt": { "type": "string", "format": "date" }
+    }
+  }
+}

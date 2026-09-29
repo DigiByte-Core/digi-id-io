@@ -30,14 +30,40 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/checkout@v7
+      - name: Setup Node
+        uses: actions/setup-node@v7
         with:
-          # Upload entire repository
-          path: '.'
+          node-version: 22
+          cache: npm
+      - name: Install
+        run: npm ci
+      - name: Unit tests
+        run: npm test
+      - name: Build
+        run: npm run build
+      - name: E2E tests
+        run: |
+          npx playwright install --with-deps chromium
+          npm run test:e2e -- --pass-with-no-tests
+      - name: Check internal links
+        run: npm run test:links
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v6
+      # Project sites (e.g. forks) live under /<repo>; a custom domain has an empty base path.
+      - name: Build for Pages
+        run: npm run build
+        env:
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+      - name: Check links with base path
+        run: npm run test:links
+        env:
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: '_site'
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

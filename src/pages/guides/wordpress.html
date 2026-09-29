@@ -1,0 +1,57 @@
+---
+{
+  "title": "Guide: Add Digi-ID to WordPress – Digi-ID",
+  "description": "Install the Digi-ID WordPress plugin, check its requirements, test it safely on staging, and know when to build your own integration with digiid-php.",
+  "schema": "TechArticle"
+}
+---
+<article class="section" aria-labelledby="guide-title">
+  <div class="container-x">
+    <nav aria-label="Breadcrumb" class="text-sm">
+      <ol class="flex flex-wrap gap-2 text-slate-600 dark:text-slate-400">
+        <li><a href="/developers.html">Developers</a> <span aria-hidden="true">/</span></li>
+        <li><a href="/developers.html#guides">Guides</a> <span aria-hidden="true">/</span></li>
+        <li aria-current="page">WordPress</li>
+      </ol>
+    </nav>
+    <div class="prose-doc mt-6">
+      <p class="eyebrow">Guide &middot; 10 minutes &middot; WordPress</p>
+      <h1 id="guide-title" class="text-4xl">Add Digi-ID to WordPress</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-400">The <a href="https://github.com/DigiByte-Core/digiid-wp-authentication" rel="noopener" target="_blank">Digi-ID Authentication plugin</a> extends the standard WordPress login with Digi-ID. Here's how to install it and try it safely.</p>
+
+      <div class="card my-6 border-amber-300 dark:border-amber-500">
+        <p class="font-medium text-navy dark:text-white">Heads-up: this plugin is unmaintained.</p>
+        <p class="mt-2 text-sm">It was last tested with WordPress 4.1. Try it on a staging copy of your site first, and consider contributing fixes upstream. For production sites on current WordPress, a small custom plugin built on digiid-php (see below) may be the safer path.</p>
+      </div>
+
+      <h2>1. Check requirements</h2>
+      <ul>
+        <li>HTTPS on your site &mdash; wallets post the signature to your server.</li>
+        <li>The PHP <strong>GMP</strong> extension, used for the signature maths.</li>
+      </ul>
+      <pre data-lang="bash">php -m | grep -i gmp    # prints "gmp" when the extension is installed</pre>
+      <p>If it's missing, ask your host to enable it (on Debian/Ubuntu: <code>sudo apt install php-gmp</code> and restart PHP).</p>
+
+      <h2>2. Install and activate</h2>
+      <pre data-lang="bash" data-src="generate/wp.sh"></pre>
+      <p>Or download the repository as a ZIP, upload it under <strong>Plugins &rarr; Add New &rarr; Upload Plugin</strong>, and activate <em>Digi-ID Authentication</em>.</p>
+
+      <h2>3. Try it</h2>
+      <ol>
+        <li>Open <code>/wp-login.php</code> on your staging site; the plugin adds a Digi-ID QR code to the login form.</li>
+        <li>Scan it with a Digi-ID-capable DigiByte wallet and approve.</li>
+        <li>Follow the plugin's prompts to associate the wallet with your WordPress user.</li>
+      </ol>
+
+      <h2>Building your own WordPress integration</h2>
+      <p>If the plugin doesn't fit your WordPress version, the moving parts are small:</p>
+      <ul>
+        <li>Two REST routes (<code>register_rest_route</code>): one issues a challenge, one receives the wallet callback. Port the logic from the <a href="/developers.html#quickstart">PHP quickstart</a>, which uses <code>DigiID.php</code> from digiid-php.</li>
+        <li>Store nonces in a custom table or transients with a 90-second expiry (see <a href="/guides/nonce-replay.html">Nonces &amp; replay protection</a>).</li>
+        <li>Store linked addresses in user meta and sign the user in with <code>wp_set_auth_cookie()</code> once the browser's poll sees a verified challenge.</li>
+        <li>Follow the <a href="/guides/account-linking.html">account linking</a> guide so existing users can add Digi-ID to their accounts.</li>
+      </ul>
+      <p>Built a modern plugin? <a href="/ecosystem.html#submit">List it in the ecosystem</a> so other site owners can find it.</p>
+    </div>
+  </div>
+</article>

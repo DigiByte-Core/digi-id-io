@@ -1,0 +1,60 @@
+name: Ecosystem submission
+description: Add a wallet, library, plugin or app that supports Digi-ID to digi-id.io/ecosystem.html
+title: "Ecosystem: <project name>"
+labels: ["ecosystem"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for building with Digi-ID! Prefer a pull request? Add an entry to `src/data/ecosystem.json` and a logo under `assets/images/ecosystem/`; CI validates it against the schema.
+  - type: input
+    id: name
+    attributes:
+      label: Project name
+      placeholder: My Wallet
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - wallet
+        - library
+        - plugin
+        - app
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Short description (max 160 characters)
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Project URL (https)
+      placeholder: https://example.com
+    validations:
+      required: true
+  - type: input
+    id: proof
+    attributes:
+      label: Proof of Digi-ID support (https)
+      description: Docs, release notes, source code or a public page where Digi-ID sign-in can be tried.
+    validations:
+      required: true
+  - type: input
+    id: logo
+    attributes:
+      label: Logo URL (SVG or PNG, max 50 KB)
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: I maintain this project or have permission to submit it, and it supports Digi-ID today.
+          required: true

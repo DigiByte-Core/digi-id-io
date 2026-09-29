@@ -1,0 +1,150 @@
+---
+{
+  "title": "Guide: Add Digi-ID login to a web app – Digi-ID",
+  "description": "Step-by-step: add passwordless Digi-ID login to a Node.js Express app with challenge, QR code, wallet callback, polling and secure session hand-off.",
+  "schema": "TechArticle"
+}
+---
+<article class="section" aria-labelledby="guide-title">
+  <div class="container-x">
+    <nav aria-label="Breadcrumb" class="text-sm">
+      <ol class="flex flex-wrap gap-2 text-slate-600 dark:text-slate-400">
+        <li><a href="/developers.html">Developers</a> <span aria-hidden="true">/</span></li>
+        <li><a href="/developers.html#guides">Guides</a> <span aria-hidden="true">/</span></li>
+        <li aria-current="page">Web app login</li>
+      </ol>
+    </nav>
+    <div class="prose-doc mt-6">
+      <p class="eyebrow">Guide &middot; 15 minutes &middot; Node.js</p>
+      <h1 id="guide-title" class="text-4xl">Add Digi-ID login to a web app</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-400">Build an Express application that authenticates users via DigiByte wallet signatures. Eliminates stored password hashes, secrets, and credential databases in favor of verified public addresses.</p>
+
+      <h2>How the pieces fit</h2>
+      <ol>
+        <li>The browser asks your server for a <strong>challenge</strong> and shows it as a QR code.</li>
+        <li>The wallet scans the QR code, signs the challenge string, and <strong>POSTs</strong> the payload directly to your server callback.</li>
+        <li>The browser <strong>polls</strong> your server; once the callback is verified, the server upgrades the browser's session.</li>
+      </ol>
+      <p>Because the wallet calls back from a different device, you link the two with the nonce: it is stored next to the browser's session ID when the challenge is created.</p>
+
+      <h2>1. Set up the project</h2>
+      <pre data-lang="bash">mkdir digiid-login && cd digiid-login
+npm init -y && npm pkg set type=module
+npm install express express-session digiid qrcode</pre>
+      <p>The wallet must reach your callback over HTTPS. For local testing, expose your dev server through an HTTPS tunnel (for example <code>cloudflared tunnel --url http://localhost:3000</code>) and use that hostname below.</p>
+
+      <h2>2. Write the server</h2>
+      <pre data-lang="js" data-label="server.js">import crypto from 'node:crypto';
+import express from 'express';
+import session from 'express-session';
+import DigiID from 'digiid';
+
+const CALLBACK = process.env.DIGIID_CALLBACK; // e.g. "login.example.com/digiid/callback" (no scheme)
+const TTL_MS = 90_000;
+const pending = new Map(); // nonce -> { sessionId, expires, address? }
+
+const app = express();
+app.set('trust proxy', 1);
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { httpOnly: true, sameSite: 'lax', secure: true }
+}));
+app.use(express.static('public'));
+
+// 1. Issue a challenge bound to this browser session.
+app.post('/digiid/challenge', (req, res) => {
+  const nonce = crypto.randomBytes(16).toString('hex');
+  pending.set(nonce, { sessionId: req.sessionID, expires: Date.now() + TTL_MS });
+  res.json({ nonce, uri: new DigiID({ nonce, callback: CALLBACK }).uri });
+});
+
+// 2. The wallet posts its signature here.
+app.post('/digiid/callback', express.json(), express.urlencoded({ extended: false }), (req, res) => {
+  const { address, uri, signature } = req.body ?? {};
+  if (!address || !uri || !signature) return res.status(400).json({ error: 'missing fields' });
+
+  const digiid = new DigiID({ address, uri, signature, callback: CALLBACK });
+  const challenge = pending.get(digiid.nonce);
+  if (!digiid.uriValid() || !challenge) return res.status(404).json({ error: 'unknown challenge' });
+  if (challenge.address) return res.status(409).json({ error: 'challenge already used' });
+  if (challenge.expires &lt; Date.now()) return res.status(410).json({ error: 'challenge expired' });
+  if (!digiid.signatureValid()) return res.status(401).json({ error: 'invalid signature' });
+
+  challenge.address = address;
+  res.json({ message: 'Digi-ID verified' });
+});
+
+// 3. The browser polls until the wallet has called back.
+app.get('/digiid/status', (req, res) => {
+  const nonce = String(req.query.nonce);
+  const challenge = pending.get(nonce);
+  if (!challenge || challenge.sessionId !== req.sessionID) return res.status(404).json({ state: 'unknown' });
+  if (!challenge.address) return res.json({ state: challenge.expires &lt; Date.now() ? 'expired' : 'pending' });
+
+  pending.delete(nonce);
+  req.session.regenerate((err) => {
+    if (err) return res.status(500).json({ state: 'error' });
+    req.session.address = challenge.address; // the user's Digi-ID for your site
+    res.json({ state: 'verified' });
+  });
+});
+
+app.get('/account', (req, res) => {
+  if (!req.session.address) return res.redirect('/');
+  res.send(`Signed in as ${req.session.address}`);
+});
+
+// Drop expired challenges.
+setInterval(() => {
+  const now = Date.now();
+  for (const [nonce, c] of pending) if (c.expires + 60_000 &lt; now) pending.delete(nonce);
+}, 30_000).unref();
+
+app.listen(3000, () => console.log('http://localhost:3000'));</pre>
+      <p>Only the browser session that created a challenge can read its status, and the session ID is regenerated on login to prevent session fixation.</p>
+
+      <h2>3. Build the login page</h2>
+      <pre data-lang="html" data-label="public/index.html">&lt;h1&gt;Sign in with Digi-ID&lt;/h1&gt;
+&lt;a id="digiid-link" href="#"&gt;&lt;canvas id="digiid-qr" aria-label="Digi-ID QR code"&gt;&lt;/canvas&gt;&lt;/a&gt;
+&lt;p id="digiid-status" role="status"&gt;Scan with your DigiByte wallet&lt;/p&gt;
+&lt;script type="module" src="/login.js"&gt;&lt;/script&gt;</pre>
+      <pre data-lang="js" data-label="public/login.js">import QRCode from 'https://esm.sh/qrcode@1';
+
+const status = document.querySelector('#digiid-status');
+
+async function start() {
+  const { uri, nonce } = await fetch('/digiid/challenge', { method: 'POST' }).then((r) => r.json());
+  document.querySelector('#digiid-link').href = uri;           // tap on mobile
+  await QRCode.toCanvas(document.querySelector('#digiid-qr'), uri, { width: 240 }); // scan on desktop
+
+  const poll = setInterval(async () => {
+    const { state } = await fetch(`/digiid/status?nonce=${nonce}`).then((r) => r.json());
+    if (state === 'verified') { clearInterval(poll); location.assign('/account'); }
+    if (state === 'expired') { clearInterval(poll); status.textContent = 'Expired, refreshing…'; start(); }
+  }, 2000);
+}
+
+start();</pre>
+      <p>In production, bundle <code>qrcode</code> with your app instead of loading it from a CDN.</p>
+
+      <h2>4. Run it</h2>
+      <pre data-lang="bash">DIGIID_CALLBACK=your-tunnel.example.com/digiid/callback \
+SESSION_SECRET=$(node -e "console.log(crypto.randomBytes(32).toString('hex'))") \
+node server.js</pre>
+      <p>Open your tunnel URL, scan the QR code with a Digi-ID-capable wallet and approve. You'll land on <code>/account</code> with your site-specific address.</p>
+
+      <h2>5. Before you go live</h2>
+      <ul>
+        <li>Store pending nonces in Redis or a database so active sessions persist across process restarts and load-balanced instances.</li>
+        <li>Store users by address; let them link a second wallet as a recovery option.</li>
+        <li>Rate-limit <code>/digiid/challenge</code> and <code>/digiid/callback</code>.</li>
+        <li>Maintain a static callback domain: key derivation paths are tied strictly to the domain in the callback URL.</li>
+        <li>Read <a href="/guides/nonce-replay.html">Nonces &amp; Replay Prevention</a>.</li>
+        <li>Need instant feedback instead of polling? See <a href="/guides/polling-websockets.html">Cross-Device Polling vs. WebSockets</a>.</li>
+      </ul>
+      <p>Want to see the flow without a wallet first? Try the <a href="/demo.html">sandbox demo</a>.</p>
+    </div>
+  </div>
+</article>

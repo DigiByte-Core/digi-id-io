@@ -1,0 +1,63 @@
+[
+  {
+    "id": "web-app-login",
+    "title": "Add Digi-ID login to a web app",
+    "summary": "Challenge, QR code, wallet callback and session hand-off in a small Express app.",
+    "status": "complete",
+    "audience": "web",
+    "durationMin": 15,
+    "useCaseId": "website-login"
+  },
+  {
+    "id": "nonce-replay",
+    "title": "Nonces & Replay Prevention",
+    "summary": "How to store, time-box (60–90 seconds), and consume nonces to eliminate replay attacks.",
+    "status": "complete",
+    "audience": "web",
+    "durationMin": 10
+  },
+  {
+    "id": "polling-websockets",
+    "title": "Cross-Device Polling vs. WebSockets",
+    "summary": "Comparing short-polling HTTP endpoints against WebSocket connections for real-time QR authorization updates.",
+    "status": "complete",
+    "audience": "web",
+    "durationMin": 15
+  },
+  {
+    "id": "wordpress",
+    "title": "Add Digi-ID to WordPress",
+    "summary": "Install and configure the WordPress plugin, then let users link their wallets.",
+    "status": "complete",
+    "readmeUrl": "https://github.com/DigiByte-Core/digiid-wp-authentication",
+    "audience": "cms",
+    "durationMin": 10
+  },
+  {
+    "id": "account-linking",
+    "title": "Account Binding & Recovery",
+    "summary": "Strategies for linking public wallet addresses to existing user databases and handling secondary device pairing.",
+    "status": "complete",
+    "readmeUrl": "https://github.com/DigiByte-Core/digiid-php",
+    "audience": "web",
+    "durationMin": 20
+  },
+  {
+    "id": "physical-access",
+    "title": "Build a door-access prototype",
+    "summary": "A kiosk screen per door, one stable callback and an allow-list of Digi-ID addresses.",
+    "status": "complete",
+    "readmeUrl": "https://github.com/DigiByte-Core/digiid-js",
+    "audience": "iot",
+    "durationMin": 45
+  },
+  {
+    "id": "wallet-integration",
+    "title": "Support Digi-ID in your wallet",
+    "summary": "Parse digiid:// URIs, derive per-site keys and post signed callbacks.",
+    "status": "complete",
+    "readmeUrl": "https://github.com/DigiByte-Core/digiid-js",
+    "audience": "wallet",
+    "durationMin": 60
+  }
+]

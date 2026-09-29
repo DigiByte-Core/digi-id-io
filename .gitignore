@@ -1,1 +1,9 @@
 assets/.sass-cache
+node_modules
+_site/
+packages/*/dist/
+.wrangler/
+test-results/
+playwright-report/
+.lighthouseci/
+specs/

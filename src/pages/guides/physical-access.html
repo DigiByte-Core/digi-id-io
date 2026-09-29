@@ -1,0 +1,134 @@
+---
+{
+  "title": "Guide: Build a door-access prototype – Digi-ID",
+  "description": "Unlock doors with a Digi-ID scan: a kiosk screen per door, one stable callback, an allow-list of addresses, short-lived challenges and an audit log.",
+  "schema": "TechArticle"
+}
+---
+<article class="section" aria-labelledby="guide-title">
+  <div class="container-x">
+    <nav aria-label="Breadcrumb" class="text-sm">
+      <ol class="flex flex-wrap gap-2 text-slate-600 dark:text-slate-400">
+        <li><a href="/developers.html">Developers</a> <span aria-hidden="true">/</span></li>
+        <li><a href="/developers.html#guides">Guides</a> <span aria-hidden="true">/</span></li>
+        <li aria-current="page">Door access</li>
+      </ol>
+    </nav>
+    <div class="prose-doc mt-6">
+      <p class="eyebrow">Guide &middot; 45 minutes &middot; Node.js + any screen</p>
+      <h1 id="guide-title" class="text-4xl">Build a door-access prototype</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-400">A screen next to the door shows a Digi-ID QR code. Staff scan it, approve on their phone, and the door opens if their address is on the allow-list. No cards to issue, and access can be revoked instantly.</p>
+
+      <h2>Architecture</h2>
+      <table aria-label="Door-access architecture">
+        <thead><tr><th scope="col">Part</th><th scope="col">Role</th></tr></thead>
+        <tbody>
+          <tr><td>Door screen</td><td>Any device with a browser in kiosk mode (a Raspberry Pi with a small display works well). Shows the current challenge.</td></tr>
+          <tr><td>Access server</td><td>Issues challenges per door, verifies callbacks, checks the allow-list, logs events.</td></tr>
+          <tr><td>Lock controller</td><td>A relay or smart lock the server can trigger for a specific door.</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Use one callback for every door</h2>
+      <p>Wallets derive the user's key from the callback URL <strong>including its path</strong> (see the <a href="/developers.html#protocol-keys">key derivation</a> and its test vector). If each door had its own callback path, the same person would have a different address at every door. Instead, use a single callback and remember which door each nonce belongs to.</p>
+
+      <h2>1. Allow-list and audit log</h2>
+      <pre data-lang="text" data-label="schema.sql">CREATE TABLE door_access (
+  address  VARCHAR(40) NOT NULL,
+  door_id  VARCHAR(40) NOT NULL,          -- or '*' for all doors
+  name     VARCHAR(80) NOT NULL,
+  PRIMARY KEY (address, door_id)
+);
+CREATE TABLE door_events (
+  id        BIGSERIAL PRIMARY KEY,
+  door_id   VARCHAR(40) NOT NULL,
+  address   VARCHAR(40) NOT NULL,
+  granted   BOOLEAN     NOT NULL,
+  at        TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP
+);</pre>
+      <p>Enroll people by having them sign in once on your admin site with the same callback URL, then add their address to <code>door_access</code>.</p>
+
+      <h2>2. Access server</h2>
+      <pre data-lang="js" data-label="access-server.js">import crypto from 'node:crypto';
+import express from 'express';
+import DigiID from 'digiid';
+
+const CALLBACK = 'access.example.com/digiid/callback'; // one URL for all doors
+const TTL_MS = 30_000;                                 // short: codes can be photographed
+const pending = new Map();                             // nonce -&gt; { doorId, expires, result? }
+const current = new Map();                             // doorId -&gt; nonce shown on screen
+
+const app = express();
+
+// The door screen polls this: it gets a fresh challenge after expiry or after every scan.
+app.get('/doors/:doorId/challenge', (req, res) =&gt; {
+  const { doorId } = req.params;
+  let nonce = current.get(doorId);
+  const active = nonce &amp;&amp; pending.get(nonce);
+  if (!active || active.expires &lt; Date.now() || active.result) {
+    if (active?.result) res.set('X-Last-Result', active.result);
+    nonce = crypto.randomBytes(16).toString('hex');
+    pending.set(nonce, { doorId, expires: Date.now() + TTL_MS });
+    current.set(doorId, nonce);
+  }
+  res.json({ uri: new DigiID({ nonce, callback: CALLBACK }).uri, expires: pending.get(nonce).expires });
+});
+
+app.post('/digiid/callback', express.json(), express.urlencoded({ extended: false }), async (req, res) =&gt; {
+  const { address, uri, signature } = req.body ?? {};
+  const digiid = new DigiID({ address, uri, signature, callback: CALLBACK });
+  const challenge = pending.get(digiid.nonce);
+  if (!digiid.uriValid() || !challenge || challenge.result || challenge.expires &lt; Date.now()) {
+    return res.status(410).json({ error: 'expired, scan the new code' });
+  }
+  if (!digiid.signatureValid()) return res.status(401).json({ error: 'invalid signature' });
+
+  const granted = await db.hasAccess(address, challenge.doorId);
+  challenge.result = granted ? 'granted' : 'denied';
+  await db.logEvent(challenge.doorId, address, granted);
+  if (granted) await unlockDoor(challenge.doorId);
+
+  res.status(granted ? 200 : 403).json({ message: granted ? 'Door unlocked' : 'Access denied' });
+});
+
+async function unlockDoor(doorId) {
+  // Pulse the relay for this door, e.g. via GPIO, a smart-lock API or an MQTT message.
+}
+
+app.listen(443);</pre>
+
+      <h2>3. Door screen</h2>
+      <pre data-lang="html" data-label="door.html">&lt;main&gt;
+  &lt;h1&gt;Scan to open &mdash; Server room&lt;/h1&gt;
+  &lt;canvas id="qr" aria-label="Digi-ID QR code"&gt;&lt;/canvas&gt;
+  &lt;p id="status" role="status"&gt;&lt;/p&gt;
+&lt;/main&gt;
+&lt;script type="module"&gt;
+  import QRCode from '/vendor/qrcode.mjs';
+  const DOOR = 'server-room';
+  let shown = '';
+  async function refresh() {
+    const res = await fetch(`/doors/${DOOR}/challenge`);
+    const { uri } = await res.json();
+    const last = res.headers.get('X-Last-Result');
+    if (last) document.querySelector('#status').textContent = last === 'granted' ? 'Door open' : 'Access denied';
+    if (uri !== shown) { shown = uri; await QRCode.toCanvas(document.querySelector('#qr'), uri, { width: 360 }); }
+  }
+  refresh();
+  setInterval(refresh, 1500);
+&lt;/script&gt;</pre>
+
+      <h2>Networking</h2>
+      <p>The phone posts the signature directly to the access server, so it must reach the callback over HTTPS &mdash; via the internet or on-site Wi-Fi with a certificate the phone trusts. The door screen only needs to reach the access server.</p>
+
+      <h2>Hardening checklist</h2>
+      <ul>
+        <li>Keep challenges at 20&ndash;30&nbsp;s and rotate after every scan.</li>
+        <li>Put the lock controller on a separate network segment; only the access server may trigger it.</li>
+        <li>Rate-limit the callback, and alert on repeated denied attempts.</li>
+        <li>Decide what happens when the server is offline (fail secure vs. fail safe) with your safety officer.</li>
+        <li>This is a prototype pattern &mdash; certified access-control hardware and fire codes still apply.</li>
+      </ul>
+    </div>
+  </div>
+</article>

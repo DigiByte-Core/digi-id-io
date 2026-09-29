@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <include src="head.html"></include>
+</head>
+<body id="top" class="{{ page.bodyClass }}">
+  <a href="#main" class="skip-link">Skip to content</a>
+  <include src="header.html"></include>
+  <main id="main" tabindex="-1" class="outline-none">
+<!-- @content -->
+  </main>
+  <include src="footer.html"></include>
+  <a href="#top" class="pointer-events-none fixed right-5 bottom-5 z-30 inline-flex size-12 translate-y-4 items-center justify-center rounded-full bg-primary-strong text-white no-underline opacity-0 shadow-primary transition hover:bg-primary-deep hover:no-underline focus-visible:pointer-events-auto focus-visible:translate-y-0 focus-visible:opacity-100 data-[visible]:pointer-events-auto data-[visible]:translate-y-0 data-[visible]:opacity-100 dark:bg-primary dark:text-navy-950 dark:hover:bg-accent" data-back-to-top>
+    <icon name="arrow-up" class="size-5"></icon>
+    <span class="sr-only">Back to top</span>
+  </a>
+  <div id="live-region" class="sr-only" aria-live="polite"></div>
+  <script type="module" src="/assets/js/site.js"></script>
+  <each loop="script in page.scripts">
+  <script type="module" src="/assets/js/{{ script }}.js"></script>
+  </each>
+</body>
+</html>

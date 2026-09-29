@@ -1,0 +1,47 @@
+[
+  {
+    "id": "digiid-core",
+    "name": "digiid-core",
+    "language": "TypeScript · browser & Node",
+    "repo": "https://github.com/DigiByte-Core/digi-id-io/tree/main/packages/digiid-core",
+    "install": "Copy packages/digiid-core from the digi-id.io repository",
+    "status": "maintained",
+    "summary": "URI helpers, key derivation and signature verification that run in browsers and Node. Powers this site's demo and playground; tested against the published vectors."
+  },
+  {
+    "id": "digiid-js",
+    "name": "digiid-js",
+    "language": "JavaScript · Node.js",
+    "repo": "https://github.com/DigiByte-Core/digiid-js",
+    "install": "npm install digiid",
+    "status": "community",
+    "summary": "Lightweight npm package for Express, Fastify, and Next.js backends. Includes native TypeScript definitions."
+  },
+  {
+    "id": "digiid-php",
+    "name": "digiid-php",
+    "language": "PHP",
+    "repo": "https://github.com/DigiByte-Core/digiid-php",
+    "install": "git clone https://github.com/DigiByte-Core/digiid-php",
+    "status": "community",
+    "summary": "Supports PHP 7.4+ with GMP extension. Drop-in integration for standard web servers."
+  },
+  {
+    "id": "digiid-wordpress",
+    "name": "Digi-ID for WordPress",
+    "language": "WordPress plugin",
+    "repo": "https://github.com/DigiByte-Core/digiid-wp-authentication",
+    "install": "Upload to wp-content/plugins and activate",
+    "status": "unmaintained",
+    "summary": "Enables passwordless sign-in for WP-Admin and subscriber logins out of the box."
+  },
+  {
+    "id": "digiid-phpbb",
+    "name": "Digi-ID for phpBB",
+    "language": "phpBB extension",
+    "repo": "https://github.com/DigiByte-Core/digiid-phpbb-extension",
+    "install": "Copy to ext/DigiByte/digiid and enable in the ACP",
+    "status": "unmaintained",
+    "summary": "Native forum authentication plugin that replaces standard login forms."
+  }
+]
