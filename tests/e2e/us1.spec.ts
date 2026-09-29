@@ -27,7 +27,7 @@ test('copy button copies the code sample', async ({ page, context, browserName }
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
   await page.goto('/developers.html');
   const block = page.locator('#qs2-panel-node [data-code-block]');
-  await block.getByRole('button', { name: 'Copy code' }).click();
+  await block.getByRole('button', { name: 'Copy Node.js code – Issue a challenge' }).click();
   const text = await page.evaluate(() => navigator.clipboard.readText());
   expect(text).toContain('/digiid/challenge');
 });
@@ -37,7 +37,7 @@ test('playground verifies the published example', async ({ page }) => {
   await page.getByRole('button', { name: 'Load example' }).click();
   await expect(page.locator('[data-playground-result]')).toContainText('Valid Digi-ID callback');
   await page.getByLabel('Address').fill('DAqGceHoc44KCmUKjA7XWinpLTSUMR4gBD');
-  await page.getByRole('button', { name: 'Verify' }).click();
+  await page.getByRole('button', { name: 'Verify', exact: true }).click();
   await expect(page.locator('[data-playground-result]')).toContainText('Rejected');
 });
 

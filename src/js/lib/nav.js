@@ -12,7 +12,11 @@ export function initNav(root = document) {
     iconClose?.classList.toggle('hidden', !open);
   };
 
-  toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+  toggle.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') !== 'true';
+    setOpen(open);
+    if (open) menu.querySelector('a')?.focus();
+  });
   menu.addEventListener('click', (e) => {
     if (e.target.closest('a')) setOpen(false);
   });

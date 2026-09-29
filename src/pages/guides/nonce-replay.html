@@ -20,7 +20,7 @@
       <p class="text-lg text-slate-600 dark:text-slate-400">A Digi-ID signature proves that a wallet signed <em>a specific URI</em>. The nonce inside that URI is what makes the proof fresh and single-use. Get the nonce right and replay attacks are impossible.</p>
 
       <h2>The four rules</h2>
-      <table>
+      <table aria-label="The four nonce rules">
         <thead><tr><th scope="col">Rule</th><th scope="col">Why</th><th scope="col">How</th></tr></thead>
         <tbody>
           <tr><td><strong>Unpredictable</strong></td><td>An attacker must not be able to guess a future challenge.</td><td>≥128 bits from a CSPRNG, hex or base64url.</td></tr>

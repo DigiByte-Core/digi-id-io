@@ -9,7 +9,7 @@
     <p class="eyebrow">Documentation</p>
     <h1 id="docs-title" class="max-w-3xl text-4xl sm:text-5xl">Everything about Digi-ID, in one place.</h1>
     <p class="section-lead">Frequently asked questions, what vendors need to know and how the security model works. Building an integration? The <a href="/developers.html#protocol">protocol reference</a> lives in the developer hub.</p>
-    <a href="/assets/digidocs/Digi-ID_Introduction_One-Pager_update_09-2026.pdf" target="_blank" rel="noopener" class="btn btn-secondary mt-8"><icon name="file-text" class="size-4"></icon> One-page overview (PDF)</a>
+    <a href="/assets/digidocs/Digi-ID_Introduction_One-Pager_update_09-2026.pdf" type="application/pdf" target="_blank" rel="noopener" class="btn btn-secondary mt-8"><icon name="file-text" class="size-4"></icon> One-page overview (PDF)</a>
   </div>
 </section>
 
@@ -28,47 +28,71 @@
     <div class="prose-doc">
       <section id="faq" aria-labelledby="faq-title" data-faq>
         <h2 id="faq-title" class="!mt-0">FAQ for users</h2>
-        <p><a href="/assets/digidocs/Digi-ID_Documentation/Digi-ID_FAQ.pdf" target="_blank" rel="noopener" class="inline-flex items-center gap-2"><icon name="file-text" class="size-4"></icon> Read the Digi-ID FAQ (PDF)</a></p>
-        <h3>What is Digi-ID?</h3>
-        <p>Digi-ID lets you sign in to a website, app or location using a QR code. The service must support Digi-ID before you can use it there. It uses cryptography &mdash; the same type of mathematics used to secure DigiByte &mdash; to verify your sign-in. Digi-ID can replace a username and password or be used alongside them.</p>
-        <h3>Why use Digi-ID?</h3>
-        <p>When Digi-ID replaces your password, it removes several common password risks:</p>
-        <ul>
-          <li>No password to remember, write down or share.</li>
-          <li>No sign-in password for the website to store or an attacker to steal or guess.</li>
-          <li>No password reuse across accounts.</li>
-          <li>No password to capture with keystroke-recording software.</li>
-        </ul>
-        <h3>How does sign-in work?</h3>
-        <ol>
-          <li>The service displays a unique QR code for your sign-in request. It includes a one-time value and tells your Digi-ID app where to send its response.</li>
-          <li>Scan or tap the code and confirm the request in your Digi-ID app.</li>
-          <li>The app uses your private key to create a digital signature, then sends the signed response and your public login address to the service.</li>
-          <li>The service verifies the signature and login address, then signs you in.</li>
-        </ol>
-        <h3>Why don't I need a username or password?</h3>
-        <p>Your public login address identifies you to the service, while the digital signature proves you control the matching private key.</p>
-        <h3>Could someone guess my login?</h3>
-        <p>Digi-ID uses cryptographic keys instead of passwords. These keys are designed to make guessing impractical.</p>
-        <h3>Is signing in on a shared computer safe?</h3>
-        <p>Digi-ID avoids typing a website password on that computer. It does not make the computer safe; an attacker could still capture the active session or data shown in the browser. Sign out when you're finished.</p>
-        <h3>Could someone trick me into signing them in?</h3>
-        <p>Yes. If you approve a code presented by someone else, they may gain the session. Only approve Digi-ID codes on pages you opened yourself, and check the site name your wallet shows. Be careful with codes sent in messages, shown by another person or reached through an unexpected link.</p>
-        <h3>What if I lose my phone?</h3>
-        <p>If you backed up your recovery phrase, you can restore your Digi-ID identity in a compatible app on another device. If you lose the recovery phrase as well, that Digi-ID identity cannot be restored &mdash; keep it somewhere safe and offline. There is no password reset and no support team holding a copy. Individual websites may still let you prove who you are another way and set up a new Digi-ID identity for your account.</p>
-        <h3>Can I use Digi-ID on more than one device?</h3>
-        <p>Yes. Restore the same recovery phrase on another compatible device to use the same identity. A device with a new recovery phrase creates a separate identity, and websites will treat it as a different user.</p>
-        <h3>Can a website see my DigiByte balance?</h3>
-        <p>No. Digi-ID uses a login address separate from your wallet's receiving addresses and generates a different login address for each website. <strong>Do not send DigiByte to a Digi-ID login address &mdash; funds sent there will not appear in your wallet.</strong></p>
-        <h3>What personal information does Digi-ID share?</h3>
-        <p>None beyond your public login address and a signed response. Each request includes a &ldquo;nonce&rdquo;, an unpredictable value that identifies that specific request (for example <code>x=458c552d84a8a347</code>). It does not include your name or any other personal details.</p>
-        <h3>Who do I contact for help?</h3>
-        <p>For account-specific problems, contact the website or service where you're signing in &mdash; no DigiByte channel can help with an individual website's accounts. For questions about Digi-ID itself, see the <a href="/contact.html">community page</a>.</p>
+        <p><a href="/assets/digidocs/Digi-ID_Documentation/Digi-ID_FAQ.pdf" type="application/pdf" target="_blank" rel="noopener" class="inline-flex items-center gap-2"><icon name="file-text" class="size-4"></icon> Read the Digi-ID FAQ (PDF)</a></p>
+        <details>
+          <summary>What is Digi-ID?</summary>
+          <p>Digi-ID lets you sign in to a website, app or location using a QR code. The service must support Digi-ID before you can use it there. It uses cryptography &mdash; the same type of mathematics used to secure DigiByte &mdash; to verify your sign-in. Digi-ID can replace a username and password or be used alongside them.</p>
+        </details>
+        <details>
+          <summary>Why use Digi-ID?</summary>
+          <p>When Digi-ID replaces your password, it removes several common password risks:</p>
+          <ul>
+            <li>No password to remember, write down or share.</li>
+            <li>No sign-in password for the website to store or an attacker to steal or guess.</li>
+            <li>No password reuse across accounts.</li>
+            <li>No password to capture with keystroke-recording software.</li>
+          </ul>
+        </details>
+        <details>
+          <summary>How does sign-in work?</summary>
+          <ol>
+            <li>The service displays a unique QR code for your sign-in request. It includes a one-time value and tells your Digi-ID app where to send its response.</li>
+            <li>Scan or tap the code and confirm the request in your Digi-ID app.</li>
+            <li>The app uses your private key to create a digital signature, then sends the signed response and your public login address to the service.</li>
+            <li>The service verifies the signature and login address, then signs you in.</li>
+          </ol>
+        </details>
+        <details>
+          <summary>Why don't I need a username or password?</summary>
+          <p>Your public login address identifies you to the service, while the digital signature proves you control the matching private key.</p>
+        </details>
+        <details>
+          <summary>Could someone guess my login?</summary>
+          <p>Digi-ID uses cryptographic keys instead of passwords. These keys are designed to make guessing impractical.</p>
+        </details>
+        <details>
+          <summary>Is signing in on a shared computer safe?</summary>
+          <p>Digi-ID avoids typing a website password on that computer. It does not make the computer safe; an attacker could still capture the active session or data shown in the browser. Sign out when you're finished.</p>
+        </details>
+        <details>
+          <summary>Could someone trick me into signing them in?</summary>
+          <p>Yes. If you approve a code presented by someone else, they may gain the session. Only approve Digi-ID codes on pages you opened yourself, and check the site name your wallet shows. Be careful with codes sent in messages, shown by another person or reached through an unexpected link.</p>
+        </details>
+        <details>
+          <summary>What if I lose my phone?</summary>
+          <p>If you backed up your recovery phrase, you can restore your Digi-ID identity in a compatible app on another device. If you lose the recovery phrase as well, that Digi-ID identity cannot be restored &mdash; keep it somewhere safe and offline. There is no password reset and no support team holding a copy. Individual websites may still let you prove who you are another way and set up a new Digi-ID identity for your account.</p>
+        </details>
+        <details>
+          <summary>Can I use Digi-ID on more than one device?</summary>
+          <p>Yes. Restore the same recovery phrase on another compatible device to use the same identity. A device with a new recovery phrase creates a separate identity, and websites will treat it as a different user.</p>
+        </details>
+        <details>
+          <summary>Can a website see my DigiByte balance?</summary>
+          <p>No. Digi-ID uses a login address separate from your wallet's receiving addresses and generates a different login address for each website. <strong>Do not send DigiByte to a Digi-ID login address &mdash; funds sent there will not appear in your wallet.</strong></p>
+        </details>
+        <details>
+          <summary>What personal information does Digi-ID share?</summary>
+          <p>None beyond your public login address and a signed response. Each request includes a &ldquo;nonce&rdquo;, an unpredictable value that identifies that specific request (for example <code>x=458c552d84a8a347</code>). It does not include your name or any other personal details.</p>
+        </details>
+        <details>
+          <summary>Who do I contact for help?</summary>
+          <p>For account-specific problems, contact the website or service where you're signing in &mdash; no DigiByte channel can help with an individual website's accounts. For questions about Digi-ID itself, see the <a href="/contact.html">community page</a>.</p>
+        </details>
       </section>
 
       <section id="vendors" aria-labelledby="vendors-title">
         <h2 id="vendors-title">For vendors</h2>
-        <p><a href="/assets/digidocs/Digi-ID_Documentation/Digi-ID_Vendor-Information.pdf" target="_blank" rel="noopener" class="inline-flex items-center gap-2"><icon name="file-text" class="size-4"></icon> Read the vendor guide (PDF)</a></p>
+        <p><a href="/assets/digidocs/Digi-ID_Documentation/Digi-ID_Vendor-Information.pdf" type="application/pdf" target="_blank" rel="noopener" class="inline-flex items-center gap-2"><icon name="file-text" class="size-4"></icon> Read the vendor guide (PDF)</a></p>
         <p>Digi-ID is an authentication method based on the security of the DigiByte blockchain. Users sign in to a website, application, building and more by scanning or tapping a QR code. It can replace usernames and passwords or complement them.</p>
         <h3>What's involved in integrating Digi-ID?</h3>
         <p>It depends on your stack. Where a plugin exists, you can be running in minutes. Otherwise, use one of the <a href="/developers.html#sdks">libraries</a> and the <a href="/developers.html#quickstart">quickstart</a>; a typical web integration is one challenge endpoint, one callback endpoint and a QR code on the login page.</p>
@@ -88,27 +112,41 @@
 
       <section id="integrators" aria-labelledby="integrators-title" data-faq>
         <h2 id="integrators-title">Integrator FAQ</h2>
-        <p><a href="/assets/digidocs/Digi-ID_Documentation/Digi-ID_Integration_Guide.pdf" target="_blank" rel="noopener" class="inline-flex items-center gap-2"><icon name="file-text" class="size-4"></icon> Read the integration guide (PDF)</a></p>
-        <h3>What is a good nonce timeout?</h3>
-        <p>About 90 seconds for most websites, shorter for doors and kiosks. See <a href="/guides/nonce-replay.html">Nonces &amp; Replay Prevention</a>.</p>
-        <h3>Do I need the DigiByte &ldquo;D&rdquo; in the QR code?</h3>
-        <p>No, it's optional. Label the code &ldquo;Sign in with Digi-ID&rdquo; so users know what they're scanning.</p>
-        <h3>Do I need to run a DigiByte node?</h3>
-        <p>No. The libraries verify signatures locally, with no connection to the DigiByte blockchain or any third-party service.</p>
-        <h3>Does it work offline or on a local network?</h3>
-        <p>Yes, as long as the wallet can reach the callback URL (for example over local Wi-Fi) and the callback is served over HTTPS.</p>
-        <h3>How can Digi-ID be used for building access?</h3>
-        <p>Put a screen that shows a fresh QR code at each door. Use one callback URL for all doors and record which door issued each nonce &mdash; separate callback paths would give each person a different address per door. When a user scans and approves, your access server verifies the signature, checks the address against that door's allow-list and unlocks it. See the <a href="/guides/physical-access.html">door-access guide</a>.</p>
-        <h3>Why do users get different addresses on different sites?</h3>
-        <p>Wallets derive a separate key for every callback URL, so sites can't correlate users. Keep your callback URL stable &mdash; changing it gives every user a new address.</p>
-        <h3>Can Digi-ID be added to a third-party wallet?</h3>
-        <p>Yes. The <a href="/developers.html#protocol-keys">key derivation</a> and <a href="/developers.html#protocol-vector">test vector</a> in the protocol reference are all you need.</p>
+        <p><a href="/assets/digidocs/Digi-ID_Documentation/Digi-ID_Integration_Guide.pdf" type="application/pdf" target="_blank" rel="noopener" class="inline-flex items-center gap-2"><icon name="file-text" class="size-4"></icon> Read the integration guide (PDF)</a></p>
+        <details>
+          <summary>What is a good nonce timeout?</summary>
+          <p>About 90 seconds for most websites, shorter for doors and kiosks. See <a href="/guides/nonce-replay.html">Nonces &amp; Replay Prevention</a>.</p>
+        </details>
+        <details>
+          <summary>Do I need the DigiByte &ldquo;D&rdquo; in the QR code?</summary>
+          <p>No, it's optional. Label the code &ldquo;Sign in with Digi-ID&rdquo; so users know what they're scanning.</p>
+        </details>
+        <details>
+          <summary>Do I need to run a DigiByte node?</summary>
+          <p>No. The libraries verify signatures locally, with no connection to the DigiByte blockchain or any third-party service.</p>
+        </details>
+        <details>
+          <summary>Does it work offline or on a local network?</summary>
+          <p>Yes, as long as the wallet can reach the callback URL (for example over local Wi-Fi) and the callback is served over HTTPS.</p>
+        </details>
+        <details>
+          <summary>How can Digi-ID be used for building access?</summary>
+          <p>Put a screen that shows a fresh QR code at each door. Use one callback URL for all doors and record which door issued each nonce &mdash; separate callback paths would give each person a different address per door. When a user scans and approves, your access server verifies the signature, checks the address against that door's allow-list and unlocks it. See the <a href="/guides/physical-access.html">door-access guide</a>.</p>
+        </details>
+        <details>
+          <summary>Why do users get different addresses on different sites?</summary>
+          <p>Wallets derive a separate key for every callback URL, so sites can't correlate users. Keep your callback URL stable &mdash; changing it gives every user a new address.</p>
+        </details>
+        <details>
+          <summary>Can Digi-ID be added to a third-party wallet?</summary>
+          <p>Yes. The <a href="/developers.html#protocol-keys">key derivation</a> and <a href="/developers.html#protocol-vector">test vector</a> in the protocol reference are all you need.</p>
+        </details>
       </section>
 
       <section id="security" aria-labelledby="security-title">
         <h2 id="security-title">Security model</h2>
         <p>Digi-ID is challenge&ndash;response authentication with public-key cryptography, the same idea as keyless SSH.</p>
-        <table>
+        <table aria-label="Threats and how Digi-ID handles them">
           <thead><tr><th scope="col">Threat</th><th scope="col">How Digi-ID handles it</th></tr></thead>
           <tbody>
             <tr><td>Database breach</td><td>Services store only public addresses. There is no secret to crack or reuse.</td></tr>

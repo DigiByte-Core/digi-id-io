@@ -210,7 +210,7 @@ php -m | grep -i gmp</pre></div>
       <h3 id="protocol-uri">Challenge URI</h3>
       <p>Before granting access, the service shows a QR code (and, on mobile, a link) containing:</p>
       <pre data-lang="text">digiid://www.example.com/callback?x=NONCE</pre>
-      <table>
+      <table aria-label="Parts of the challenge URI">
         <thead><tr><th scope="col">Part</th><th scope="col">Meaning</th></tr></thead>
         <tbody>
           <tr><td><code>digiid://</code></td><td>Scheme that opens a Digi-ID wallet when tapped or scanned.</td></tr>
@@ -224,7 +224,7 @@ php -m | grep -i gmp</pre></div>
       <h3 id="protocol-callback">Callback</h3>
       <p>After the user confirms with their PIN or fingerprint, the wallet POSTs to the callback URL (JSON body; some tools send form fields):</p>
       <pre data-lang="http" data-src="callback/http.txt"></pre>
-      <table>
+      <table aria-label="Callback fields">
         <thead><tr><th scope="col">Field</th><th scope="col">Description</th></tr></thead>
         <tbody>
           <tr><td><code>address</code></td><td>The user's DigiByte address for your site (starts with <code>D</code>). Use it as the stable user ID.</td></tr>
@@ -255,7 +255,7 @@ php -m | grep -i gmp</pre></div>
       </ol>
 
       <h3 id="protocol-vector">Test vector</h3>
-      <table>
+      <table aria-labelledby="protocol-vector">
         <tbody>
           <tr><th scope="row">BIP39 seed</th><td><code>myth glimpse mystery abstract embark net faint hospital catch hint develop state</code></td></tr>
           <tr><th scope="row">Digi-ID URI</th><td><code>digiid://digiid.digibyteprojects.com/callback?x=c6140375e5bae71e</code></td></tr>

@@ -18,6 +18,7 @@ const BASE_PATH = (process.env.BASE_PATH || '').replace(/\/+$/, '');
 
 const SHIKI_LANGS = ['javascript', 'typescript', 'php', 'bash', 'json', 'http', 'html', 'text'];
 const LANG_ALIASES = { js: 'javascript', node: 'javascript', ts: 'typescript', sh: 'bash', txt: 'text', wp: 'php' };
+const LANG_NAMES = { javascript: 'JavaScript', typescript: 'TypeScript', php: 'PHP', bash: 'shell', http: 'HTTP', json: 'JSON', html: 'HTML' };
 
 // Icons not shipped by lucide-static (brand marks were removed upstream).
 const CUSTOM_ICONS = {
@@ -85,6 +86,23 @@ function iconPlugin(used) {
 
 function highlightPlugin(highlighter) {
   return async (tree) => {
+    const tabNames = new Map();
+    tree.match({ attrs: { role: 'tablist' } }, (list) => {
+      const group = list.attrs['aria-label'];
+      for (const tab of list.content || []) {
+        if (tab?.attrs?.role !== 'tab') continue;
+        const name = collectText(tab.content).trim();
+        tabNames.set(tab.attrs.id, group ? `${name} code – ${group}` : `${name} code`);
+      }
+      return list;
+    });
+    tree.match({ attrs: { role: 'tabpanel' } }, (panel) => {
+      const name = tabNames.get(panel.attrs['aria-labelledby']);
+      for (const child of panel.content || []) {
+        if (name && child?.tag === 'pre') child.attrs['data-copy-name'] = name;
+      }
+      return panel;
+    });
     const jobs = [];
     tree.match({ tag: 'pre', attrs: { 'data-lang': /.+/ } }, (node) => {
       jobs.push(node);
@@ -102,13 +120,14 @@ function highlightPlugin(highlighter) {
       }
       const html = highlighter.codeToHtml(code.trimEnd(), { lang, themes: { light: 'github-light-default', dark: 'github-dark-default' } });
       const label = node.attrs['data-label'];
+      const copyName = node.attrs['data-copy-name'] || `${label || LANG_NAMES[lang] || lang} code`;
       node.tag = 'div';
       node.attrs = { class: 'code-block', 'data-code-block': '' };
       node.content = [
         ...(label ? [{ tag: 'div', attrs: { class: 'code-block__label' }, content: [label] }] : []),
         {
           tag: 'button',
-          attrs: { type: 'button', class: 'code-block__copy', 'data-copy': '', 'aria-label': 'Copy code' },
+          attrs: { type: 'button', class: 'code-block__copy', 'data-copy': '', 'aria-label': `Copy ${copyName}` },
           content: ['Copy']
         },
         html
@@ -146,14 +165,20 @@ function textOf(node) {
   return collectText(typeof node === 'string' ? [node] : node.content).replace(/\s+/g, ' ').trim();
 }
 
-// FAQ entries come from <section data-faq>: each h3 is a question, following siblings until the next h3 form the answer.
+// FAQ entries come from <section data-faq>: each <details> (summary = question), or each h3 followed by its answer siblings.
 function faqEntries(tree) {
   const entries = [];
   tree.match({ tag: 'section', attrs: { 'data-faq': true } }, (section) => {
     let current = null;
     for (const child of section.content || []) {
       if (typeof child !== 'object') continue;
-      if (child.tag === 'h3') {
+      if (child.tag === 'details') {
+        const parts = (child.content || []).filter((c) => typeof c === 'object');
+        const summary = parts.find((c) => c.tag === 'summary');
+        const answer = parts.filter((c) => ['p', 'ul', 'ol', 'table'].includes(c.tag)).map(textOf);
+        if (summary) entries.push({ question: textOf(summary), answer });
+        current = null;
+      } else if (child.tag === 'h3') {
         current = { question: textOf(child), answer: [] };
         entries.push(current);
       } else if (current && ['p', 'ul', 'ol', 'table'].includes(child.tag)) {
@@ -337,8 +362,8 @@ async function copyAssets() {
     ['assets/scenarium', 'assets/scenarium'],
     ['assets/digidocs', 'assets/digidocs'],
     ['assets/images', 'assets/images'],
-    ['assets/fonts/text/nexa/NexaBold.woff', 'assets/fonts/nexa-bold.woff'],
-    ['assets/fonts/text/nexa/NexaLight.woff', 'assets/fonts/nexa-light.woff']
+    ['assets/fonts/text/nexa/NexaBold.woff2', 'assets/fonts/nexa-bold.woff2'],
+    ['assets/fonts/text/nexa/NexaLight.woff2', 'assets/fonts/nexa-light.woff2']
   ];
   for (const weight of [400, 500, 700]) {
     copies.push([`node_modules/@fontsource/roboto/files/roboto-latin-${weight}-normal.woff2`, `assets/fonts/roboto-${weight}.woff2`]);

@@ -10,7 +10,10 @@ function storedTheme() {
 
 function apply(theme, buttons) {
   document.documentElement.setAttribute('data-theme', theme);
-  for (const btn of buttons) btn.setAttribute('aria-pressed', String(theme === 'dark'));
+  for (const btn of buttons) {
+    const label = btn.querySelector('[data-theme-label]');
+    if (label) label.textContent = theme === 'dark' ? 'Use light theme' : 'Use dark theme';
+  }
 }
 
 export function initTheme(root = document) {
