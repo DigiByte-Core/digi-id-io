@@ -37,12 +37,6 @@
     <p class="eyebrow">Quickstart &middot; ~5 minutes</p>
     <h2 id="qs-title" class="section-title">Integrate passwordless authorization in three steps.</h2>
     <p class="section-lead">Your server issues a challenge nonce, the wallet signs it, and your server verifies the signature locally. Choose your backend language to view code samples.</p>
-    <ol class="mt-8 grid max-w-5xl gap-4 text-sm sm:grid-cols-2">
-      <li class="flex gap-3"><span class="grid size-6 shrink-0 place-items-center rounded-full bg-accent/15 font-mono text-xs text-primary-strong dark:text-accent">1</span><span><strong class="text-navy dark:text-white">Generate Session:</strong> Create a unique nonce and render a <code>digiid://</code> URI as a QR code on your login page.</span></li>
-      <li class="flex gap-3"><span class="grid size-6 shrink-0 place-items-center rounded-full bg-accent/15 font-mono text-xs text-primary-strong dark:text-accent">2</span><span><strong class="text-navy dark:text-white">Listen for Payload:</strong> Set up an endpoint to receive <code>address</code>, <code>uri</code>, and <code>signature</code> via POST request.</span></li>
-      <li class="flex gap-3"><span class="grid size-6 shrink-0 place-items-center rounded-full bg-accent/15 font-mono text-xs text-primary-strong dark:text-accent">3</span><span><strong class="text-navy dark:text-white">Validate:</strong> Verify that the nonce hasn't expired, match the URI to your domain, and check the signature against the public address.</span></li>
-      <li class="flex gap-3"><span class="grid size-6 shrink-0 place-items-center rounded-full bg-accent/15 font-mono text-xs text-primary-strong dark:text-accent">4</span><span><strong class="text-navy dark:text-white">Authenticate:</strong> Match the validated address to an account in your database and issue your standard session token or cookie.</span></li>
-    </ol>
 
     <ol class="mt-12 space-y-14">
       <li class="grid gap-8 lg:grid-cols-[18rem_1fr]">

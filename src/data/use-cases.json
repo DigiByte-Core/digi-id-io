@@ -33,6 +33,7 @@
     "benefits": ["Phishing-resistant: signatures are bound to your domain", "No password to reuse or leak", "Confirm high-value actions with a scan", "Works for launchers, web portals and consoles with QR display"],
     "flow": ["Launcher shows a QR code", "Player scans with their wallet", "Game server verifies the signature", "Session token issued to the launcher"],
     "guideId": "web-app-login",
+    "cta": "Try it: Secure a player account",
     "projectIds": []
   },
   {

@@ -53,7 +53,7 @@
       </div>
       <div class="flex flex-wrap items-center gap-3">
         <if condition="guides.find((g) => g.id === uc.guideId).status === 'complete'">
-        <a href="/guides/{{ uc.guideId }}.html" class="btn btn-primary">Build this: {{ guides.find((g) => g.id === uc.guideId).title }} <icon name="arrow-right" class="size-4"></icon></a>
+        <a href="/guides/{{ uc.guideId }}.html" class="btn btn-primary">{{ uc.cta || 'Try it: ' + guides.find((g) => g.id === uc.guideId).title }} <icon name="arrow-right" class="size-4"></icon></a>
         </if>
         <else>
         <a href="{{ guides.find((g) => g.id === uc.guideId).readmeUrl }}" rel="noopener" target="_blank" class="btn btn-secondary">Guide coming soon &middot; start from the library README <icon name="external-link" class="size-4"></icon></a>
